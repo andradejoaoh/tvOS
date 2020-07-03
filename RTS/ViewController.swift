@@ -6,14 +6,16 @@
 //  Copyright © 2020 João Henrique Andrade. All rights reserved.
 //
 
+import SpriteKit
 import UIKit
 
 class ViewController: UIViewController {
-    @IBOutlet weak var resourcesLabel: UILabel!
-    @IBOutlet weak var soldiersLabel: UILabel!
+    
+    let gameScene: SKScene = SKScene()
+    let gameView: SKView = SKView()
     var castle: Castle = Castle()
     var createSoldierIsRunning: Bool = false
-    
+    var trainningInstance = SKSpriteNode()
     var soldiersInQueue: Int = 0 {
         didSet{
             if createSoldierIsRunning == false{
@@ -24,18 +26,26 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        resourcesLabel.text = "Resources: \(castle.coins)"
-        soldiersLabel.text = "Soldiers: \(castle.soldiers)"
+        trainningInstance.size = CGSize(width: 1, height: 1)
+        trainningInstance.color = SKColor.black
+        
+        if let view = self.view as! SKView? {
+            gameScene.scaleMode = .aspectFill
+            gameScene.backgroundColor = SKColor.red
+            gameScene.addChild(trainningInstance)
+
+            view.presentScene(gameScene)
+        }
     }
     
-    @IBAction func createSoldierButton(_ sender: Any) {
+    
+    func createSoldierButton(_ sender: Any) {
         soldiersInQueue += 1
-        
     }
     
     func updateLabels(){
-        resourcesLabel.text = "Resources: \(castle.coins)"
-        soldiersLabel.text = "Soldiers: \(castle.soldiers)"
+        //        resourcesLabel.text = "Resources: \(castle.coins)"
+        //        soldiersLabel.text = "Soldiers: \(castle.soldiers)"
     }
     
     
