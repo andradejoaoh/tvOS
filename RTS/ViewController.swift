@@ -12,7 +12,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var resourcesLabel: UILabel!
     @IBOutlet weak var soldiersLabel: UILabel!
     var castle: Castle = Castle()
-
+    var createSoldierIsRunning: Bool = false
+    
+    var soldiersInQueue: Int = 0 {
+        didSet{
+            if createSoldierIsRunning == false{
+                createSoldier()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         resourcesLabel.text = "Resources: \(castle.coins)"
@@ -20,11 +29,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func createSoldierButton(_ sender: Any) {
-        createSoldier { (sucess) in
-            if sucess {
-                updateLabels()
-            }
-        }
+        soldiersInQueue += 1
+        
     }
     
     func updateLabels(){
@@ -32,10 +38,23 @@ class ViewController: UIViewController {
         soldiersLabel.text = "Soldiers: \(castle.soldiers)"
     }
     
-    func createSoldier(completion: (_ success: Bool) -> Void){
-        castle.soldiers += 1
+    
+    func createSoldier(){
+        self.createSoldierIsRunning = true
         castle.coins -= Soldier.price
-        completion(true)
+        soldiersInQueue -= 1
+        
+        let _ = Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { (timer) in
+            self.castle.soldiers += 1
+            self.updateLabels()
+            self.createSoldierIsRunning = false
+            
+            if self.soldiersInQueue == 0 {
+                timer.invalidate()
+            } else if self.soldiersInQueue > 0 {
+                self.createSoldier()
+            }
+        }
     }
 }
 
