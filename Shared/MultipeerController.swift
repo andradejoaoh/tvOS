@@ -48,7 +48,7 @@ public class MultipeerController: NSObject {
     public let connectionType: ConnectionType
 
     private let myPeerID = MCPeerID(displayName: UIDevice.current.name)
-    private lazy var session: MCSession = MCSession(peer: myPeerID)
+    private lazy var session: MCSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
 
     #if os(iOS)
     private var browser: MCNearbyServiceBrowser
@@ -78,10 +78,13 @@ public class MultipeerController: NSObject {
 
 extension MultipeerController: MCSessionDelegate {
     public func session(_ session: MCSession, peer peerID: MCPeerID, didChange state: MCSessionState) {
-        if state == .connected {
+        switch state {
+        case .connected:
             delegate?.peerJoined(peerID)
-        } else if state == .notConnected {
+        case .notConnected:
             delegate?.peerLeft(peerID)
+        default:
+            print("Unknown status for \(peerID)")
         }
     }
 
@@ -104,8 +107,6 @@ extension MultipeerController: MCSessionDelegate {
             delegate?.finishedReceivingResource(resourceName, from: peerID, answer: ResourceAnswer.fail(err: error))
         }
     }
-
-
 }
 
 #if os(iOS)

@@ -7,10 +7,17 @@
 //
 
 import UIKit
+import MultipeerConnectivity
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MultipeerHandler {
+    
 
+    @IBAction func connectPlayers(_ sender: Any) {
+        
+    }
+    
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
