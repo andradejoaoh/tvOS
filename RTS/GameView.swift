@@ -12,8 +12,6 @@ import UIKit
 class GameView: UIViewController {
     
     let gameScene: GameScene = GameScene()
-    let gameController: GameController = GameController()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +23,9 @@ class GameView: UIViewController {
         }
     }
     
-    func createSoldierButton(_ sender: Any) {
-        gameController.soldiersInQueue += 1
-    }
     
     override func viewDidAppear(_ animated: Bool) {
-        navigationController?.navigationBar.barStyle = .default
+    
     }
 }
 
