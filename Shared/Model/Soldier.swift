@@ -10,10 +10,10 @@ import Foundation
 
 public struct Soldier {
     //Soldier life.
-    let hp: Int = 30
+    static let hp: Int = 30
     
     //Attack damage per attack.
-    let attack: Int = 5
+    static let attack: Int = 5
     
     //Time to make the soldier in seconds.
     static let timeToMake: Int = 2
