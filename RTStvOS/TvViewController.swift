@@ -11,6 +11,7 @@ import MultipeerConnectivity
 
 class TvViewController: UIViewController {
     
+    @IBOutlet weak var lblStatus: UILabel!
     var multipeerController: MultipeerController!
     var connectionType: ConnectionType!
     
@@ -22,9 +23,12 @@ class TvViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+//        connectionType = .host
+        lblStatus.text = "Connect at least to two iPhone devices to have fun :)"
+        MultipeerController.shared().delegate = self
+        
     }
 }
 

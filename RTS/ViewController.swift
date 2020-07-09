@@ -8,6 +8,7 @@
 
 import SpriteKit
 import UIKit
+import MultipeerConnectivity
 
 class ViewController: UIViewController {
     
@@ -66,5 +67,19 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+}
+
+extension ViewController: MultipeerHandler {
+    
+    func peerDiscovered(_ id: MCPeerID) -> Bool {
+        return true
+    }
+    
+    func peerLost(_ id: MCPeerID) {
+            print("Lost connection")
+    }
+    
+    
 }
 

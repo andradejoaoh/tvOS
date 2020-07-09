@@ -7,10 +7,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Tv View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="RTStvOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TvViewController" customModule="RTStvOS" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -28,12 +28,26 @@
                                     <action selector="connectPlayers:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="rSg-K1-rWa"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZJ-xa-iy4">
+                                <rect key="frame" x="106" y="93" width="1708" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="uMi-qd-ddx"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="KZJ-xa-iy4" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="33" id="9g7-9c-XPx"/>
+                            <constraint firstItem="wu6-TO-1qx" firstAttribute="trailing" secondItem="KZJ-xa-iy4" secondAttribute="trailing" constant="16" id="MHi-d3-7KY"/>
+                            <constraint firstItem="KZJ-xa-iy4" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="16" id="ipe-n3-ddj"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="wu6-TO-1qx"/>
                     </view>
                     <connections>
-                        <outlet property="connectPlayers" destination="42l-wC-lze" id="cbf-N1-aUb"/>
+                        <outlet property="lblStatus" destination="KZJ-xa-iy4" id="moT-8g-P6h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
