@@ -12,6 +12,8 @@ import MultipeerConnectivity
 
 class ViewController: UIViewController {
     
+    @IBOutlet weak var lblStatus: UILabel!
+    var host: MCPeerID?
     let gameScene: SKScene = SKScene()
     let gameView: SKView = SKView()
     var castle: Castle = Castle()
@@ -29,6 +31,9 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         trainningInstance.size = CGSize(width: 1, height: 1)
         trainningInstance.color = SKColor.black
+        
+        lblStatus.text = ("Connect to an AppleTV to begin your fun!")
+        MultipeerController.shared().delegate = self
         
         if let view = self.view as! SKView? {
             gameScene.scaleMode = .aspectFill
@@ -67,19 +72,35 @@ class ViewController: UIViewController {
             }
         }
     }
-    
 }
 
 extension ViewController: MultipeerHandler {
     
     func peerDiscovered(_ id: MCPeerID) -> Bool {
-        return true
+        DispatchQueue.main.async {
+            self.lblStatus.text = (id.displayName + " was found.")
+        }
+              host = id
+              return true
     }
     
     func peerLost(_ id: MCPeerID) {
-            print("Lost connection")
+        DispatchQueue.main.async {
+            self.lblStatus.text = ("Lost connection to " + id.displayName)
+        }
+    }
+        
+    func peerJoined(_ id: MCPeerID) {
+        DispatchQueue.main.async {
+            self.lblStatus.text = (id.displayName + " has connected.")
+        }
     }
     
-    
+    func peerLeft(_ id: MCPeerID) {
+        DispatchQueue.main.async {
+            self.lblStatus.text = (id.displayName + " has disconnected.")
+        }
+    }
+        
 }
 

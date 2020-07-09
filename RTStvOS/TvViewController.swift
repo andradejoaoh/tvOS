@@ -15,13 +15,6 @@ class TvViewController: UIViewController {
     var multipeerController: MultipeerController!
     var connectionType: ConnectionType!
     
-
-    @IBAction func connectPlayers(_ sender: Any) {
-        if connectionType == .host {
-            print("Sou host")
-        }
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -34,9 +27,21 @@ class TvViewController: UIViewController {
 
 extension TvViewController: MultipeerHandler {
     func peerReceivedInvitation(_ id: MCPeerID) -> Bool {
-        return true
+        DispatchQueue.main.async {
+                self.lblStatus.text = (id.displayName + " is trying to join.")
+            }
+            return MultipeerController.shared().connectedPeers.count < 6
     }
+    
     func peerJoined(_ id: MCPeerID) {
-        print("Connected")
+        DispatchQueue.main.async {
+            self.lblStatus.text = (id.displayName + " has connected.")
+        }
+    }
+    
+    func peerLeft(_ id: MCPeerID) {
+        DispatchQueue.main.async {
+            self.lblStatus.text = (id.displayName + " has disconnected.")
+          }
     }
 }
