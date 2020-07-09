@@ -12,12 +12,17 @@ struct Castle {
     var name: String = "Player"
     
     //Castle life.
-    var life: Int = 600
+    var life: Int = 6000
     
-    //Resources amount.
-    var coins: Int = 200
-    var wood: Int = 200
+    //Villagers amount.
+    var villager: Int = 50
     
     //Soldiers amount.
-    var soldiers: Int = 0
+    var soldier: Int = 0
+    
+    //Farmers amount.
+    var farmer: Int = 0
+    
+    //Archers amount.
+    var archer: Int = 0
 }
