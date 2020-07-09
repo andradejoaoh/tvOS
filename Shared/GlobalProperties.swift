@@ -9,5 +9,5 @@
 import Foundation
 public struct GlobalProperties {
     private init(){}
-    public static let serviceType: String = "br.jha.RTS"
+    public static let serviceType: String = "br-RTS"
 }

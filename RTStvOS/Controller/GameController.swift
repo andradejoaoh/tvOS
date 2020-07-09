@@ -8,8 +8,8 @@
 
 import Foundation
 class GameController {
-    private init ()
-    public static shared: GameController = GameController()
+//    private init ()
+    public static var shared: GameController = GameController()
     
 
     func createMap(){
