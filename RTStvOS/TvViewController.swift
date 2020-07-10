@@ -15,9 +15,8 @@ class TvViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        lblStatus.text = "Connect at least to two iPhone devices to have fun :)"
-        MultipeerController.shared().delegate = self
+        lblStatus.text = "Connect an iPhone device..."
+        MultipeerController.shared.delegate = self
 
     }
 }
