@@ -1,23 +1,22 @@
 //
-//  Soldier.swift
+//  Archer.swift
 //  RTS
 //
-//  Created by João Henrique Andrade on 02/07/20.
+//  Created by João Henrique Andrade on 08/07/20.
 //  Copyright © 2020 João Henrique Andrade. All rights reserved.
 //
 
 import Foundation
-
-public struct Soldier {
+public struct Archer {
     //Soldier life.
-    let hp: Int = 30
+    static let hp: Int = 20
     
     //Attack damage per attack.
-    let attack: Int = 5
+    static let attack: Int = 8
     
     //Time to make the soldier in seconds.
-    let timeToMake: Int = 2
+    static let timeToMake: Int = 2
     
     //Price to make the soldier.
-    static let price: Int = 5
+    static let price: Int = 1
 }
