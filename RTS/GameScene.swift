@@ -11,15 +11,17 @@ import SpriteKit
 
 class GameScene: SKScene {
     lazy var gameController: GameController = GameController(gameScene: self)
-    
-    private var trainningInstance = SKSpriteNode(color: SKColor.black, size: CGSize(width: 60, height: 60))
-    private var farmInstance = SKSpriteNode(color: SKColor.green, size: CGSize(width: 60, height: 60))
+    lazy var screenSize = self.frame
+    private var trainningInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
+    private var farmInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
+    private let backgroundNode = SKSpriteNode(imageNamed: "castle.pdf")
     private var soldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Soldiers")
     private var farmersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Farmers")
     private var villagersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Villagers")
 
     
     override func didMove(to view: SKView) {
+        self.addChild(backgroundNode)
         self.addChild(soldiersLabel)
         self.addChild(villagersLabel)
         self.addChild(farmersLabel)
@@ -29,18 +31,28 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        self.scaleMode = .aspectFill
+        self.scaleMode = .fill
         self.backgroundColor = SKColor.white
-        
         setupNodes()
-
     }
     
     func setupNodes(){
-        farmInstance.position.y += 100
+        farmInstance.size = CGSize(width: screenSize.width/2.3 , height: screenSize.height/1.6)
+        farmInstance.position.x = CGFloat(-screenSize.width/3.5)
+        farmInstance.position.y = CGFloat(-screenSize.height/4)
+        farmInstance.zPosition = 2
+        
+        trainningInstance.size = CGSize(width: screenSize.width/2.5 , height: screenSize.height/5)
+        trainningInstance.position.x = CGFloat(screenSize.width/3.5)
+        trainningInstance.position.y = CGFloat(-screenSize.height/4)
+        trainningInstance.zPosition = 2
+
+        
         soldiersLabel.position.y += self.frame.height/2 - 80
         farmersLabel.position.y += self.frame.height/2 - 120
         villagersLabel.position.y += self.frame.height/2 - 160
+        
+        backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
     }
     

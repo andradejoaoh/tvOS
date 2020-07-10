@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import MultipeerConnectivity
 
-class LobbyViewController: ViewController {
+class LobbyViewController: UIViewController {
     
     @IBOutlet weak var lblStatus: UILabel!
     var host: MCPeerID?
