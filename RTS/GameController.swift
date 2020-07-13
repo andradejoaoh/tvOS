@@ -11,7 +11,7 @@ class GameController {
     
     var castle: Castle = Castle()
     let gameScene: GameScene
-
+    
     var createSoldierIsRunning: Bool = false
     var soldierInQueue: Int = 0 {
         didSet{
@@ -30,6 +30,15 @@ class GameController {
         }
     }
     
+    var createArcherIsRunning: Bool = false
+    var archerInQueue: Int = 0 {
+        didSet{
+            if createArcherIsRunning == false{
+                createArcher()
+            }
+        }
+    }
+    
     init(gameScene: GameScene) {
         self.gameScene = gameScene
         setupFarmerTimer()
@@ -37,7 +46,6 @@ class GameController {
     
     func createSoldier(){
         self.createSoldierIsRunning = true
-        castle.villager -= Soldier.price
         soldierInQueue -= 1
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Soldier.timeToMake), repeats: false) { (timer) in
@@ -54,7 +62,6 @@ class GameController {
     
     func createFarmer(){
         self.createFarmerIsRunning = true
-        castle.villager -= Farmer.price
         farmerInQueue -= 1
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Farmer.timeToMake), repeats: false) { (timer) in
@@ -65,6 +72,22 @@ class GameController {
                 timer.invalidate()
             } else if self.farmerInQueue > 0 {
                 self.createFarmer()
+            }
+        }
+    }
+    
+    func createArcher(){
+        self.createArcherIsRunning = true
+        archerInQueue -= 1
+        
+        let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Archer.timeToMake), repeats: false) { (timer) in
+            self.castle.archer += 1
+            self.createArcherIsRunning = false
+            self.gameScene.updateLabel()
+            if self.archerInQueue == 0 {
+                timer.invalidate()
+            } else if self.archerInQueue > 0 {
+                self.createArcher()
             }
         }
     }
