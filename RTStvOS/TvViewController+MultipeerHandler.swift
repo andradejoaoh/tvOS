@@ -14,6 +14,8 @@ extension TvViewController: MultipeerHandler {
     func peerReceivedInvitation(_ id: MCPeerID) -> Bool {
         DispatchQueue.main.async {
             self.lblStatus.text = (id.displayName + " is trying to join.")
+            let phonePlayer = Players (id: id.description)
+            self.players.append(phonePlayer)
         }
         return MultipeerController.shared.connectedPeers.count < 6
     }
@@ -23,25 +25,39 @@ extension TvViewController: MultipeerHandler {
             self.lblStatus.text = (id.displayName + " has connected.")
             let data = "oioioio".data(using: .utf8)
             print("sending data")
-            MultipeerController.shared.sendToAllPeers(data!, reliably: true)
+            MultipeerController.shared.sendToPeers(data!, reliably: false, peers: [id])
         }
     }
     
     func peerLeft(_ id: MCPeerID) {
         DispatchQueue.main.async {
             self.lblStatus.text = (id.displayName + " has disconnected.")
+            let player = self.players.first { (player) -> Bool in
+                      return player.id == id.description
+                      }
+                  
+                  let seconds = 5.0
+                  DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+                      self.players.removeAll { (removingPlayer) -> Bool in
+                      player?.id == removingPlayer.id
+                      }
+                 }
         }
     }
     
     func receivedData(_ data: Data, from peerID: MCPeerID) {
-        print("recieved data")
         DispatchQueue.main.async {
-            let t = String(data: data, encoding: .utf8)
-            guard t != nil else {
-                print("received message found nil")
-                return
+            guard let texto = String(bytes: data, encoding: .utf8) else { return }
+            var playerAux: Players?
+             
+            for index in 0..<self.players.count {
+                if self.players[index].id == peerID.description {
+                    playerAux = self.players[index]
+                 }
+             }
+            guard let player = playerAux else { return }
+            
+            MultipeerController.shared.sendToPeers(data, reliably: false, peers: [peerID])
             }
-            self.lblStatus.text = peerID.displayName + ": " + t!
         }
-    }
 }

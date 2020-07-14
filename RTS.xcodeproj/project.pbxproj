@@ -36,12 +36,16 @@
 		6161412B24AFBD5B00194165 /* MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6161412A24AFBD5B00194165 /* MultipeerHandler.swift */; };
 		6161412C24AFBF6300194165 /* MultipeerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6161412824AFBD4A00194165 /* MultipeerController.swift */; };
 		6161412D24AFBF6300194165 /* MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6161412A24AFBD5B00194165 /* MultipeerHandler.swift */; };
-		6FA7F8D324B6BF7000992181 /* TvViewController+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D224B6BF7000992181 /* TvViewController+MultipeerHandler.swift */; };
-		6FA7F8D524B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D424B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift */; };
-		6FA7F8D724B6C1A100992181 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */; };
 		61DD279924B3B0E4009C4425 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DD279824B3B0E4009C4425 /* GameScene.swift */; };
 		61DD279B24B3B212009C4425 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DD279A24B3B212009C4425 /* GameController.swift */; };
 		61DD279D24B3C013009C4425 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 61DD279C24B3C013009C4425 /* GameScene.sks */; };
+		6FA7F8D324B6BF7000992181 /* TvViewController+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D224B6BF7000992181 /* TvViewController+MultipeerHandler.swift */; };
+		6FA7F8D524B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D424B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift */; };
+		6FA7F8D724B6C1A100992181 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */; };
+		6FA7F8DD24BCE63500992181 /* CommandSysten.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSysten.swift */; };
+		6FA7F8DE24BCE63500992181 /* CommandSysten.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSysten.swift */; };
+		6FA7F8E024BE166B00992181 /* Players.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Players.swift */; };
+		6FA7F8E124BE166B00992181 /* Players.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Players.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,12 +74,14 @@
 		6161412624AFB2F900194165 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		6161412824AFBD4A00194165 /* MultipeerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerController.swift; sourceTree = "<group>"; };
 		6161412A24AFBD5B00194165 /* MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerHandler.swift; sourceTree = "<group>"; };
-		6FA7F8D224B6BF7000992181 /* TvViewController+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TvViewController+MultipeerHandler.swift"; sourceTree = "<group>"; };
-		6FA7F8D424B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LobbyViewController+MultipeerHandler.swift"; sourceTree = "<group>"; };
-		6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		61DD279824B3B0E4009C4425 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		61DD279A24B3B212009C4425 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		61DD279C24B3C013009C4425 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		6FA7F8D224B6BF7000992181 /* TvViewController+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TvViewController+MultipeerHandler.swift"; sourceTree = "<group>"; };
+		6FA7F8D424B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LobbyViewController+MultipeerHandler.swift"; sourceTree = "<group>"; };
+		6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
+		6FA7F8DC24BCE63500992181 /* CommandSysten.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSysten.swift; sourceTree = "<group>"; };
+		6FA7F8DF24BE166B00992181 /* Players.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Players.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +178,9 @@
 				613AAC6624B63BDF00F15167 /* Controller */,
 				6161412424AF9EC800194165 /* Model */,
 				6161412824AFBD4A00194165 /* MultipeerController.swift */,
+				6FA7F8DC24BCE63500992181 /* CommandSysten.swift */,
 				6161412A24AFBD5B00194165 /* MultipeerHandler.swift */,
+				6FA7F8DF24BE166B00992181 /* Players.swift */,
 				612600AA24AFCF3000D0FD67 /* GlobalProperties.swift */,
 			);
 			path = Shared;
@@ -300,6 +308,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6FA7F8E024BE166B00992181 /* Players.swift in Sources */,
 				6161412C24AFBF6300194165 /* MultipeerController.swift in Sources */,
 				6FA7F8D724B6C1A100992181 /* LobbyViewController.swift in Sources */,
 				61DD279B24B3B212009C4425 /* GameController.swift in Sources */,
@@ -312,6 +321,7 @@
 				6161412224AE766E00194165 /* Castle.swift in Sources */,
 				6161411F24AE75A800194165 /* Soldier.swift in Sources */,
 				613AAC6524B6365600F15167 /* Archer.swift in Sources */,
+				6FA7F8DD24BCE63500992181 /* CommandSysten.swift in Sources */,
 				616140F524AE731500194165 /* SceneDelegate.swift in Sources */,
 				613AAC6324B5081F00F15167 /* iOSLabelNode.swift in Sources */,
 				612600AB24AFCF3000D0FD67 /* GlobalProperties.swift in Sources */,
@@ -328,7 +338,9 @@
 				613AAC6924B63C6300F15167 /* WarController.swift in Sources */,
 				613AAC6A24B63C6300F15167 /* Farmer.swift in Sources */,
 				613AAC6B24B63C6300F15167 /* Archer.swift in Sources */,
-				6161410F24AE733000194165 /* ViewController.swift in Sources */,
+				6161410F24AE733000194165 /* TvViewController.swift in Sources */,
+				6FA7F8E124BE166B00992181 /* Players.swift in Sources */,
+				6FA7F8DE24BCE63500992181 /* CommandSysten.swift in Sources */,
 				6161412924AFBD4A00194165 /* MultipeerController.swift in Sources */,
 				6161412724AFB2F900194165 /* GameController.swift in Sources */,
 				6161412024AE75A800194165 /* Soldier.swift in Sources */,

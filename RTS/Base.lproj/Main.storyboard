@@ -57,6 +57,7 @@
                         <viewLayoutGuide key="safeArea" id="C4i-AE-Ag2"/>
                     </view>
                     <connections>
+                        <outlet property="btnStarGame" destination="xtz-8V-DPP" id="vQf-F1-5TT"/>
                         <outlet property="lblStatus" destination="l8T-gH-A1H" id="rsJ-9I-WxQ"/>
                     </connections>
                 </viewController>

@@ -37,6 +37,15 @@ public class MultipeerController: NSObject {
         advertiser.delegate = self
         #endif
     }
+    
+    deinit {
+        #if os(iOS)
+        self.browser.stopBrowsingForPeers()
+        #else
+        self.advertiser.stopAdvertisingPeer()
+        #endif
+       
+    }
 
     public let serviceType: String
     public let connectionType: ConnectionType
@@ -75,9 +84,6 @@ extension MultipeerController: MCSessionDelegate {
         switch state {
         case .connected:
             delegate?.peerJoined(peerID)
-            #if os(iOS)
-            browser.stopBrowsingForPeers()
-            #endif
         case .notConnected:
             delegate?.peerLeft(peerID)
         default:
