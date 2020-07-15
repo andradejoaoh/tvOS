@@ -28,6 +28,7 @@ extension LobbyViewController: MultipeerHandler {
     func peerJoined(_ id: MCPeerID) {
         DispatchQueue.main.async {
             self.lblStatus.text = (id.displayName + " has connected.")
+            self.btnStarGame.isEnabled = true
         }
     }
     
@@ -36,5 +37,15 @@ extension LobbyViewController: MultipeerHandler {
             self.lblStatus.text = (id.displayName + " has disconnected.")
         }
     }
-        
+     
+    func receivedData(_ data: Data, from peerID: MCPeerID) {
+        DispatchQueue.main.async {
+            guard let text = String(bytes: data, encoding: .utf8) else { return }
+            guard t != nil else {
+                print("received message found nil")
+                return
+            }
+            self.lblStatus.text = peerID.displayName + ": " + t!
+        }
+    }
 }

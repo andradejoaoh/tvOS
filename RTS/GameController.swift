@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import MultipeerConnectivity
+
 class GameController {
     
     var castle: Castle = Castle()
@@ -24,7 +26,7 @@ class GameController {
     var createFarmerIsRunning: Bool = false
     var farmerInQueue: Int = 0 {
         didSet{
-            if createFarmerIsRunning == false{
+            if createFarmerIsRunning == false {
                 createFarmer()
             }
         }
@@ -58,6 +60,8 @@ class GameController {
                 self.createSoldier()
             }
         }
+         let data = "addArcher:2_Siena".data(using: .utf8)
+               MultipeerController.shared.sendToAllPeers(data!, reliably: true)
     }
     
     func createFarmer(){

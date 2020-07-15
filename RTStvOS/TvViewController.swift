@@ -12,12 +12,16 @@ import MultipeerConnectivity
 class TvViewController: UIViewController {
     
     @IBOutlet weak var lblStatus: UILabel!
+    var players = [Player]()
+    var castle = Castle()
+    var soldier = Soldier()
+    var archer = Archer()
+    var farmer = Farmer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        lblStatus.text = "Connect at least to two iPhone devices to have fun :)"
-        MultipeerController.shared().delegate = self
+        lblStatus.text = "Connect an iPhone device..."
+        MultipeerController.shared.delegate = self
 
     }
 }

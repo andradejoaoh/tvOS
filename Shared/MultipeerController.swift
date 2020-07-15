@@ -16,13 +16,7 @@ public enum ConnectionType {
 
 public class MultipeerController: NSObject {
 
-    public static func shared() -> MultipeerController {
-        return sharedInstance
-    }
-    private static let sharedInstance: MultipeerController = {
-        let mc = MultipeerController ()
-        return mc
-    }()
+    static let shared = MultipeerController ()
 
     private override init() {
         self.serviceType = GlobalProperties.serviceType
@@ -43,12 +37,21 @@ public class MultipeerController: NSObject {
         advertiser.delegate = self
         #endif
     }
+    
+    deinit {
+        #if os(iOS)
+        self.browser.stopBrowsingForPeers()
+        #else
+        self.advertiser.stopAdvertisingPeer()
+        #endif
+       
+    }
 
     public let serviceType: String
     public let connectionType: ConnectionType
 
     private let myPeerID = MCPeerID(displayName: UIDevice.current.name)
-    private lazy var session: MCSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
+    public lazy var session: MCSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
 
     #if os(iOS)
     private var browser: MCNearbyServiceBrowser
