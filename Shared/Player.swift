@@ -6,10 +6,11 @@
 //  Copyright © 2020 João Henrique Andrade. All rights reserved.
 //
 
-class Players {
+class Player {
     let id: String
     
     public init (id: String) {
         self.id = id
+
     }
 }

@@ -40,7 +40,7 @@ extension LobbyViewController: MultipeerHandler {
      
     func receivedData(_ data: Data, from peerID: MCPeerID) {
         DispatchQueue.main.async {
-            let t = String(data: data, encoding: .utf8)
+            guard let text = String(bytes: data, encoding: .utf8) else { return }
             guard t != nil else {
                 print("received message found nil")
                 return

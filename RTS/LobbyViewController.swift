@@ -17,9 +17,9 @@ class LobbyViewController: UIViewController {
     @IBOutlet weak var btnStarGame: UIButton!
     
     @IBAction func buttonClick(_ sender: Any) {
-        let data = "heyooooo".data(using: .utf8)
+        let data = "sendArmy:23_Siena_Bologna".data(using: .utf8)
         print("iPhone sending data")
-        MultipeerController.shared.sendToPeers(data!, reliably: false, peers: [host!])
+        MultipeerController.shared.sendToAllPeers(data!, reliably: true)
     }
     
     override func viewDidLoad() {

@@ -12,7 +12,11 @@ import MultipeerConnectivity
 class TvViewController: UIViewController {
     
     @IBOutlet weak var lblStatus: UILabel!
-    var players = [Players]()
+    var players = [Player]()
+    var castle = Castle()
+    var soldier = Soldier()
+    var archer = Archer()
+    var farmer = Farmer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
