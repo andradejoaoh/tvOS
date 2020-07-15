@@ -7,12 +7,12 @@
 //
 
 import Foundation
+import SpriteKit
 class GameController {
-//    private init ()
-    public static var shared: GameController = GameController()
+    var players: [Castle] = []
+    var gameScene: GameScene
     
-
-    func createMap(){
-        
+    init(gameScene: GameScene) {
+        self.gameScene = gameScene
     }
 }
