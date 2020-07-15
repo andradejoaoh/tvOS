@@ -16,6 +16,7 @@ class iOSLabelNode: SKLabelNode {
         self.fontSize = CGFloat(fontSize)
         self.fontColor = fontColor
         self.text = text
+        self.zPosition = 1
     }
     
     required init?(coder aDecoder: NSCoder) {
