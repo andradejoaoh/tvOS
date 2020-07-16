@@ -12,14 +12,17 @@ import SpriteKit
 class GameView: UIViewController {
     
     let gameScene: GameScene = GameScene()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("viewDidLoad")
         if let view = self.view as! SKView? {
             guard let scene = SKScene(fileNamed: "GameScene") else { return }
             view.presentScene(scene)
             view.ignoresSiblingOrder = true
             view.translatesAutoresizingMaskIntoConstraints = false
+            print("Foi")
+        } else {
+            print("Nao foi")
         }
     }
     

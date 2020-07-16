@@ -14,6 +14,8 @@ public enum ConnectionType {
     case peer
 }
 
+let hostName = "AppleTvHost"
+
 public class MultipeerController: NSObject {
 
     static let shared = MultipeerController ()
@@ -46,11 +48,16 @@ public class MultipeerController: NSObject {
         #endif
        
     }
+    
+    
 
     public let serviceType: String
     public let connectionType: ConnectionType
-
-    private let myPeerID = MCPeerID(displayName: UIDevice.current.name)
+    #if os(iOS)
+    public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
+    #else
+    public let myPeerID = MCPeerID(displayName: hostName)
+    #endif
     public lazy var session: MCSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
 
     #if os(iOS)

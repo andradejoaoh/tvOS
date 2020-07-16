@@ -6,10 +6,15 @@
 //  Copyright © 2020 João Henrique Andrade. All rights reserved.
 //
 
+
 import Foundation
-struct Castle {
+
+ class Castle {
     //Player name.
-    var name: String = "Player"
+    let name: String
+    
+    //City names
+    static var citynames: [String] = ["Rodes","Carcassone","Rothenburg","San Gimignano","Chester","Colmar","Ávila"]
     
     //Castle life.
     var life: Int = 6000
@@ -25,4 +30,16 @@ struct Castle {
     
     //Archers amount.
     var archer: Int = 0
+    
+    static func getUniqueName() -> String {
+        if citynames.count > 0 {
+        return citynames.remove(at: Int.random(in: 0...citynames.count - 1))
+        } else {
+            fatalError("City not found")
+        }
+    }
+    
+    init() {
+        name = Castle.getUniqueName()
+    }
 }

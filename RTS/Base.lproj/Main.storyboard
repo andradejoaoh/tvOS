@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nit-Ka-Vb3">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -47,17 +47,38 @@
                                     <action selector="buttonClick:" destination="nit-Ka-Vb3" eventType="touchUpInside" id="sGH-MV-Ea5"/>
                                 </connections>
                             </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sv6-KP-Vq9">
+                                <rect key="frame" x="292" y="592" width="102" height="94"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="102" id="0c3-cU-hMq"/>
+                                    <constraint firstAttribute="height" constant="96.5" id="pNw-2o-mq0"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJP-kc-eIk">
+                                <rect key="frame" x="67" y="613" width="93" height="53"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                <state key="normal" title="Ready"/>
+                                <connections>
+                                    <action selector="btnReady:" destination="nit-Ka-Vb3" eventType="touchUpInside" id="GmB-d6-cdP"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="C4i-AE-Ag2" firstAttribute="trailing" secondItem="sv6-KP-Vq9" secondAttribute="trailing" constant="20" id="1ij-JO-Zgs"/>
                             <constraint firstItem="C4i-AE-Ag2" firstAttribute="trailing" secondItem="l8T-gH-A1H" secondAttribute="trailing" constant="20" id="5QU-5S-32D"/>
+                            <constraint firstItem="tJP-kc-eIk" firstAttribute="leading" secondItem="C4i-AE-Ag2" secondAttribute="leading" constant="67" id="NKI-S8-cxe"/>
                             <constraint firstItem="l8T-gH-A1H" firstAttribute="leading" secondItem="C4i-AE-Ag2" secondAttribute="leading" constant="20" id="TLM-3R-qY5"/>
+                            <constraint firstItem="C4i-AE-Ag2" firstAttribute="bottom" secondItem="sv6-KP-Vq9" secondAttribute="bottom" constant="174.5" id="cGI-oV-w5T"/>
                             <constraint firstItem="l8T-gH-A1H" firstAttribute="top" secondItem="C4i-AE-Ag2" secondAttribute="top" constant="60" id="tlB-hj-MRQ"/>
+                            <constraint firstItem="C4i-AE-Ag2" firstAttribute="bottom" secondItem="tJP-kc-eIk" secondAttribute="bottom" constant="196" id="u3p-iL-XWy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C4i-AE-Ag2"/>
                     </view>
                     <connections>
+                        <outlet property="btnReady" destination="tJP-kc-eIk" id="pj2-Yo-1sw"/>
                         <outlet property="btnStarGame" destination="xtz-8V-DPP" id="vQf-F1-5TT"/>
+                        <outlet property="imgCheck" destination="sv6-KP-Vq9" id="ufX-fn-Baj"/>
                         <outlet property="lblStatus" destination="l8T-gH-A1H" id="rsJ-9I-WxQ"/>
                     </connections>
                 </viewController>
@@ -66,4 +87,7 @@
             <point key="canvasLocation" x="-630.43478260869574" y="112.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="square.fill" catalog="system" width="128" height="114"/>
+    </resources>
 </document>
