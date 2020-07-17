@@ -15,9 +15,6 @@ extension LobbyViewController: MultipeerHandler {
         DispatchQueue.main.async {
             self.lblStatus.text = (id.displayName + " was found.")
         }
-        if id.displayName == hostName {
-            host = id
-        }
         return true
     }
     
@@ -30,7 +27,9 @@ extension LobbyViewController: MultipeerHandler {
     func peerJoined(_ id: MCPeerID) {
         DispatchQueue.main.async {
             self.lblStatus.text = (id.displayName + " has connected.")
-            self.btnStarGame.isEnabled = true
+        }
+        if id.displayName == hostName {
+            MultipeerController.shared.host = id
         }
     }
     
@@ -39,27 +38,31 @@ extension LobbyViewController: MultipeerHandler {
             self.lblStatus.text = (id.displayName + " has disconnected.")
         }
     }
-     
+    
     func receivedData(_ data: Data, from peerID: MCPeerID) {
         DispatchQueue.main.async {
             
             if peerID.displayName != hostName { return }
             guard let text = String(bytes: data, encoding: .utf8) else {return}
-
+            
             let substrings = text.split(separator: ":")
-              let funcName = substrings.first
-                switch funcName {
-                case "isReadyConfirmation":
-                    self.imgCheck.image = UIImage.init(systemName: "checkmark.square.fill")
-                    self.isReady = true
-                case "isNotReadyConfirmation":
-                    self.imgCheck.image = UIImage.init(systemName: "square.fill")
-                    self.isReady = false
-                case "gameStart":
-                    print("Comecar jogo")
-               default:
-                print ("LobbyViewController receivedData: No func found with name \(text), with id \(peerID.description), self id \(MultipeerController.shared.myPeerID.description)")
+            let funcName = substrings.first
+            switch funcName {
+            case "isReadyConfirmation":
+                print("[iOS] LobbyViewController receivedData: isReadyConfirmation")
+                self.imgCheck.image = UIImage.init(systemName: "checkmark.square.fill")
+                self.isReady = true
+            case "isNotReadyConfirmation":
+                self.imgCheck.image = UIImage.init(systemName: "square.fill")
+                self.isReady = false
+            case "gameStart":
+                MultipeerController.shared.myCastle = Castle(named: String(substrings[1]))
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "showGameView", sender: nil)
                 }
+            default:
+                print ("[iOS] LobbyViewController receivedData: No func found with name \(text), from id \(peerID.description), self id \(MultipeerController.shared.myPeerID.description)")
+            }
         }
     }
 }

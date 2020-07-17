@@ -7,7 +7,7 @@
 //
 import MultipeerConnectivity
 
-class Player {
+public class Player {
     let id: MCPeerID
     let castle: Castle
     var isReady: Bool

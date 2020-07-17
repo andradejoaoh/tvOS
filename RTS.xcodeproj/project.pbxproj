@@ -49,6 +49,7 @@
 		6FA7F8DE24BCE63500992181 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSystem.swift */; };
 		6FA7F8E024BE166B00992181 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Player.swift */; };
 		6FA7F8E124BE166B00992181 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Player.swift */; };
+		8CB884AA24C2263A001BA24E /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		6FA7F8DC24BCE63500992181 /* CommandSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSystem.swift; sourceTree = "<group>"; };
 		6FA7F8DF24BE166B00992181 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameView+MultipeerHandler.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,6 +172,7 @@
 				6161410C24AE733000194165 /* AppDelegate.swift */,
 				611EA88124BE3406001C59ED /* GameScene.swift */,
 				611EA88324BE343C001C59ED /* GameView.swift */,
+				8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */,
 				6161410E24AE733000194165 /* TvLobbyViewController.swift */,
 				6FA7F8D224B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift */,
 				6161411024AE733000194165 /* Main.storyboard */,
@@ -356,6 +359,7 @@
 				6161412724AFB2F900194165 /* GameController.swift in Sources */,
 				6161412024AE75A800194165 /* Soldier.swift in Sources */,
 				6161410D24AE733000194165 /* AppDelegate.swift in Sources */,
+				8CB884AA24C2263A001BA24E /* GameView+MultipeerHandler.swift in Sources */,
 				6161412B24AFBD5B00194165 /* MultipeerHandler.swift in Sources */,
 				6161412324AE766E00194165 /* Castle.swift in Sources */,
 				611EA88224BE3406001C59ED /* GameScene.swift in Sources */,

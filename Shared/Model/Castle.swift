@@ -9,7 +9,7 @@
 
 import Foundation
 
- class Castle {
+public class Castle {
     //Player name.
     let name: String
     
@@ -41,5 +41,9 @@ import Foundation
     
     init() {
         name = Castle.getUniqueName()
+    }
+    
+    init(named: String) {
+        self.name = named
     }
 }

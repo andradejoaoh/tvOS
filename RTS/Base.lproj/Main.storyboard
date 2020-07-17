@@ -17,6 +17,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="ZeJ-cw-S69"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -25,7 +26,7 @@
         <!--Lobby View Controller-->
         <scene sceneID="NzX-FP-o6O">
             <objects>
-                <viewController id="nit-Ka-Vb3" customClass="LobbyViewController" customModule="RTS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="nit-Ka-Vb3" customClass="LobbyViewController" customModule="RTS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o5N-si-8Z7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -39,14 +40,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xtz-8V-DPP">
-                                <rect key="frame" x="184" y="428" width="46" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="buttonClick:" destination="nit-Ka-Vb3" eventType="touchUpInside" id="sGH-MV-Ea5"/>
-                                </connections>
-                            </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sv6-KP-Vq9">
                                 <rect key="frame" x="292" y="592" width="102" height="94"/>
                                 <constraints>
@@ -77,9 +70,9 @@
                     </view>
                     <connections>
                         <outlet property="btnReady" destination="tJP-kc-eIk" id="pj2-Yo-1sw"/>
-                        <outlet property="btnStarGame" destination="xtz-8V-DPP" id="vQf-F1-5TT"/>
                         <outlet property="imgCheck" destination="sv6-KP-Vq9" id="ufX-fn-Baj"/>
                         <outlet property="lblStatus" destination="l8T-gH-A1H" id="rsJ-9I-WxQ"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="showGameView" animates="NO" modalPresentationStyle="fullScreen" id="f4T-sn-zik"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="57b-mg-C2H" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

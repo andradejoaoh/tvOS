@@ -11,23 +11,23 @@ import SpriteKit
 
 class GameView: UIViewController {
     
-    let gameScene: GameScene = GameScene()
+//    let gameScene: GameScene = GameScene()
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("viewDidLoad")
+        print("[TV] GameView: viewDidLoad")
+        MultipeerController.shared.delegate = self
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
         if let view = self.view as! SKView? {
             guard let scene = SKScene(fileNamed: "GameScene") else { return }
             view.presentScene(scene)
             view.ignoresSiblingOrder = true
             view.translatesAutoresizingMaskIntoConstraints = false
-            print("Foi")
+            print("[TV] GameView: viewDidAppear: view is SKView")
         } else {
-            print("Nao foi")
+            print("[TV] GameView: viewDidAppear: view is not an SKView!")
         }
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-    
     }
 }

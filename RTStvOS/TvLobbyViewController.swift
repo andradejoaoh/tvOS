@@ -11,39 +11,37 @@ import MultipeerConnectivity
 
 class TvLobbyViewController: UIViewController {
     
-    @IBOutlet weak var btnPlay: UIButton!
-    @IBAction func btnPlay(_ sender: Any) {
-        startGame()
-    }
     
     @IBOutlet weak var txtPlayers: UITextView!
  
     @IBOutlet weak var lblStatus: UILabel!
     
-    var players = [Player]()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         lblStatus.text = "Connect an iPhone device..."
-        btnPlay.isHidden  = true
         MultipeerController.shared.delegate = self
     }
     
     func checkPlayersReady() {
-        if countPlayersReady() >= 1 {
-//            btnPlay.isHidden = false
+        if countPlayersReady() >= 2 {
             startGame()
         }
     }
     
     func startGame() {
-//        self.present(GameView(), animated: false, completion: nil)
+        for p in MultipeerController.shared.players {
+            if let data = "gameStart:\(p.castle.name)".data(using: .utf8) {
+                MultipeerController.shared.sendToPeers(data, reliably: true, peers: [p.id])
+            }
+        }
+        DispatchQueue.main.async {
             self.performSegue(withIdentifier: "showGameView", sender: nil)
+        }
     }
     
     func countPlayersReady() -> Int {
         var count = 0
-        for p in players {
+        for p in MultipeerController.shared.players {
             if p.isReady {
                 count += 1
             }

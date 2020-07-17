@@ -35,23 +35,13 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7J-js-cTi">
-                                <rect key="frame" x="864" y="837" width="192" height="86"/>
-                                <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="btnPlay:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="hgo-as-pVh"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="g5I-bP-ar0" secondAttribute="bottom" constant="207" id="4jF-lh-1Uy"/>
                             <constraint firstItem="KZJ-xa-iy4" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="33" id="9g7-9c-XPx"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="k7J-js-cTi" secondAttribute="bottom" constant="97" id="Dey-Ir-frv"/>
                             <constraint firstItem="wu6-TO-1qx" firstAttribute="trailing" secondItem="g5I-bP-ar0" secondAttribute="trailing" constant="16" id="LCl-i1-j6g"/>
                             <constraint firstItem="wu6-TO-1qx" firstAttribute="trailing" secondItem="KZJ-xa-iy4" secondAttribute="trailing" constant="16" id="MHi-d3-7KY"/>
-                            <constraint firstItem="k7J-js-cTi" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="774" id="Yg6-3H-ATd"/>
                             <constraint firstItem="g5I-bP-ar0" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="16" id="drF-WW-QJp"/>
                             <constraint firstItem="KZJ-xa-iy4" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="16" id="ipe-n3-ddj"/>
                             <constraint firstItem="g5I-bP-ar0" firstAttribute="top" secondItem="KZJ-xa-iy4" secondAttribute="bottom" constant="33" id="sC8-Xw-OmT"/>
@@ -59,7 +49,6 @@
                         <viewLayoutGuide key="safeArea" id="wu6-TO-1qx"/>
                     </view>
                     <connections>
-                        <outlet property="btnPlay" destination="k7J-js-cTi" id="Cwa-Xw-WvW"/>
                         <outlet property="lblStatus" destination="KZJ-xa-iy4" id="eI8-n3-G37"/>
                         <outlet property="txtPlayers" destination="g5I-bP-ar0" id="VCZ-rV-7ma"/>
                         <segue destination="M1J-RN-qUk" kind="show" identifier="showGameView" id="eYO-tZ-tWB"/>
@@ -86,7 +75,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zSX-D9-8H7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2296" y="69"/>
+            <point key="canvasLocation" x="2633" y="69"/>
         </scene>
     </scenes>
 </document>

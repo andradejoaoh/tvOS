@@ -6,42 +6,34 @@
 //  Copyright © 2020 João Henrique Andrade. All rights reserved.
 //
 
-
-import Foundation
 import MultipeerConnectivity
 
 extension TvLobbyViewController: MultipeerHandler {
     
     func peerReceivedInvitation(_ id: MCPeerID) -> Bool {
         DispatchQueue.main.async {
-            self.lblStatus.text = (id.displayName + " is trying to join.")
+            self.updateStatus(id.displayName + " is trying to join.")
         }
         return MultipeerController.shared.connectedPeers.count < 6
     }
     
     func peerJoined(_ id: MCPeerID) {
         DispatchQueue.main.async {
-            self.lblStatus.text = (id.displayName + " has connected.")
-            self.txtPlayers.text += (id.displayName + " has connected.\n")
+            self.updateStatus(id.displayName + " has connected.")
             let phonePlayer = Player (id: id, castle: Castle(), isReady: false)
-                self.players.append(phonePlayer)
-            
-            let data = "oioioio".data(using: .utf8)
-            print("sending data")
-            MultipeerController.shared.sendToPeers(data!, reliably: false, peers: [id])
+            MultipeerController.shared.players.append(phonePlayer)
         }
     }
     
     func peerLeft(_ id: MCPeerID) {
         DispatchQueue.main.async {
-            self.lblStatus.text = (id.displayName + " has disconnected.")
-            self.txtPlayers.text += (id.displayName + " has disconnected.\n")
-            let player = self.players.first { (player) -> Bool in
+            self.updateStatus(id.displayName + " has disconnected.")
+            let player = MultipeerController.shared.players.first { (player) -> Bool in
                 return player.id == id
             }
             let seconds = 5.0
             DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                self.players.removeAll { (removingPlayer) -> Bool in
+                MultipeerController.shared.players.removeAll { (removingPlayer) -> Bool in
                     player?.id == removingPlayer.id
                 }
             }
@@ -53,9 +45,9 @@ extension TvLobbyViewController: MultipeerHandler {
             guard let text = String(bytes: data, encoding: .utf8) else { return }
             var playerAux: Player?
             
-            for index in 0..<self.players.count {
-                if self.players[index].id == peerID {
-                    playerAux = self.players[index]
+            for index in 0..<MultipeerController.shared.players.count {
+                if MultipeerController.shared.players[index].id == peerID {
+                    playerAux = MultipeerController.shared.players[index]
                 }
             }
             guard let player = playerAux else { return }
@@ -63,24 +55,15 @@ extension TvLobbyViewController: MultipeerHandler {
             let substrings = text.split(separator: ":")
             let funcName = substrings.first
             switch funcName {
-            case "sendArmy":
-                let parameters = substrings[1].split(separator: "_")
-                guard let soldiers = Int(parameters[0]) else {return}
-                let fromCity = String(parameters[1])
-                let toCity = String (parameters[2])
-                self.sendArmy(soldiers: soldiers, fromCity: fromCity, toCity: toCity)
-            case "addArcher":
-                let parameters = substrings[1].split(separator: "_")
-                guard let archers = Int(parameters[0]) else {return}
-                let onCity = String(parameters[1])
-                self.addArcher(archers: archers, onCity: onCity)
             case "ready":
                 player.isReady = true
+                self.updateStatus("\(peerID.displayName) is READY")
                 guard let data = "isReadyConfirmation".data(using: .utf8) else {return}
                 self.checkPlayersReady()
                 MultipeerController.shared.sendToPeers(data, reliably: true, peers: [player.id])
             case "notReady":
                 player.isReady = false
+                self.updateStatus("\(peerID.displayName) is NOT READY")
                 guard let data = "isNotReadyConfirmation".data(using: .utf8) else {return}
                 MultipeerController.shared.sendToPeers(data, reliably: true, peers: [player.id])
 
@@ -92,21 +75,8 @@ extension TvLobbyViewController: MultipeerHandler {
         }
     }
     
-    func sendArmy(soldiers: Int, fromCity: String, toCity: String) {
-        print("\(soldiers),\(fromCity),\(toCity)")
+    func updateStatus(_ newMessage: String) {
+        self.lblStatus.text = newMessage
+        self.txtPlayers.text += newMessage + "\n"
     }
-    
-    func addArcher(archers: Int, onCity: String) {
-       getCastle(named: onCity).archer += archers
-    }
-    
-    func getCastle(named: String) -> Castle {
-        for p in players {
-            if p.castle.name == named {
-                return p.castle
-            }
-        }
-        fatalError("getCastle: Didn't find castle with name \(named)")
-    }
-    
 }
