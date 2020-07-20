@@ -60,10 +60,18 @@ public class MultipeerController: NSObject {
     private var browser: MCNearbyServiceBrowser
     public var host: MCPeerID?
     public var myCastle: Castle?
+    
+    public func stopBrowsing() {
+        self.browser.stopBrowsingForPeers()
+    }
     #elseif os(tvOS)
     public let myPeerID = MCPeerID(displayName: hostName)
     public var players = [Player]()
     private var advertiser: MCNearbyServiceAdvertiser
+    
+    public func stopAdvertising() {
+        self.advertiser.stopAdvertisingPeer()
+    }
     #endif
     
 
@@ -90,10 +98,12 @@ extension MultipeerController: MCSessionDelegate {
         switch state {
         case .connected:
             delegate?.peerJoined(peerID)
+        case .connecting:
+            delegate?.peerConnecting(peerID)
         case .notConnected:
             delegate?.peerLeft(peerID)
-        default:
-            print("Unknown status for \(peerID)")
+        @unknown default:
+            print("Unknown state \(state) for session \(session)")
         }
     }
 

@@ -29,6 +29,7 @@ class TvLobbyViewController: UIViewController {
     }
     
     func startGame() {
+        MultipeerController.shared.stopAdvertising()
         for p in MultipeerController.shared.players {
             if let data = "gameStart:\(p.castle.name)".data(using: .utf8) {
                 MultipeerController.shared.sendToPeers(data, reliably: true, peers: [p.id])
