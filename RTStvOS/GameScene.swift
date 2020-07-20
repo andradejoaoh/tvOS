@@ -19,6 +19,7 @@ class GameScene: SKScene {
     private var soldierWalkTextures: [SKTexture] = []
     
     override func sceneDidLoad() {
+        print("[TV] GameScene: sceneDidLoad")
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.scaleMode = .fill
         self.backgroundColor = SKColor.white

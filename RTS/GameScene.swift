@@ -41,6 +41,7 @@ class GameScene: SKScene {
     }
     
     override func sceneDidLoad() {
+        print("[iOS] GameScene: sceneDidLoad")
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.scaleMode = .fill
         self.backgroundColor = SKColor.white

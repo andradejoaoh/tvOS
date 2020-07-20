@@ -14,6 +14,8 @@ public enum ConnectionType {
     case peer
 }
 
+let hostName = "AppleTvHost"
+
 public class MultipeerController: NSObject {
 
     static let shared = MultipeerController ()
@@ -24,7 +26,7 @@ public class MultipeerController: NSObject {
         browser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
         browser.startBrowsingForPeers()
         connectionType = .peer
-        #else
+        #elseif os(tvOS)
         advertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
         advertiser.startAdvertisingPeer()
         connectionType = .host
@@ -33,7 +35,7 @@ public class MultipeerController: NSObject {
         session.delegate = self
         #if os(iOS)
         browser.delegate = self
-        #else
+        #elseif os(tvOS)
         advertiser.delegate = self
         #endif
     }
@@ -44,22 +46,26 @@ public class MultipeerController: NSObject {
         #else
         self.advertiser.stopAdvertisingPeer()
         #endif
-       
     }
+    
+    
 
     public let serviceType: String
     public let connectionType: ConnectionType
-
-    private let myPeerID = MCPeerID(displayName: UIDevice.current.name)
+    public var delegate: MultipeerHandler?
     public lazy var session: MCSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
-
+    
     #if os(iOS)
+    public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
     private var browser: MCNearbyServiceBrowser
-    #else
+    public var host: MCPeerID?
+    public var myCastle: Castle?
+    #elseif os(tvOS)
+    public let myPeerID = MCPeerID(displayName: hostName)
+    public var players = [Player]()
     private var advertiser: MCNearbyServiceAdvertiser
     #endif
-
-    public var delegate: MultipeerHandler?
+    
 
     public func sendToAllPeers(_ data: Data, reliably: Bool) {
         sendToPeers(data, reliably: reliably, peers: connectedPeers)
@@ -124,7 +130,7 @@ extension MultipeerController: MCNearbyServiceBrowserDelegate {
         delegate?.peerLost(peerID)
     }
 }
-#else
+#elseif os(tvOS)
 extension MultipeerController: MCNearbyServiceAdvertiserDelegate {
     public func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didReceiveInvitationFromPeer peerID: MCPeerID, withContext context: Data?, invitationHandler: @escaping (Bool, MCSession?) -> Void) {
         if delegate?.peerReceivedInvitation(peerID) ?? false {

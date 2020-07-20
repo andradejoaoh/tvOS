@@ -60,8 +60,6 @@ class GameController {
                 self.createSoldier()
             }
         }
-         let data = "addArcher:2_Siena".data(using: .utf8)
-               MultipeerController.shared.sendToAllPeers(data!, reliably: true)
     }
     
     func createFarmer(){
