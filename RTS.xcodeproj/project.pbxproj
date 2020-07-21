@@ -52,7 +52,10 @@
 		6FA7F8DE24BCE63500992181 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSystem.swift */; };
 		6FA7F8E024BE166B00992181 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Player.swift */; };
 		6FA7F8E124BE166B00992181 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Player.swift */; };
+		8C51659824C763A600239F82 /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */; };
 		8CB884AA24C2263A001BA24E /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */; };
+		8CE85E0C24C7712200D5AEB3 /* PopupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE85E0B24C7712200D5AEB3 /* PopupNode.swift */; };
+		8CE85E0D24C7825600D5AEB3 /* iOSLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613AAC6224B5081F00F15167 /* iOSLabelNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,7 +97,9 @@
 		6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		6FA7F8DC24BCE63500992181 /* CommandSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSystem.swift; sourceTree = "<group>"; };
 		6FA7F8DF24BE166B00992181 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameView+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameView+MultipeerHandler.swift"; sourceTree = "<group>"; };
+		8CE85E0B24C7712200D5AEB3 /* PopupNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				613AAC6224B5081F00F15167 /* iOSLabelNode.swift */,
+				8CE85E0B24C7712200D5AEB3 /* PopupNode.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,6 +169,7 @@
 			children = (
 				613AAC6124B5080800F15167 /* View */,
 				616140F624AE731500194165 /* GameView.swift */,
+				8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */,
 				61DD279824B3B0E4009C4425 /* GameScene.swift */,
 				61DD279A24B3B212009C4425 /* GameController.swift */,
 				616140F424AE731500194165 /* SceneDelegate.swift */,
@@ -353,12 +360,14 @@
 				61DD279924B3B0E4009C4425 /* GameScene.swift in Sources */,
 				616140F324AE731500194165 /* AppDelegate.swift in Sources */,
 				613AAC6824B63BEF00F15167 /* WarController.swift in Sources */,
+				8CE85E0C24C7712200D5AEB3 /* PopupNode.swift in Sources */,
 				613AAC6024B4F2D900F15167 /* Farmer.swift in Sources */,
 				6161412224AE766E00194165 /* Castle.swift in Sources */,
 				6161411F24AE75A800194165 /* Soldier.swift in Sources */,
 				613AAC6524B6365600F15167 /* Archer.swift in Sources */,
 				6FA7F8DD24BCE63500992181 /* CommandSystem.swift in Sources */,
 				6120ED9D24C0D49B00F560B5 /* CGExtension.swift in Sources */,
+				8C51659824C763A600239F82 /* GameView+MultipeerHandler.swift in Sources */,
 				616140F524AE731500194165 /* SceneDelegate.swift in Sources */,
 				613AAC6324B5081F00F15167 /* iOSLabelNode.swift in Sources */,
 				612600AB24AFCF3000D0FD67 /* GlobalProperties.swift in Sources */,
@@ -392,6 +401,7 @@
 				6161412324AE766E00194165 /* Castle.swift in Sources */,
 				611EA88224BE3406001C59ED /* GameScene.swift in Sources */,
 				612600AC24AFCF3000D0FD67 /* GlobalProperties.swift in Sources */,
+				8CE85E0D24C7825600D5AEB3 /* iOSLabelNode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

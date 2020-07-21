@@ -60,6 +60,8 @@ public class Castle {
         } else {
             self.hp = 0
             print("Castelo \(self.name) Morreu - WASTED!")
+            
+            
         }
     }
     
@@ -82,6 +84,13 @@ public class Castle {
             }
         } else {
             self.receiveDamage(damage: receivedDamage)
+        }
+        
+        if let player = MultipeerController.shared.players.first { (player) -> Bool in
+            player.castle.name == self.name
+            } {
+            guard let data = "updateCastle:\(self.hp)_\(self.archer)".data(using: .utf8) else { return }
+            MultipeerController.shared.sendToPeers(data, reliably: true, peers: [player.id])
         }
         
     }

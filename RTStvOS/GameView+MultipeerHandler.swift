@@ -58,7 +58,6 @@ extension GameView: MultipeerHandler {
             default:
                 print ("[TV] GameView receivedData: No func found with name \(text) ")
             }
-            
             MultipeerController.shared.sendToAllPeers(data, reliably: true)
         }
     }
