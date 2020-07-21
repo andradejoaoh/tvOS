@@ -56,6 +56,7 @@ extension LobbyViewController: MultipeerHandler {
                 self.imgCheck.image = UIImage.init(systemName: "square.fill")
                 self.isReady = false
             case "gameStart":
+                MultipeerController.shared.stopBrowsing()
                 MultipeerController.shared.myCastle = Castle(named: String(substrings[1]))
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showGameView", sender: nil)
