@@ -36,7 +36,6 @@ class GameView: UIViewController {
     
     func goToLobby() {
         DispatchQueue.main.async {
-            print("dismiss")
             self.dismiss(animated: false, completion: nil)
         }
     }

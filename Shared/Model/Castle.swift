@@ -16,6 +16,8 @@ public class Castle {
     //City names
     static var citynames: [String] = ["Rodes","Carcassone","Rothenburg","San Gimignano","Chester","Colmar","Ávila"]
     
+    static var chosenNames = [String]()
+    
     //Castle life.
     var hp: Int = 6000
     
@@ -35,7 +37,9 @@ public class Castle {
     
     static func getUniqueName() -> String {
         if citynames.count > 0 {
-            return citynames.remove(at: Int.random(in: 0...citynames.count - 1))
+            let chosenName = citynames.remove(at: Int.random(in: 0...citynames.count - 1))
+            chosenNames.append(chosenName)
+            return chosenName
         } else {
             fatalError("City not found")
         }
@@ -92,7 +96,17 @@ public class Castle {
             guard let data = "updateCastle:\(self.hp)_\(self.archer)".data(using: .utf8) else { return }
             MultipeerController.shared.sendToPeers(data, reliably: true, peers: [player.id])
         }
-        
+    }
+    
+    func returnNameToPool(castleName: String) {
+        Castle.chosenNames.removeAll { (name) -> Bool in
+            name == castleName
+        }
+        Castle.citynames.append(castleName)
+    }
+    
+    deinit {
+        returnNameToPool(castleName: self.name)
     }
 #endif
 }

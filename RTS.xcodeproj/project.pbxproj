@@ -50,7 +50,6 @@
 		6FA7F8D724B6C1A100992181 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */; };
 		6FA7F8DD24BCE63500992181 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSystem.swift */; };
 		6FA7F8DE24BCE63500992181 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSystem.swift */; };
-		6FA7F8E024BE166B00992181 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Player.swift */; };
 		6FA7F8E124BE166B00992181 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Player.swift */; };
 		8C51659824C763A600239F82 /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */; };
 		8CB884AA24C2263A001BA24E /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */; };
@@ -214,7 +213,6 @@
 				6161412824AFBD4A00194165 /* MultipeerController.swift */,
 				6FA7F8DC24BCE63500992181 /* CommandSystem.swift */,
 				6161412A24AFBD5B00194165 /* MultipeerHandler.swift */,
-				6FA7F8DF24BE166B00992181 /* Player.swift */,
 				612600AA24AFCF3000D0FD67 /* GlobalProperties.swift */,
 			);
 			path = Shared;
@@ -242,6 +240,7 @@
 		6161C21624C6383800DCC600 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				6FA7F8DF24BE166B00992181 /* Player.swift */,
 				6161C21724C6385400DCC600 /* Army.swift */,
 			);
 			path = Model;
@@ -351,7 +350,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6FA7F8E024BE166B00992181 /* Player.swift in Sources */,
 				6161412C24AFBF6300194165 /* MultipeerController.swift in Sources */,
 				6FA7F8D724B6C1A100992181 /* LobbyViewController.swift in Sources */,
 				61DD279B24B3B212009C4425 /* GameController.swift in Sources */,
