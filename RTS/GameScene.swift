@@ -8,6 +8,8 @@
 
 import Foundation
 import SpriteKit
+import MultipeerConnectivity
+
 
 class GameScene: SKScene {
     lazy var gameController: GameController = GameController(gameScene: self)
@@ -15,6 +17,9 @@ class GameScene: SKScene {
     private var soldierInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
     private var farmerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
     private var archerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
+    private var attackButton = SKSpriteNode(color: SKColor.red, size: CGSize(width: 50, height: 50))
+    private var popupNode = SKSpriteNode(color: SKColor.cyan, size: CGSize(width: 500, height: 800))
+    private var popupBackground = SKSpriteNode()
     private let backgroundNode = SKSpriteNode(imageNamed: "castle.pdf")
     
     private var soldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Soldiers")
@@ -25,7 +30,21 @@ class GameScene: SKScene {
     private var multiplierSelected: Int = 1
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
     private var multiplierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "1x")
-
+    
+    var castle = SKSpriteNode(color: SKColor.black, size: CGSize(width: 450, height: 80))
+    var castle2  =  SKSpriteNode(color: SKColor.red, size: CGSize(width: 450, height: 80))
+    var castle3  =  SKSpriteNode(color: SKColor.green, size: CGSize(width: 450, height: 80))
+    var castle4  =  SKSpriteNode(color: SKColor.gray, size: CGSize(width: 450, height: 80))
+    var castle5  =  SKSpriteNode(color: SKColor.yellow, size: CGSize(width: 450, height: 80))
+    var castle6  =  SKSpriteNode(color: SKColor.orange, size: CGSize(width: 450, height: 80))
+    
+    var minusTroop = SKSpriteNode(color: SKColor.white, size: CGSize(width: 50, height: 50))
+    var plusTroop = SKSpriteNode(color: SKColor.systemGray2, size: CGSize(width: 50, height: 50))
+    var soldiersAmountLabel = iOSLabelNode(fontSize: 30, fontColor: .white, text: "0")
+    var army: Int = 0
+    
+    var sendArmy =  SKSpriteNode(color: SKColor.purple, size: CGSize(width: 450, height: 80))
+    
     override func didMove(to view: SKView) {
         self.addChild(backgroundNode)
         
@@ -34,6 +53,8 @@ class GameScene: SKScene {
         self.addChild(farmersLabel)
         self.addChild(archersLabel)
         self.addChild(multiplierNode)
+        
+        self.addChild(attackButton)
         
         self.addChild(soldierInstance)
         self.addChild(farmerInstance)
@@ -75,8 +96,56 @@ class GameScene: SKScene {
         villagersLabel.position.y += self.frame.height/2 - 160
         archersLabel.position.y += self.frame.height/2 - 200
         
+        attackButton.position.y = screenSize.height/2 - 1250
+        attackButton.zPosition = 4
+        
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
+        popupSetup()
+    }
+    
+    func popupSetup()  {
+        attackButton.name = "attackButton"
+        popupNode.zPosition = 6
+        popupBackground.zPosition = 5
+        popupBackground.size = CGSize(width: self.frame.width, height: self.frame.height)
+        popupBackground.color = UIColor.black
+        popupBackground.alpha = 0.5
+        
+        castle.position.y = popupNode.size.height/2 - 80
+        castle2.position.y = popupNode.size.height/2 - 180
+        castle3.position.y =  popupNode.size.height/2 - 280
+        castle4.position.y = popupNode.size.height/2 - 380
+        castle5.position.y = popupNode.size.height/2 - 480
+        castle6.position.y = popupNode.size.height/2 - 580
+        
+        sendArmy.position.y = popupNode.size.height/2 - 700
+        
+        minusTroop.position.x = castle.size.width/5 - 30
+        plusTroop.position.x =  castle.size.height/2 + 140
+        minusTroop.zPosition = 10
+        plusTroop.zPosition = 10
+        minusTroop.name = "minusTroop"
+        plusTroop.name = "plusTroop"
+        soldiersAmountLabel.position.x = castle.size.width/5 + 30
+        soldiersAmountLabel.position.y = castle.size.height/2 - 50
+        
+        self.addChild(popupBackground)
+        self.addChild(popupNode)
+        popupNode.addChild(castle)
+        popupNode.addChild(castle2)
+        popupNode.addChild(castle3)
+        popupNode.addChild(castle4)
+        popupNode.addChild(castle5)
+        popupNode.addChild(castle6)
+        popupNode.addChild(sendArmy)
+        castle.addChild(minusTroop)
+        castle.addChild(plusTroop)
+        castle.addChild(soldiersAmountLabel)
+        
+        popupNode.isHidden =  true
+        popupBackground.isHidden = true
+        
     }
     
     func updateLabel(){
@@ -91,6 +160,29 @@ class GameScene: SKScene {
         } else {
             multiplierNode.color = UIColor.green
         }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+          guard let touch = touches.first else {
+                    return
+                }
+                let location = touch.location(in: self)
+        let frontTouchedNode = self.atPoint(location)
+        
+
+        if (frontTouchedNode.name == "attackButton")  {
+            popupBackground.isHidden = false
+            popupNode.isHidden = false
+            } else if popupBackground.contains(location) && !popupNode.contains(location) {
+                popupNode.isHidden = true
+               popupBackground.isHidden = true
+            }
+         if (frontTouchedNode.name == "plusTroop") {
+                army += 1
+            } else if (frontTouchedNode.name == "minusTroop" && army > 0) {
+                 army -= 1
+            }
+        soldiersAmountLabel.text = "\(army)"
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -120,6 +212,29 @@ class GameScene: SKScene {
                     multiplierSelected = 1
                 }
             }
+//            if attackButton.contains(location)  {
+//                    self.addChild(popupBackground)
+//                    self.addChild(popupNode)
+//                    popupNode.addChild(castle)
+//                    popupNode.addChild(castle2)
+//                    popupNode.addChild(castle3)
+//                    popupNode.addChild(castle4)
+//                    popupNode.addChild(castle5)
+//                    popupNode.addChild(castle6)
+//                    popupNode.addChild(sendArmy)
+//                    castle.addChild(minusTroop)
+//                    castle.addChild(plusTroop)
+//                    castle.addChild(soldiersAmountLabel)
+//                } else if popupBackground.contains(location) && !popupNode.contains(location) {
+//                    popupNode.removeFromParent()
+//                    popupBackground.removeFromParent()
+//                } else if minusTroop.contains(location) && army > 0 {
+//                    army -= 1
+//                } else if plusTroop.contains(location) {
+//                    army += 1
+//                }
+//            print(army)
+//            soldiersAmountLabel.text = "\(army)"
             updateLabel()
         }
     }

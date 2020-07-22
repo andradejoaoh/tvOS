@@ -54,6 +54,7 @@ public class MultipeerController: NSObject {
     public let connectionType: ConnectionType
     public var delegate: MultipeerHandler?
     public lazy var session: MCSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
+    public var players = [Player]()
     
     #if os(iOS)
     public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
@@ -62,7 +63,6 @@ public class MultipeerController: NSObject {
     public var myCastle: Castle?
     #elseif os(tvOS)
     public let myPeerID = MCPeerID(displayName: hostName)
-    public var players = [Player]()
     private var advertiser: MCNearbyServiceAdvertiser
     #endif
     

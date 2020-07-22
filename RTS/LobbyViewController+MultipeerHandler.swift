@@ -57,6 +57,7 @@ extension LobbyViewController: MultipeerHandler {
                 self.isReady = false
             case "gameStart":
                 MultipeerController.shared.myCastle = Castle(named: String(substrings[1]))
+                self.getCastles()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showGameView", sender: nil)
                 }
@@ -65,5 +66,13 @@ extension LobbyViewController: MultipeerHandler {
             }
         }
     }
+    
+    func getCastles() -> [String] {
+        for p in MultipeerController.shared.players {
+                return [p.castle.name]
+        }
+        fatalError("getCastles: Didn't find castles")
+    }
+
 }
 
