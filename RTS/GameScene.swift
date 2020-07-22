@@ -31,22 +31,19 @@ class GameScene: SKScene {
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
     private var multiplierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "1x")
     
-    var castle = SKSpriteNode(color: SKColor.black, size: CGSize(width: 450, height: 80))
-    var castle2  =  SKSpriteNode(color: SKColor.red, size: CGSize(width: 450, height: 80))
-    var castle3  =  SKSpriteNode(color: SKColor.green, size: CGSize(width: 450, height: 80))
-    var castle4  =  SKSpriteNode(color: SKColor.gray, size: CGSize(width: 450, height: 80))
-    var castle5  =  SKSpriteNode(color: SKColor.yellow, size: CGSize(width: 450, height: 80))
-    var castle6  =  SKSpriteNode(color: SKColor.orange, size: CGSize(width: 450, height: 80))
+    var castle1PopoverSection = SKSpriteNode(color: SKColor.black, size: CGSize(width: 450, height: 80))
     
     var minusTroop = SKSpriteNode(color: SKColor.white, size: CGSize(width: 50, height: 50))
     var plusTroop = SKSpriteNode(color: SKColor.systemGray2, size: CGSize(width: 50, height: 50))
     var soldiersAmountLabel = iOSLabelNode(fontSize: 30, fontColor: .white, text: "0")
     var army: Int = 0
     
-    var sendArmy =  SKSpriteNode(color: SKColor.purple, size: CGSize(width: 450, height: 80))
+    var sendArmyPopoverBtn =  SKSpriteNode(color: SKColor.purple, size: CGSize(width: 450, height: 80))
     
     private var testGameOver = SKSpriteNode(color: SKColor.purple, size: CGSize(width: 60, height: 60))
     private var testGameWon = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
+    
+    var attackPopup: AttackPopup?
 
     override func didMove(to view: SKView) {
         self.addChild(backgroundNode)
@@ -118,51 +115,40 @@ class GameScene: SKScene {
         
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
-        popupSetup()
+        
+        attackButton.name = "attackButton"
+//        popupSetup()
     }
     
     func popupSetup()  {
-        attackButton.name = "attackButton"
         popupNode.zPosition = 6
         popupBackground.zPosition = 5
         popupBackground.size = CGSize(width: self.frame.width, height: self.frame.height)
         popupBackground.color = UIColor.black
         popupBackground.alpha = 0.5
+        sendArmyPopoverBtn.position.y = popupNode.size.height/2 - 700
         
-        castle.position.y = popupNode.size.height/2 - 80
-        castle2.position.y = popupNode.size.height/2 - 180
-        castle3.position.y =  popupNode.size.height/2 - 280
-        castle4.position.y = popupNode.size.height/2 - 380
-        castle5.position.y = popupNode.size.height/2 - 480
-        castle6.position.y = popupNode.size.height/2 - 580
-        
-        sendArmy.position.y = popupNode.size.height/2 - 700
-        
-        minusTroop.position.x = castle.size.width/5 - 30
-        plusTroop.position.x =  castle.size.height/2 + 140
-        minusTroop.zPosition = 10
-        plusTroop.zPosition = 10
-        minusTroop.name = "minusTroop"
-        plusTroop.name = "plusTroop"
-        soldiersAmountLabel.position.x = castle.size.width/5 + 30
-        soldiersAmountLabel.position.y = castle.size.height/2 - 50
+        for c in MultipeerController.shared.otherCastles {
+            // section: minus/plus -> label -> section -> popup
+            castle1PopoverSection.position.y = popupNode.size.height/2 - 80
+            minusTroop.position.x = castle1PopoverSection.size.width/5 - 30
+            plusTroop.position.x =  castle1PopoverSection.size.height/2 + 140
+            minusTroop.name = "minusTroop"
+            plusTroop.name = "plusTroop"
+            soldiersAmountLabel.position.x = castle1PopoverSection.size.width/5 + 30
+            soldiersAmountLabel.position.y = castle1PopoverSection.size.height/2 - 50
+            castle1PopoverSection.addChild(minusTroop)
+            castle1PopoverSection.addChild(plusTroop)
+            castle1PopoverSection.addChild(soldiersAmountLabel)
+        }
         
         self.addChild(popupBackground)
         self.addChild(popupNode)
-        popupNode.addChild(castle)
-        popupNode.addChild(castle2)
-        popupNode.addChild(castle3)
-        popupNode.addChild(castle4)
-        popupNode.addChild(castle5)
-        popupNode.addChild(castle6)
-        popupNode.addChild(sendArmy)
-        castle.addChild(minusTroop)
-        castle.addChild(plusTroop)
-        castle.addChild(soldiersAmountLabel)
+        popupNode.addChild(castle1PopoverSection)
+        popupNode.addChild(sendArmyPopoverBtn)
         
         popupNode.isHidden =  true
         popupBackground.isHidden = true
-        
     }
     
     func updateLabel(){
@@ -188,11 +174,17 @@ class GameScene: SKScene {
         
 
         if (frontTouchedNode.name == "attackButton")  {
-            popupBackground.isHidden = false
-            popupNode.isHidden = false
+//            popupBackground.isHidden = false
+//            popupNode.isHidden = false
+            attackPopup = AttackPopup(castleNames: MultipeerController.shared.otherCastles.map({ (castle) -> String in
+                castle.name
+            }), scene: self)
+            self.addChild(attackPopup!)
             } else if popupBackground.contains(location) && !popupNode.contains(location) {
-                popupNode.isHidden = true
-               popupBackground.isHidden = true
+//                popupNode.isHidden = true
+//               popupBackground.isHidden = true
+            attackPopup?.removeFromParent()
+            attackPopup = nil
             }
          if (frontTouchedNode.name == "plusTroop") {
                 army += 1
@@ -239,7 +231,7 @@ class GameScene: SKScene {
         }
     }
     
-    func gameOver() {
+     func gameOver() {
         let popupNode = SKSpriteNode(color: SKColor.lightGray, size: CGSize(width: 400, height: 400))
         self.addChild(popupNode)
         popupNode.zPosition = 10
@@ -252,6 +244,8 @@ class GameScene: SKScene {
         let popupNode = SKSpriteNode(color: SKColor.darkGray, size: CGSize(width: 400, height: 400))
         self.addChild(popupNode)
         popupNode.zPosition = 10
+        let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "You Won")
+        popupNode.addChild(popupLabel)
         self.isUserInteractionEnabled = false
     }
     

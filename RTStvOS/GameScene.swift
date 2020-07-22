@@ -36,7 +36,9 @@ class GameScene: SKScene {
         self.addChild(backgroudNode)
         //        createMap(playerCount: MultipeerController.shared.players.count)
         createMap(castleList: MultipeerController.shared.players.map({ (player) -> Castle in
-            return player.castle
+            let newCastle = player.castle
+            MultipeerController.shared.castles.append(newCastle)
+            return newCastle
         }))
     }
     
@@ -163,11 +165,15 @@ class GameScene: SKScene {
                 MultipeerController.shared.sendToPeers(data, reliably: true, peers: [id])
                 let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
                 let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(playersAlive.first!) won!")
+                popupNode.addChild(popupLabel)
+                addChild(popupNode)
             } else  {
                 guard let data = "draw".data(using: .utf8) else { return }
                 MultipeerController.shared.sendToAllPeers(data, reliably: true)
                 let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
                 let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "It's a draw!")
+                popupNode.addChild(popupLabel)
+                addChild(popupNode)
             }
             guard let data = "goBackToLobby".data(using: .utf8) else { return }
             MultipeerController.shared.sendToAllPeers(data, reliably: true)

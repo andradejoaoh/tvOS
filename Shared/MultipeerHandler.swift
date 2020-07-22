@@ -9,7 +9,7 @@
 import Foundation
 import MultipeerConnectivity
 
-public protocol MultipeerHandler {
+public protocol MultipeerHandler: NSObject {
     func receivedData(_ data: Data, from peerID: MCPeerID)
     func receivedStream(_ stream: InputStream, from peerID: MCPeerID)
     func startedReceivingResource(_ resourceName: String, from peerID: MCPeerID)

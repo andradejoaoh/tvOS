@@ -27,6 +27,7 @@ class TvLobbyViewController: UIViewController {
             p.isReady = false
             p.castle = Castle()
         }
+        MultipeerController.shared.castles.removeAll()
         checkForConnectedPlayers()
     }
     
@@ -43,7 +44,7 @@ class TvLobbyViewController: UIViewController {
         }
     }
     
-    private func checkPlayersReady() {
+    func checkPlayersReady() {
         if countPlayersReady() >= 2 {
             if countPlayersReady() == MultipeerController.shared.players.count {
                 startGame()
@@ -54,7 +55,13 @@ class TvLobbyViewController: UIViewController {
     func startGame() {
         MultipeerController.shared.stopAdvertising()
         for p in MultipeerController.shared.players {
-            if let data = "gameStart:\(p.castle.name)".data(using: .utf8) {
+            var gameStartMsg = "gameStart:\(p.castle.name)"
+            for other in MultipeerController.shared.players {
+                if other !== p {
+                    gameStartMsg += "_\(other.castle.name)"
+                }
+            }
+            if let data = gameStartMsg.data(using: .utf8) {
                 MultipeerController.shared.sendToPeers(data, reliably: true, peers: [p.id])
             }
         }

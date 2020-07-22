@@ -50,16 +50,15 @@ public class MultipeerController: NSObject {
 
     public let serviceType: String
     public let connectionType: ConnectionType
-    public var delegate: MultipeerHandler?
+    public weak var delegate: MultipeerHandler?
     public lazy var session: MCSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
-    public var players = [Player]()
     
     #if os(iOS)
     public let myPeerID = MCPeerID(displayName: UIDevice.current.name)
     private var browser: MCNearbyServiceBrowser
     public var host: MCPeerID?
     public var myCastle: Castle?
-    
+    public var otherCastles = [Castle]()
     public func stopBrowsing() {
         self.browser.stopBrowsingForPeers()
     }
@@ -70,7 +69,8 @@ public class MultipeerController: NSObject {
     #elseif os(tvOS)
     public let myPeerID = MCPeerID(displayName: hostName)
     private var advertiser: MCNearbyServiceAdvertiser
-    
+    public var players = [Player]()
+    public var castles = [Castle]()
     public func stopAdvertising() {
         self.advertiser.stopAdvertisingPeer()
     }

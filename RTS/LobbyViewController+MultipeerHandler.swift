@@ -49,32 +49,23 @@ extension LobbyViewController: MultipeerHandler {
             let funcName = substrings.first
             switch funcName {
             case "isReadyConfirmation":
-                setReady(true)
+                self.setReady(true)
             case "isNotReadyConfirmation":
-                setReady(false)
-            case "gameStart":
+                self.setReady(false)
+            case "gameStart": //gameStart:myCastle_castle2_castle3...
+                let castleNames = substrings[1].split(separator: "_")
                 MultipeerController.shared.stopBrowsing()
-                MultipeerController.shared.myCastle = Castle(named: String(substrings[1]))
-                self.getCastles()
+                MultipeerController.shared.myCastle = Castle(named: String(castleNames[0]))
+                for i in 1..<castleNames.count {
+                    MultipeerController.shared.otherCastles.append(Castle(named: String(castleNames[i])))
+                }
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showGameView", sender: nil)
-                }
-            case "goBackToLobby":
-                DispatchQueue.main.async {
-                    self.dismiss(animated: false, completion: nil)
                 }
             default:
                 print ("[iOS] LobbyViewController receivedData: No func found with name \(text), from id \(peerID.description), self id \(MultipeerController.shared.myPeerID.description)")
             }
         }
     }
-    
-    func getCastles() -> [String] {
-        for p in MultipeerController.shared.players {
-                return [p.castle.name]
-        }
-        fatalError("getCastles: Didn't find castles")
-    }
-
 }
 

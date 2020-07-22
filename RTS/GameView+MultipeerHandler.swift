@@ -18,7 +18,6 @@ extension GameView : MultipeerHandler {
         
     }
     
-    
     func receivedData(_ data: Data, from peerID: MCPeerID) {
         DispatchQueue.main.async {
             
@@ -44,6 +43,11 @@ extension GameView : MultipeerHandler {
                 self.gameScene.gameWon()
             case "draw":
                 self.gameScene.draw()
+            case "goBackToLobby":
+                MultipeerController.shared.otherCastles.removeAll()
+                DispatchQueue.main.async {
+                    self.dismiss(animated: false, completion: nil)
+                }
             default:
                 print ("[iOS] GameView receivedData: No func found with name \(text), from id \(peerID.description), self id \(MultipeerController.shared.myPeerID.description)")
             }

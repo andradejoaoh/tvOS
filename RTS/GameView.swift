@@ -15,19 +15,17 @@ class GameView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view = SKView(frame: view.frame)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if let view = self.view as! SKView? {
             guard let scene = SKScene(fileNamed: "GameScene") else { return }
             view.presentScene(scene)
             view.ignoresSiblingOrder = true
             view.translatesAutoresizingMaskIntoConstraints = false
             gameScene = (scene as! GameScene)
+            MultipeerController.shared.delegate = self
         }
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        gameScene.gameWon()
     }
     
 }
