@@ -14,7 +14,6 @@ class GameScene: SKScene {
     weak var gameView: GameView?
     lazy var gameController: GameController = GameController(gameScene: self)
     private var backgroudNode: SKSpriteNode = SKSpriteNode(imageNamed: "overWorld")
-    private var soldier: SKSpriteNode = SKSpriteNode(imageNamed: "soldierWalk0")
     
     private var castleNodes: [SKSpriteNode] = []
     private var testCastles: [Castle] = [Castle(), Castle()]
@@ -65,11 +64,13 @@ class GameScene: SKScene {
     
     func setupNodes(){
         backgroudNode.size = CGSize(width: self.frame.width, height: self.frame.height)
-        soldier.size = CGSize(width: self.frame.width/10, height: self.frame.height/5)
-        soldier.zPosition = 2
+
     }
     
     func attackAnimation(army: Army ,from: Castle, to: Castle){
+        let soldier: SKSpriteNode = SKSpriteNode(imageNamed: "soldierWalk0")
+        soldier.size = CGSize(width: self.frame.width/12, height: self.frame.height/6)
+        soldier.zPosition = 2
         
         guard let fromNode = castleNodes.first(where: { (aCastleNode) -> Bool in
             aCastleNode.name == from.name
@@ -82,7 +83,7 @@ class GameScene: SKScene {
         let fromPosition: CGPoint = fromNode.position
         let toPosition: CGPoint = toNode.position
         
-        self.soldier.position = fromPosition
+        soldier.position = fromPosition
         var movePos: CGPoint = toPosition
         
         if fromPosition.x > toPosition.x {
@@ -105,15 +106,22 @@ class GameScene: SKScene {
         
         let soldierMove = SKAction.move(to: movePos, duration: animationTime)
         let soldierSprite = SKAction.animate(with: soldierWalkTextures, timePerFrame: 0.25)
-        let soldierWalk = SKAction.repeat(soldierSprite, count: Int(animationTime))
+        let soldierWalk = SKAction.repeat(soldierSprite, count: Int(ceil(animationTime)))
         
-        let soldierAnimation = SKAction.group([soldierMove, soldierWalk])
+        let soldierWalkAnimation = SKAction.group([soldierMove, soldierWalk])
         
-        self.addChild(self.soldier)
+        self.addChild(soldier)
         
-        self.soldier.run(soldierAnimation) {
-            self.soldier.removeFromParent()
+        soldier.run(soldierWalkAnimation) {
+            let soldierAttack = SKAction.animate(with: self.soldierAttackTextures, timePerFrame: 0.2)
+            let soldierAttackAnimation = SKAction.repeat(soldierAttack, count: 10)
+                
+            
+            soldier.run(soldierAttackAnimation){
+                soldier.removeFromParent()
+            }
             self.beginAttack(attackerArmy: army, defensorCastle: to)
+
         }
     }
     
@@ -137,7 +145,8 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        attackAnimation(army: Army(soldierCount: 20), from: MultipeerController.shared.players[0].castle, to: MultipeerController.shared.players[1].castle)
+//        attackAnimation(army: Army(soldierCount: 20), from: MultipeerController.shared.players[0].castle, to: MultipeerController.shared.players[1].castle)
+        attackAnimation(army: Army(soldierCount: 20), from: testCastles[0], to: testCastles[1])
     }
     
     func beginAttack(attackerArmy: Army, defensorCastle: Castle){
