@@ -11,24 +11,48 @@ import MultipeerConnectivity
 
 class TvLobbyViewController: UIViewController {
     
-    
     @IBOutlet weak var txtPlayers: UITextView!
  
     @IBOutlet weak var lblStatus: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        lblStatus.text = "Connect an iPhone device..."
-        MultipeerController.shared.delegate = self
     }
     
-    func checkPlayersReady() {
+    override func viewDidAppear(_ animated: Bool) {
+        lblStatus.text = "Connect an iPhone device..."
+        MultipeerController.shared.delegate = self
+        MultipeerController.shared.startAdvertising()
+        for p in MultipeerController.shared.players {
+            p.isReady = false
+            p.castle = Castle()
+        }
+        checkForConnectedPlayers()
+    }
+    
+    func updateStatus(_ newMessage: String) {
+        self.lblStatus.text = newMessage
+        self.txtPlayers.text += newMessage + "\n"
+    }
+    
+    func checkForConnectedPlayers() {
+        for player in MultipeerController.shared.players {
+            DispatchQueue.main.async {
+                self.updateStatus(player.id.displayName + " has connected.")
+            }
+        }
+    }
+    
+    private func checkPlayersReady() {
         if countPlayersReady() >= 2 {
-            startGame()
+            if countPlayersReady() == MultipeerController.shared.players.count {
+                startGame()
+            }
         }
     }
     
     func startGame() {
+        MultipeerController.shared.stopAdvertising()
         for p in MultipeerController.shared.players {
             if let data = "gameStart:\(p.castle.name)".data(using: .utf8) {
                 MultipeerController.shared.sendToPeers(data, reliably: true, peers: [p.id])
@@ -39,7 +63,7 @@ class TvLobbyViewController: UIViewController {
         }
     }
     
-    func countPlayersReady() -> Int {
+    private func countPlayersReady() -> Int {
         var count = 0
         for p in MultipeerController.shared.players {
             if p.isReady {

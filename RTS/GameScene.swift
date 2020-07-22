@@ -45,6 +45,9 @@ class GameScene: SKScene {
     
     var sendArmy =  SKSpriteNode(color: SKColor.purple, size: CGSize(width: 450, height: 80))
     
+    private var testGameOver = SKSpriteNode(color: SKColor.purple, size: CGSize(width: 60, height: 60))
+    private var testGameWon = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
+
     override func didMove(to view: SKView) {
         self.addChild(backgroundNode)
         
@@ -59,6 +62,10 @@ class GameScene: SKScene {
         self.addChild(soldierInstance)
         self.addChild(farmerInstance)
         self.addChild(archerInstance)
+        
+        // test
+        self.addChild(testGameWon)
+        self.addChild(testGameOver)
     }
     
     override func sceneDidLoad() {
@@ -90,6 +97,16 @@ class GameScene: SKScene {
         multiplierNode.addChild(multiplierLabel)
         multiplierNode.zPosition = 2
         multiplierLabel.zPosition = 3
+        
+        // test
+        testGameOver.position.x = 0
+        testGameOver.position.y += self.frame.height/2 - 140
+        testGameOver.zPosition = 2
+        
+        testGameWon.position.x = 0
+        testGameWon.position.y += self.frame.height/2 - 200
+        testGameWon.zPosition = 2
+        // test end
         
         soldiersLabel.position.y += self.frame.height/2 - 80
         farmersLabel.position.y += self.frame.height/2 - 120
@@ -212,30 +229,38 @@ class GameScene: SKScene {
                     multiplierSelected = 1
                 }
             }
-//            if attackButton.contains(location)  {
-//                    self.addChild(popupBackground)
-//                    self.addChild(popupNode)
-//                    popupNode.addChild(castle)
-//                    popupNode.addChild(castle2)
-//                    popupNode.addChild(castle3)
-//                    popupNode.addChild(castle4)
-//                    popupNode.addChild(castle5)
-//                    popupNode.addChild(castle6)
-//                    popupNode.addChild(sendArmy)
-//                    castle.addChild(minusTroop)
-//                    castle.addChild(plusTroop)
-//                    castle.addChild(soldiersAmountLabel)
-//                } else if popupBackground.contains(location) && !popupNode.contains(location) {
-//                    popupNode.removeFromParent()
-//                    popupBackground.removeFromParent()
-//                } else if minusTroop.contains(location) && army > 0 {
-//                    army -= 1
-//                } else if plusTroop.contains(location) {
-//                    army += 1
-//                }
-//            print(army)
-//            soldiersAmountLabel.text = "\(army)"
+            // test
+            else if testGameOver.contains(location) {
+                gameOver()
+            } else if testGameWon.contains(location) {
+                gameWon()
+            }
             updateLabel()
         }
+    }
+    
+    func gameOver() {
+        let popupNode = SKSpriteNode(color: SKColor.lightGray, size: CGSize(width: 400, height: 400))
+        self.addChild(popupNode)
+        popupNode.zPosition = 10
+        let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Game Over")
+        popupNode.addChild(popupLabel)
+        self.isUserInteractionEnabled = false
+    }
+    
+    func gameWon() {
+        let popupNode = SKSpriteNode(color: SKColor.darkGray, size: CGSize(width: 400, height: 400))
+        self.addChild(popupNode)
+        popupNode.zPosition = 10
+        self.isUserInteractionEnabled = false
+    }
+    
+    func draw() {
+        let popupNode = SKSpriteNode(color: SKColor.lightGray, size: CGSize(width: 400, height: 400))
+        self.addChild(popupNode)
+        popupNode.zPosition = 10
+        let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Draw")
+        popupNode.addChild(popupLabel)
+        self.isUserInteractionEnabled = false
     }
 }

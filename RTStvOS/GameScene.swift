@@ -11,12 +11,17 @@ import SpriteKit
 
 class GameScene: SKScene {
     
+    weak var gameView: GameView?
     lazy var gameController: GameController = GameController(gameScene: self)
     private var backgroudNode: SKSpriteNode = SKSpriteNode(imageNamed: "overWorld")
     private var soldier: SKSpriteNode = SKSpriteNode(imageNamed: "soldierWalk0")
-
+    
     private var castleNodes: [SKSpriteNode] = []
+    private var testCastles: [Castle] = [Castle(), Castle()]
+
     private var soldierWalkTextures: [SKTexture] = []
+    private var soldierAttackTextures: [SKTexture] = []
+    
     
     override func sceneDidLoad() {
         print("[TV] GameScene: sceneDidLoad")
@@ -24,29 +29,33 @@ class GameScene: SKScene {
         self.scaleMode = .fill
         self.backgroundColor = SKColor.white
         setupNodes()
-        createMap(playerCount: 6)
         buildSoldier()
     }
     
     override func didMove(to view: SKView) {
         self.addChild(backgroudNode)
+        //        createMap(playerCount: MultipeerController.shared.players.count)
+        createMap(castleList: MultipeerController.shared.players.map({ (player) -> Castle in
+            return player.castle
+        }))
     }
     
-    func createMap(playerCount: Int) {
+    func createMap(castleList: [Castle]) {
         var posX: CGFloat = 0
         
-        for player in 0..<playerCount {
+        for castle in 0..<castleList.count {
             let castleNode = SKSpriteNode(imageNamed: "castle")
-            let posY: CGFloat = self.frame.height/3 - CGFloat(player%2) * self.frame.height/2.2
-            let frameX = self.frame.width * 0.7 / CGFloat(playerCount-1) * CGFloat(player)
+            let posY: CGFloat = self.frame.height/3 - CGFloat(castle%2) * self.frame.height/2.2
+            let frameX = self.frame.width * 0.7 / CGFloat(castleList.count-1) * CGFloat(castle)
             
             posX = frameX - self.frame.width * 0.35
             
-
+            
             
             castleNode.size = CGSize(width: self.frame.width/6, height: self.frame.height/4)
             castleNode.position = CGPoint(x: posX, y: posY)
             castleNode.zPosition = 2
+            castleNode.name = castleList[castle].name
             self.addChild(castleNode)
             self.castleNodes.append(castleNode)
         }
@@ -58,17 +67,41 @@ class GameScene: SKScene {
         soldier.zPosition = 2
     }
     
-    func attackAnimation(from: SKSpriteNode, to: SKSpriteNode){
-        self.soldier.position = from.position
-        if from.position.x > to.position.x {
+    func attackAnimation(army: Army ,from: Castle, to: Castle){
+        
+        guard let fromNode = castleNodes.first(where: { (aCastleNode) -> Bool in
+            aCastleNode.name == from.name
+        }) else { return }
+        
+        guard let toNode = castleNodes.first(where: { (aCastleNode) -> Bool in
+            aCastleNode.name == to.name
+        }) else { return }
+        
+        let fromPosition: CGPoint = fromNode.position
+        let toPosition: CGPoint = toNode.position
+        
+        self.soldier.position = fromPosition
+        var movePos: CGPoint = toPosition
+        
+        if fromPosition.x > toPosition.x {
             soldier.xScale = -1
+            movePos.x += 60
         } else {
             soldier.xScale = 1
+            movePos.x -= 60
         }
-        let distance = CGPoint.CGPointDistance(from: from.position, to: to.position)
+        
+        if fromPosition.y > toPosition.y {
+            movePos.y += 60
+        } else {
+            movePos.y -= 60
+        }
+        
+        let distance = CGPoint.CGPointDistance(from: fromPosition, to: toPosition)
         let animationTime = Double(distance/70)
         
-        let soldierMove = SKAction.move(to: to.position, duration: animationTime)
+        
+        let soldierMove = SKAction.move(to: movePos, duration: animationTime)
         let soldierSprite = SKAction.animate(with: soldierWalkTextures, timePerFrame: 0.25)
         let soldierWalk = SKAction.repeat(soldierSprite, count: Int(animationTime))
         
@@ -77,23 +110,70 @@ class GameScene: SKScene {
         self.addChild(self.soldier)
         
         self.soldier.run(soldierAnimation) {
-            print("Rodou")
             self.soldier.removeFromParent()
+            self.beginAttack(attackerArmy: army, defensorCastle: to)
         }
     }
     
     
     func buildSoldier() {
         let soldierWalkAtlas = SKTextureAtlas(named: "soldierWalk")
-        let numImages = soldierWalkAtlas.textureNames.count
-        
-        for i in 0..<numImages {
+        let soldierAttackAtlas = SKTextureAtlas(named: "soldierAttack")
+
+        let numWalkImages = soldierWalkAtlas.textureNames.count
+        let numAttackImages = soldierAttackAtlas.textureNames.count
+
+        for i in 0..<numWalkImages {
             let soldierTextureName = "soldierWalk\(i)"
             soldierWalkTextures.append(soldierWalkAtlas.textureNamed(soldierTextureName))
+        }
+        
+        for i in 0..<numAttackImages {
+            let soldierTextureName = "soldierAttack\(i)"
+            soldierAttackTextures.append(soldierAttackAtlas.textureNamed(soldierTextureName))
         }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        attackAnimation(from: castleNodes[2], to: castleNodes[5])
+        attackAnimation(army: Army(soldierCount: 20), from: MultipeerController.shared.players[0].castle, to: MultipeerController.shared.players[1].castle)
+    }
+    
+    func beginAttack(attackerArmy: Army, defensorCastle: Castle){
+        _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
+            if attackerArmy.soldierCount > 0 && defensorCastle.hp > 0 {
+                defensorCastle.receiveAttack(damage: attackerArmy.attack())
+                attackerArmy.receiveDamage(damage: defensorCastle.defensorAttack())
+                self.checkIfSomeoneWon()
+                self.beginAttack(attackerArmy: attackerArmy, defensorCastle: defensorCastle)
+            } else { return }
+        }
+    }
+    
+    func checkIfSomeoneWon() {
+        var playersAlive = [Player]()
+        MultipeerController.shared.players.forEach { (player) in
+            if player.castle.hp > 0 {
+                playersAlive.append(player)
+            }
+        }
+        if playersAlive.count <= 1 {
+            if playersAlive.count == 1 {
+                let id = playersAlive.first!.id
+                guard let data = "youWon".data(using: .utf8) else { return }
+                MultipeerController.shared.sendToPeers(data, reliably: true, peers: [id])
+                let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
+                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(playersAlive.first!) won!")
+            } else  {
+                guard let data = "draw".data(using: .utf8) else { return }
+                MultipeerController.shared.sendToAllPeers(data, reliably: true)
+                let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
+                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "It's a draw!")
+            }
+            guard let data = "goBackToLobby".data(using: .utf8) else { return }
+            MultipeerController.shared.sendToAllPeers(data, reliably: true)
+            _ = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) {_ in 
+                self.gameView?.goToLobby()
+            }
+        }
     }
 }

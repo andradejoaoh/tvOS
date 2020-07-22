@@ -11,7 +11,7 @@ import UIKit
 
 class GameView: UIViewController {
     
-    let gameScene: GameScene = GameScene()
+    var gameScene: GameScene!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,12 +21,14 @@ class GameView: UIViewController {
             view.presentScene(scene)
             view.ignoresSiblingOrder = true
             view.translatesAutoresizingMaskIntoConstraints = false
+            gameScene = (scene as! GameScene)
         }
     }
     
     
     override func viewDidAppear(_ animated: Bool) {
-    
+        gameScene.gameWon()
     }
+    
 }
 

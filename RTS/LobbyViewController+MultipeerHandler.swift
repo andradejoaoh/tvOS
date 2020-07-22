@@ -49,17 +49,19 @@ extension LobbyViewController: MultipeerHandler {
             let funcName = substrings.first
             switch funcName {
             case "isReadyConfirmation":
-                print("[iOS] LobbyViewController receivedData: isReadyConfirmation")
-                self.imgCheck.image = UIImage.init(systemName: "checkmark.square.fill")
-                self.isReady = true
+                setReady(true)
             case "isNotReadyConfirmation":
-                self.imgCheck.image = UIImage.init(systemName: "square.fill")
-                self.isReady = false
+                setReady(false)
             case "gameStart":
+                MultipeerController.shared.stopBrowsing()
                 MultipeerController.shared.myCastle = Castle(named: String(substrings[1]))
                 self.getCastles()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showGameView", sender: nil)
+                }
+            case "goBackToLobby":
+                DispatchQueue.main.async {
+                    self.dismiss(animated: false, completion: nil)
                 }
             default:
                 print ("[iOS] LobbyViewController receivedData: No func found with name \(text), from id \(peerID.description), self id \(MultipeerController.shared.myPeerID.description)")

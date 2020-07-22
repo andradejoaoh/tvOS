@@ -20,7 +20,7 @@ extension TvLobbyViewController: MultipeerHandler {
     func peerJoined(_ id: MCPeerID) {
         DispatchQueue.main.async {
             self.updateStatus(id.displayName + " has connected.")
-            let phonePlayer = Player (id: id, castle: Castle(), isReady: false)
+            let phonePlayer = Player(id: id, castle: Castle(), isReady: false)
             MultipeerController.shared.players.append(phonePlayer)
         }
     }
@@ -31,11 +31,8 @@ extension TvLobbyViewController: MultipeerHandler {
             let player = MultipeerController.shared.players.first { (player) -> Bool in
                 return player.id == id
             }
-            let seconds = 5.0
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                MultipeerController.shared.players.removeAll { (removingPlayer) -> Bool in
-                    player?.id == removingPlayer.id
-                }
+            MultipeerController.shared.players.removeAll { (removingPlayer) -> Bool in
+                player === removingPlayer
             }
         }
     }
@@ -75,8 +72,4 @@ extension TvLobbyViewController: MultipeerHandler {
         }
     }
     
-    func updateStatus(_ newMessage: String) {
-        self.lblStatus.text = newMessage
-        self.txtPlayers.text += newMessage + "\n"
-    }
 }
