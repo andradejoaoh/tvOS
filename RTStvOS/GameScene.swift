@@ -33,10 +33,10 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.addChild(backgroudNode)
-        //        createMap(playerCount: MultipeerController.shared.players.count)
-        createMap(castleList: MultipeerController.shared.players.map({ (player) -> Castle in
-            return player.castle
-        }))
+        createMap(castleList: testCastles)
+//        createMap(castleList: MultipeerController.shared.players.map({ (player) -> Castle in
+//            return player.castle
+//        }))
     }
     
     func createMap(castleList: [Castle]) {
@@ -104,7 +104,7 @@ class GameScene: SKScene {
         
         let soldierMove = SKAction.move(to: movePos, duration: animationTime)
         let soldierSprite = SKAction.animate(with: soldierWalkTextures, timePerFrame: 0.25)
-        let soldierWalk = SKAction.repeat(soldierSprite, count: Int(animationTime))
+        let soldierWalk = SKAction.repeat(soldierSprite, count: Int(ceil(animationTime)))
         
         let soldierWalkAnimation = SKAction.group([soldierMove, soldierWalk])
         
@@ -112,11 +112,14 @@ class GameScene: SKScene {
         
         soldier.run(soldierWalkAnimation) {
             let soldierAttack = SKAction.animate(with: self.soldierAttackTextures, timePerFrame: 0.2)
-            let soldierAttackAnimation = SKAction.repeatForever(soldierAttack)
+            let soldierAttackAnimation = SKAction.repeat(soldierAttack, count: 10)
+                
             
-            soldier.run(soldierAttackAnimation)
+            soldier.run(soldierAttackAnimation){
+                soldier.removeFromParent()
+            }
             self.beginAttack(attackerArmy: army, defensorCastle: to)
-            soldier.removeFromParent()
+
         }
     }
     
@@ -140,7 +143,8 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        attackAnimation(army: Army(soldierCount: 20), from: MultipeerController.shared.players[0].castle, to: MultipeerController.shared.players[1].castle)
+//        attackAnimation(army: Army(soldierCount: 20), from: MultipeerController.shared.players[0].castle, to: MultipeerController.shared.players[1].castle)
+        attackAnimation(army: Army(soldierCount: 20), from: testCastles[0], to: testCastles[1])
     }
     
     func beginAttack(attackerArmy: Army, defensorCastle: Castle){
@@ -166,13 +170,13 @@ class GameScene: SKScene {
                 let id = playersAlive.first!.id
                 guard let data = "youWon".data(using: .utf8) else { return }
                 MultipeerController.shared.sendToPeers(data, reliably: true, peers: [id])
-                let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
-                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(playersAlive.first!) won!")
+//                let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
+//                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(playersAlive.first!) won!")
             } else  {
                 guard let data = "draw".data(using: .utf8) else { return }
                 MultipeerController.shared.sendToAllPeers(data, reliably: true)
-                let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
-                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "It's a draw!")
+//                let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
+//                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "It's a draw!")
             }
             guard let data = "goBackToLobby".data(using: .utf8) else { return }
             MultipeerController.shared.sendToAllPeers(data, reliably: true)

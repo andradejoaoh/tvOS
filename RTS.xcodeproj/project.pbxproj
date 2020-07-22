@@ -290,7 +290,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1150;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = "João Henrique Andrade";
 				TargetAttributes = {
 					616140EE24AE731500194165 = {
@@ -380,13 +380,10 @@
 				6161410F24AE733000194165 /* TvLobbyViewController.swift in Sources */,
 				6FA7F8D324B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift in Sources */,
 				6120ED9E24C0D4AF00F560B5 /* CGExtension.swift in Sources */,
-				6161410F24AE733000194165 /* TvLobbyViewController.swift in Sources */,
-				6FA7F8D324B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift in Sources */,
 				613AAC6924B63C6300F15167 /* WarController.swift in Sources */,
 				613AAC6A24B63C6300F15167 /* Farmer.swift in Sources */,
 				611EA88424BE343C001C59ED /* GameView.swift in Sources */,
 				613AAC6B24B63C6300F15167 /* Archer.swift in Sources */,
-				6161410F24AE733000194165 /* TvLobbyViewController.swift in Sources */,
 				6FA7F8E124BE166B00992181 /* Player.swift in Sources */,
 				6FA7F8DE24BCE63500992181 /* CommandSystem.swift in Sources */,
 				6161412924AFBD4A00194165 /* MultipeerController.swift in Sources */,
