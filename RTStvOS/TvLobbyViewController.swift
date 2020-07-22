@@ -43,7 +43,7 @@ class TvLobbyViewController: UIViewController {
         }
     }
     
-    private func checkPlayersReady() {
+    func checkPlayersReady() {
         if countPlayersReady() >= 2 {
             if countPlayersReady() == MultipeerController.shared.players.count {
                 startGame()
