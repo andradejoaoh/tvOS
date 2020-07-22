@@ -11,6 +11,7 @@ import SpriteKit
 
 class GameScene: SKScene {
     
+    weak var gameView: GameView?
     lazy var gameController: GameController = GameController(gameScene: self)
     private var backgroudNode: SKSpriteNode = SKSpriteNode(imageNamed: "overWorld")
     private var soldier: SKSpriteNode = SKSpriteNode(imageNamed: "soldierWalk0")
@@ -34,7 +35,9 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         self.addChild(backgroudNode)
         //        createMap(playerCount: MultipeerController.shared.players.count)
-        createMap(castleList: testCastles)
+        createMap(castleList: MultipeerController.shared.players.map({ (player) -> Castle in
+            return player.castle
+        }))
     }
     
     func createMap(castleList: [Castle]) {
@@ -132,7 +135,7 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        attackAnimation(army: Army(soldierCount: 20), from: testCastles[0], to: testCastles[1])
+        attackAnimation(army: Army(soldierCount: 20), from: MultipeerController.shared.players[0].castle, to: MultipeerController.shared.players[1].castle)
     }
     
     func beginAttack(attackerArmy: Army, defensorCastle: Castle){
@@ -140,8 +143,37 @@ class GameScene: SKScene {
             if attackerArmy.soldierCount > 0 && defensorCastle.hp > 0 {
                 defensorCastle.receiveAttack(damage: attackerArmy.attack())
                 attackerArmy.receiveDamage(damage: defensorCastle.defensorAttack())
+                self.checkIfSomeoneWon()
                 self.beginAttack(attackerArmy: attackerArmy, defensorCastle: defensorCastle)
             } else { return }
+        }
+    }
+    
+    func checkIfSomeoneWon() {
+        var playersAlive = [Player]()
+        MultipeerController.shared.players.forEach { (player) in
+            if player.castle.hp > 0 {
+                playersAlive.append(player)
+            }
+        }
+        if playersAlive.count <= 1 {
+            if playersAlive.count == 1 {
+                let id = playersAlive.first!.id
+                guard let data = "youWon".data(using: .utf8) else { return }
+                MultipeerController.shared.sendToPeers(data, reliably: true, peers: [id])
+                let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
+                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(playersAlive.first!) won!")
+            } else  {
+                guard let data = "draw".data(using: .utf8) else { return }
+                MultipeerController.shared.sendToAllPeers(data, reliably: true)
+                let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
+                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "It's a draw!")
+            }
+            guard let data = "goBackToLobby".data(using: .utf8) else { return }
+            MultipeerController.shared.sendToAllPeers(data, reliably: true)
+            _ = Timer.scheduledTimer(withTimeInterval: 5, repeats: false) {_ in 
+                self.gameView?.goToLobby()
+            }
         }
     }
 }

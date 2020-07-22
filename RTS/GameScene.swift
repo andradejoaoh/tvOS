@@ -12,9 +12,9 @@ import SpriteKit
 class GameScene: SKScene {
     lazy var gameController: GameController = GameController(gameScene: self)
     lazy var screenSize = self.frame
-    private var soldierInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
-    private var farmerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
-    private var archerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
+    private var soldierInstance = SKSpriteNode(color: SKColor.red, size: CGSize(width: 60, height: 60))
+    private var farmerInstance = SKSpriteNode(color: SKColor.blue, size: CGSize(width: 60, height: 60))
+    private var archerInstance = SKSpriteNode(color: SKColor.yellow, size: CGSize(width: 60, height: 60))
     private let backgroundNode = SKSpriteNode(imageNamed: "castle.pdf")
     
     private var soldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Soldiers")
@@ -25,6 +25,9 @@ class GameScene: SKScene {
     private var multiplierSelected: Int = 1
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
     private var multiplierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "1x")
+    
+    private var testGameOver = SKSpriteNode(color: SKColor.purple, size: CGSize(width: 60, height: 60))
+    private var testGameWon = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
 
     override func didMove(to view: SKView) {
         self.addChild(backgroundNode)
@@ -38,6 +41,10 @@ class GameScene: SKScene {
         self.addChild(soldierInstance)
         self.addChild(farmerInstance)
         self.addChild(archerInstance)
+        
+        // test
+        self.addChild(testGameWon)
+        self.addChild(testGameOver)
     }
     
     override func sceneDidLoad() {
@@ -69,6 +76,16 @@ class GameScene: SKScene {
         multiplierNode.addChild(multiplierLabel)
         multiplierNode.zPosition = 2
         multiplierLabel.zPosition = 3
+        
+        // test
+        testGameOver.position.x = 0
+        testGameOver.position.y += self.frame.height/2 - 140
+        testGameOver.zPosition = 2
+        
+        testGameWon.position.x = 0
+        testGameWon.position.y += self.frame.height/2 - 200
+        testGameWon.zPosition = 2
+        // test end
         
         soldiersLabel.position.y += self.frame.height/2 - 80
         farmersLabel.position.y += self.frame.height/2 - 120
@@ -120,7 +137,38 @@ class GameScene: SKScene {
                     multiplierSelected = 1
                 }
             }
+            // test
+            else if testGameOver.contains(location) {
+                gameOver()
+            } else if testGameWon.contains(location) {
+                gameWon()
+            }
             updateLabel()
         }
+    }
+    
+    func gameOver() {
+        let popupNode = SKSpriteNode(color: SKColor.lightGray, size: CGSize(width: 400, height: 400))
+        self.addChild(popupNode)
+        popupNode.zPosition = 10
+        let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Game Over")
+        popupNode.addChild(popupLabel)
+        self.isUserInteractionEnabled = false
+    }
+    
+    func gameWon() {
+        let popupNode = SKSpriteNode(color: SKColor.darkGray, size: CGSize(width: 400, height: 400))
+        self.addChild(popupNode)
+        popupNode.zPosition = 10
+        self.isUserInteractionEnabled = false
+    }
+    
+    func draw() {
+        let popupNode = SKSpriteNode(color: SKColor.lightGray, size: CGSize(width: 400, height: 400))
+        self.addChild(popupNode)
+        popupNode.zPosition = 10
+        let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Draw")
+        popupNode.addChild(popupLabel)
+        self.isUserInteractionEnabled = false
     }
 }

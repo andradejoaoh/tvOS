@@ -15,18 +15,10 @@ extension GameView: MultipeerHandler {
     }
     
     func peerLeft(_ id: MCPeerID) {
-        DispatchQueue.main.async {
-            print(id.displayName + " has disconnected.")
-            let player = MultipeerController.shared.players.first { (player) -> Bool in
-                return player.id == id
-            }
-            let seconds = 5.0
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                MultipeerController.shared.players.removeAll { (removingPlayer) -> Bool in
-                    player?.id == removingPlayer.id
-                }
-            }
+        let player = MultipeerController.shared.players.first { (player) -> Bool in
+            return player.id == id
         }
+        player?.removePlayer()
     }
     
     func receivedData(_ data: Data, from peerID: MCPeerID) {
@@ -58,7 +50,6 @@ extension GameView: MultipeerHandler {
             default:
                 print ("[TV] GameView receivedData: No func found with name \(text) ")
             }
-            
             MultipeerController.shared.sendToAllPeers(data, reliably: true)
         }
     }
