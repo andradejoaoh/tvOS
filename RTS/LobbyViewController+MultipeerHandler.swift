@@ -49,14 +49,16 @@ extension LobbyViewController: MultipeerHandler {
             let funcName = substrings.first
             switch funcName {
             case "isReadyConfirmation":
-                print("[iOS] LobbyViewController receivedData: isReadyConfirmation")
-                self.imgCheck.image = UIImage.init(systemName: "checkmark.square.fill")
-                self.isReady = true
+                self.setReady(true)
             case "isNotReadyConfirmation":
-                self.imgCheck.image = UIImage.init(systemName: "square.fill")
-                self.isReady = false
-            case "gameStart":
-                MultipeerController.shared.myCastle = Castle(named: String(substrings[1]))
+                self.setReady(false)
+            case "gameStart": //gameStart:myCastle_castle2_castle3...
+                let castleNames = substrings[1].split(separator: "_")
+                MultipeerController.shared.stopBrowsing()
+                MultipeerController.shared.myCastle = Castle(named: String(castleNames[0]))
+                for i in 1..<castleNames.count {
+                    MultipeerController.shared.otherCastles.append(Castle(named: String(castleNames[i])))
+                }
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "showGameView", sender: nil)
                 }

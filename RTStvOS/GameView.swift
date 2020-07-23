@@ -11,7 +11,8 @@ import SpriteKit
 
 class GameView: UIViewController {
     
-//    let gameScene: GameScene = GameScene()
+    var gameScene: GameScene!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print("[TV] GameView: viewDidLoad")
@@ -25,9 +26,17 @@ class GameView: UIViewController {
             view.presentScene(scene)
             view.ignoresSiblingOrder = true
             view.translatesAutoresizingMaskIntoConstraints = false
+            gameScene = (scene as! GameScene)
+            gameScene.gameView = self
             print("[TV] GameView: viewDidAppear: view is SKView")
         } else {
             print("[TV] GameView: viewDidAppear: view is not an SKView!")
+        }
+    }
+    
+    func goToLobby() {
+        DispatchQueue.main.async {
+            self.dismiss(animated: false, completion: nil)
         }
     }
 }

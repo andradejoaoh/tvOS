@@ -9,11 +9,12 @@
 import Foundation
 import MultipeerConnectivity
 
-public protocol MultipeerHandler {
+public protocol MultipeerHandler: NSObject {
     func receivedData(_ data: Data, from peerID: MCPeerID)
     func receivedStream(_ stream: InputStream, from peerID: MCPeerID)
     func startedReceivingResource(_ resourceName: String, from peerID: MCPeerID)
     func finishedReceivingResource(_ resourceName: String, from peerID: MCPeerID, answer: ResourceAnswer)
+    func peerConnecting(_ id: MCPeerID)
     func peerJoined(_ id: MCPeerID)
     func peerLeft(_ id: MCPeerID)
 
@@ -31,16 +32,11 @@ public enum ResourceAnswer {
 }
 
 public extension MultipeerHandler {
-    func receivedData(_ data: Data, from peerID: MCPeerID) {
-    }
-    func receivedStream(_ stream: InputStream, from peerID: MCPeerID) {
-    }
-    func startedReceivingResource(_ resourceName: String, from peerID: MCPeerID) {
-    }
-    func finishedReceivingResource(_ resourceName: String, from peerID: MCPeerID, answer: ResourceAnswer) {
-    }
-    func peerJoined(_ id: MCPeerID) {
-    }
-    func peerLeft(_ id: MCPeerID) {
-    }
+    func receivedData(_ data: Data, from peerID: MCPeerID) { }
+    func receivedStream(_ stream: InputStream, from peerID: MCPeerID) { }
+    func startedReceivingResource(_ resourceName: String, from peerID: MCPeerID) { }
+    func finishedReceivingResource(_ resourceName: String, from peerID: MCPeerID, answer: ResourceAnswer) { }
+    func peerJoined(_ id: MCPeerID) { }
+    func peerConnecting(_ id: MCPeerID) { }
+    func peerLeft(_ id: MCPeerID) { }
 }

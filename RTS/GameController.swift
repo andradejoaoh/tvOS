@@ -11,7 +11,10 @@ import MultipeerConnectivity
 
 class GameController {
     
-    var castle: Castle = Castle()
+    var castle: Castle = {
+        guard let castle = MultipeerController.shared.myCastle else { fatalError("myCastle not found") }
+        return castle
+    }()
     let gameScene: GameScene
     
     var createSoldierIsRunning: Bool = false
@@ -86,6 +89,7 @@ class GameController {
             self.castle.archer += 1
             self.createArcherIsRunning = false
             self.gameScene.updateLabel()
+            MultipeerController.shared.sendToHost(msg: "addArcher:\(1)_\(self.castle.name)")
             if self.archerInQueue == 0 {
                 timer.invalidate()
             } else if self.archerInQueue > 0 {

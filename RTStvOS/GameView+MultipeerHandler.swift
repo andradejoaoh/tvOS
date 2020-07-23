@@ -15,18 +15,10 @@ extension GameView: MultipeerHandler {
     }
     
     func peerLeft(_ id: MCPeerID) {
-        DispatchQueue.main.async {
-            print(id.displayName + " has disconnected.")
-            let player = MultipeerController.shared.players.first { (player) -> Bool in
-                return player.id == id
-            }
-            let seconds = 5.0
-            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-                MultipeerController.shared.players.removeAll { (removingPlayer) -> Bool in
-                    player?.id == removingPlayer.id
-                }
-            }
+        let player = MultipeerController.shared.players.first { (player) -> Bool in
+            return player.id == id
         }
+        player?.removePlayer()
     }
     
     func receivedData(_ data: Data, from peerID: MCPeerID) {
@@ -45,6 +37,7 @@ extension GameView: MultipeerHandler {
             let funcName = substrings.first
             switch funcName {
             case "sendArmy":
+                // "sendArmy:nSoldiers_fromCity_toCity"
                 let parameters = substrings[1].split(separator: "_")
                 guard let soldiers = Int(parameters[0]) else {return}
                 let fromCity = String(parameters[1])
@@ -58,13 +51,16 @@ extension GameView: MultipeerHandler {
             default:
                 print ("[TV] GameView receivedData: No func found with name \(text) ")
             }
-            
             MultipeerController.shared.sendToAllPeers(data, reliably: true)
         }
     }
     
     func sendArmy(soldiers: Int, fromCity: String, toCity: String) {
-        print("\(soldiers),\(fromCity),\(toCity)")
+        let fromCastle = getCastle(named: fromCity)
+        let toCastle = getCastle(named: toCity)
+        if toCastle.hp > 0 {
+            gameScene.attackAnimation(army: Army(soldierCount: soldiers), from: fromCastle, to: toCastle)
+        }
     }
     
     func addArcher(archers: Int, onCity: String) {
@@ -72,9 +68,9 @@ extension GameView: MultipeerHandler {
     }
     
     func getCastle(named: String) -> Castle {
-        for p in MultipeerController.shared.players {
-            if p.castle.name == named {
-                return p.castle
+        for c in MultipeerController.shared.castles {
+            if c.name == named {
+                return c
             }
         }
         fatalError("getCastle: Didn't find castle with name \(named)\n")

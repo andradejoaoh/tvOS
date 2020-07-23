@@ -24,11 +24,9 @@ public class MultipeerController: NSObject {
         self.serviceType = GlobalProperties.serviceType
         #if os(iOS)
         browser = MCNearbyServiceBrowser(peer: myPeerID, serviceType: serviceType)
-        browser.startBrowsingForPeers()
         connectionType = .peer
         #elseif os(tvOS)
         advertiser = MCNearbyServiceAdvertiser(peer: myPeerID, discoveryInfo: nil, serviceType: serviceType)
-        advertiser.startAdvertisingPeer()
         connectionType = .host
         #endif
         super.init()
@@ -52,7 +50,7 @@ public class MultipeerController: NSObject {
 
     public let serviceType: String
     public let connectionType: ConnectionType
-    public var delegate: MultipeerHandler?
+    public weak var delegate: MultipeerHandler?
     public lazy var session: MCSession = MCSession(peer: myPeerID, securityIdentity: nil, encryptionPreference: .required)
     
     #if os(iOS)
@@ -60,10 +58,36 @@ public class MultipeerController: NSObject {
     private var browser: MCNearbyServiceBrowser
     public var host: MCPeerID?
     public var myCastle: Castle?
+    public var otherCastles = [Castle]()
+    public func stopBrowsing() {
+        self.browser.stopBrowsingForPeers()
+    }
+    
+    public func startBrowsing() {
+        self.browser.startBrowsingForPeers()
+    }
+    
+    public func sendToHost(msg: String) {
+        guard let host = MultipeerController.shared.host else {
+            print("[iOS] sendToHost: host found nil")
+            return }
+        guard let data = msg.data(using: .utf8) else {
+            print("[iOS] sendToHost: failed to create data for utf8 format")
+            return }
+        MultipeerController.shared.sendToPeers(data, reliably: true, peers: [host])
+    }
     #elseif os(tvOS)
     public let myPeerID = MCPeerID(displayName: hostName)
-    public var players = [Player]()
     private var advertiser: MCNearbyServiceAdvertiser
+    public var players = [Player]()
+    public var castles = [Castle]()
+    public func stopAdvertising() {
+        self.advertiser.stopAdvertisingPeer()
+    }
+    
+    public func startAdvertising() {
+        self.advertiser.startAdvertisingPeer()
+    }
     #endif
     
 
@@ -90,10 +114,12 @@ extension MultipeerController: MCSessionDelegate {
         switch state {
         case .connected:
             delegate?.peerJoined(peerID)
+        case .connecting:
+            delegate?.peerConnecting(peerID)
         case .notConnected:
             delegate?.peerLeft(peerID)
-        default:
-            print("Unknown status for \(peerID)")
+        @unknown default:
+            print("Unknown state \(state) for session \(session)")
         }
     }
 
