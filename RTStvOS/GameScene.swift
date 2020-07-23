@@ -114,13 +114,14 @@ class GameScene: SKScene {
         
         soldier.run(soldierWalkAnimation) {
             let soldierAttack = SKAction.animate(with: self.soldierAttackTextures, timePerFrame: 0.2)
-            let soldierAttackAnimation = SKAction.repeat(soldierAttack, count: 10)
+            let soldierAttackAnimation = SKAction.repeatForever(soldierAttack)
                 
             
-            soldier.run(soldierAttackAnimation){
+            soldier.run(soldierAttackAnimation)
+            
+            self.beginAttack(attackerArmy: army, defensorCastle: to, completion: {
                 soldier.removeFromParent()
-            }
-            self.beginAttack(attackerArmy: army, defensorCastle: to)
+            })
 
         }
     }
@@ -144,19 +145,17 @@ class GameScene: SKScene {
         }
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        attackAnimation(army: Army(soldierCount: 20), from: MultipeerController.shared.players[0].castle, to: MultipeerController.shared.players[1].castle)
-        attackAnimation(army: Army(soldierCount: 20), from: testCastles[0], to: testCastles[1])
-    }
-    
-    func beginAttack(attackerArmy: Army, defensorCastle: Castle){
+    func beginAttack(attackerArmy: Army, defensorCastle: Castle, completion: @escaping () -> Void){
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
             if attackerArmy.soldierCount > 0 && defensorCastle.hp > 0 {
                 defensorCastle.receiveAttack(damage: attackerArmy.attack())
                 attackerArmy.receiveDamage(damage: defensorCastle.defensorAttack())
                 self.checkIfSomeoneWon()
-                self.beginAttack(attackerArmy: attackerArmy, defensorCastle: defensorCastle)
-            } else { return }
+                self.beginAttack(attackerArmy: attackerArmy, defensorCastle: defensorCastle, completion: completion)
+            } else {
+                completion()
+                return
+            }
         }
     }
     

@@ -72,11 +72,7 @@ public class Castle {
     func receiveAttack(damage: Int){
         let receivedDamage = damage + overReceivedDamage
         let deadArchers = (damage + overReceivedDamage)/Archer.hp
-        overReceivedDamage = damage % Archer.hp
-        archer -= deadArchers
-        
-        print("Castle HP: \(self.hp)")
-        print("Dano recebido: \(receivedDamage)")
+        overReceivedDamage = receivedDamage - deadArchers*Archer.hp
         
         if archer > 0 {
             if (archer > deadArchers){
@@ -90,9 +86,9 @@ public class Castle {
             self.receiveDamage(damage: receivedDamage)
         }
         
-        if let player = MultipeerController.shared.players.first { (player) -> Bool in
-            player.castle.name == self.name
-            } {
+        if let player = MultipeerController.shared.players.first(where: { (p) -> Bool in
+            p.castle.name == self.name
+        }) {
             guard let data = "updateCastle:\(self.hp)_\(self.archer)".data(using: .utf8) else { return }
             MultipeerController.shared.sendToPeers(data, reliably: true, peers: [player.id])
         }

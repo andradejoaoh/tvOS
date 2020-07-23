@@ -11,13 +11,15 @@ import SpriteKit
 class AttackPopup: SKSpriteNode {
     
     weak var gameScene: GameScene?
+    var backgroundNode: SKSpriteNode
     var sections: [AttackPopupSection] = []
     var sendAttackBtn: SKSpriteNode
     var spacing: CGFloat = 100
     
     init(castleNames: [String], scene: GameScene) {
-        sendAttackBtn = SKSpriteNode(color: .systemRed, size: CGSize(width: 200, height: 100))
         gameScene = scene
+        backgroundNode = SKSpriteNode(color: UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.3), size: scene.frame.size)
+        sendAttackBtn = SKSpriteNode(color: .systemRed, size: CGSize(width: 200, height: 100))
         super.init(texture: nil, color: .cyan, size: CGSize(width: 500, height: 800))
         for i in 0..<castleNames.count {
             let newSection = AttackPopupSection(castleName: castleNames[i], popupBounds: self.frame, posY: self.frame.maxY - spacing/2 - (CGFloat(i) * spacing))
@@ -26,6 +28,8 @@ class AttackPopup: SKSpriteNode {
         }
         self.zPosition = 100
         self.isUserInteractionEnabled = true
+        addChild(backgroundNode)
+        backgroundNode.zPosition = -1
         sendAttackBtn.position.y = self.frame.minY + spacing/2 + sendAttackBtn.frame.height/2
         addChild(sendAttackBtn)
     }
@@ -54,6 +58,10 @@ class AttackPopup: SKSpriteNode {
             let node = self.atPoint(location)
             if node === sendAttackBtn {
                 sendAttack()
+            }
+            else if node === backgroundNode {
+                gameScene?.attackPopup = nil
+                self.removeFromParent()
             }
         }
     }

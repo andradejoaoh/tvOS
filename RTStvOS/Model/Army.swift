@@ -20,8 +20,9 @@ class Army {
     }
     
     func receiveDamage(damage: Int){
-        let deadSoldiers = (damage + overReceivedDamage)/Soldier.hp
-        overReceivedDamage = damage % Soldier.hp
+        let totalDamage = damage + overReceivedDamage
+        let deadSoldiers = totalDamage/Soldier.hp
+        overReceivedDamage = totalDamage - deadSoldiers*Soldier.hp
         soldierCount -= deadSoldiers
     }
 }
