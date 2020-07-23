@@ -10,6 +10,7 @@ import SpriteKit
 
 class AttackPopupSection: SKNode {
     
+    unowned var parentPopup: AttackPopup
     var castleName: iOSLabelNode
     var minusButton: SKSpriteNode
     var plusButton: SKSpriteNode
@@ -21,7 +22,8 @@ class AttackPopupSection: SKNode {
     }
     var padding: CGFloat = 20
     
-    init(castleName: String, popupBounds: CGRect, posY: CGFloat) {
+    init(castleName: String, popupBounds: CGRect, posY: CGFloat, parent: AttackPopup) {
+        self.parentPopup = parent
         self.castleName = iOSLabelNode(fontSize: 32, fontColor: .black, text: castleName)
         minusButton = SKSpriteNode(color: .red, size: CGSize(width: 40, height: 40))
         plusButton = SKSpriteNode(color: .red, size: CGSize(width: 40, height: 40))
@@ -45,10 +47,16 @@ class AttackPopupSection: SKNode {
         if let location = touches.first?.location(in: self) {
             let node = self.atPoint(location)
             if node === minusButton {
-                value = value == 0 ? value : value - 1
+                if value != 0 {
+                    value -= 1
+                    parentPopup.myCastle.soldier += 1
+                }
             }
             else if node === plusButton {
-                value += 1
+                if parentPopup.myCastle.soldier > 0 {
+                    value += 1
+                    parentPopup.myCastle.soldier -= 1
+                }
             }
         }
     }

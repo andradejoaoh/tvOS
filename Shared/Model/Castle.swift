@@ -59,8 +59,8 @@ public class Castle {
     
 #if os(tvOS)
     private func receiveDamage(damage: Int){
-        if self.hp > (damage + overReceivedDamage) {
-            self.hp -= damage + overReceivedDamage
+        if self.hp > damage {
+            self.hp -= damage
         } else {
             self.hp = 0
             print("Castelo \(self.name) Morreu - WASTED!")
@@ -70,20 +70,17 @@ public class Castle {
     }
     
     func receiveAttack(damage: Int){
-        let receivedDamage = damage + overReceivedDamage
-        let deadArchers = (damage + overReceivedDamage)/Archer.hp
-        overReceivedDamage = receivedDamage - deadArchers*Archer.hp
+        let totalDamage = damage + overReceivedDamage
+        let deadArchers = totalDamage/Archer.hp
+        overReceivedDamage = totalDamage - deadArchers*Archer.hp
         
-        if archer > 0 {
-            if (archer > deadArchers){
-                archer -= deadArchers
-            } else {
-                let archerHP = archer * Archer.hp
-                archer = 0
-                self.receiveDamage(damage: receivedDamage - archerHP)
-            }
+        if archer > deadArchers {
+            archer -= deadArchers
         } else {
-            self.receiveDamage(damage: receivedDamage)
+            let archerHP = archer * Archer.hp
+            archer = 0
+            self.receiveDamage(damage: totalDamage - archerHP)
+            overReceivedDamage = 0
         }
         
         if let player = MultipeerController.shared.players.first(where: { (p) -> Bool in

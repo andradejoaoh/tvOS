@@ -66,6 +66,16 @@ public class MultipeerController: NSObject {
     public func startBrowsing() {
         self.browser.startBrowsingForPeers()
     }
+    
+    public func sendToHost(msg: String) {
+        guard let host = MultipeerController.shared.host else {
+            print("[iOS] sendToHost: host found nil")
+            return }
+        guard let data = msg.data(using: .utf8) else {
+            print("[iOS] sendToHost: failed to create data for utf8 format")
+            return }
+        MultipeerController.shared.sendToPeers(data, reliably: true, peers: [host])
+    }
     #elseif os(tvOS)
     public let myPeerID = MCPeerID(displayName: hostName)
     private var advertiser: MCNearbyServiceAdvertiser

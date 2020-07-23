@@ -17,13 +17,9 @@ class LobbyViewController: UIViewController {
     var isReady = false
     @IBAction func btnReady(_ sender: Any) {
         if !isReady {
-            guard let text = "ready".data(using: .utf8) else {return}
-            guard let host = MultipeerController.shared.host else {return}
-            MultipeerController.shared.sendToPeers(text, reliably: true, peers: [host])
+            MultipeerController.shared.sendToHost(msg: "ready")
         } else {
-            guard let text = "notReady".data(using: .utf8) else {return}
-            guard let host = MultipeerController.shared.host else {return}
-            MultipeerController.shared.sendToPeers(text, reliably: true, peers: [host])
+            MultipeerController.shared.sendToHost(msg: "notReady")
         }
     }
     

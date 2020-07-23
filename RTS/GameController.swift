@@ -89,6 +89,7 @@ class GameController {
             self.castle.archer += 1
             self.createArcherIsRunning = false
             self.gameScene.updateLabel()
+            MultipeerController.shared.sendToHost(msg: "addArcher:\(1)_\(self.castle.name)")
             if self.archerInQueue == 0 {
                 timer.invalidate()
             } else if self.archerInQueue > 0 {

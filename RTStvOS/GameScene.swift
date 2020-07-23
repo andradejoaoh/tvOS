@@ -33,12 +33,12 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.addChild(backgroudNode)
-        //        createMap(playerCount: MultipeerController.shared.players.count)
         createMap(castleList: MultipeerController.shared.players.map({ (player) -> Castle in
             let newCastle = player.castle
             MultipeerController.shared.castles.append(newCastle)
             return newCastle
         }))
+//        createMap(castleList: testCastles)
     }
     
     func createMap(castleList: [Castle]) {
@@ -125,7 +125,11 @@ class GameScene: SKScene {
 
         }
     }
-    
+
+
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        attackAnimation(army: Army(soldierCount: 5), from: testCastles[0], to: testCastles[1])
+//    }
     
     func buildSoldier() {
         let soldierWalkAtlas = SKTextureAtlas(named: "soldierWalk")

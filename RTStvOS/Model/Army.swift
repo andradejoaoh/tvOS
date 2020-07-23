@@ -21,8 +21,11 @@ class Army {
     
     func receiveDamage(damage: Int){
         let totalDamage = damage + overReceivedDamage
+        print("totalDamage: \(totalDamage)")
         let deadSoldiers = totalDamage/Soldier.hp
+        print("totalDamage: \(deadSoldiers)")
         overReceivedDamage = totalDamage - deadSoldiers*Soldier.hp
         soldierCount -= deadSoldiers
+        print("soldierCount: \(soldierCount)")
     }
 }
