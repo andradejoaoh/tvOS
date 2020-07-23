@@ -176,7 +176,7 @@ class GameScene: SKScene {
                 guard let data = "youWon".data(using: .utf8) else { return }
                 MultipeerController.shared.sendToPeers(data, reliably: true, peers: [id])
                 let popupNode = SKSpriteNode(color: .gray, size: CGSize(width: 400, height: 400))
-                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(playersAlive.first!) won!")
+                let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(playersAlive.first!.castle.name) won!")
                 popupNode.addChild(popupLabel)
                 addChild(popupNode)
             } else  {
