@@ -17,7 +17,7 @@ class GameScene: SKScene {
     private var soldierInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
     private var farmerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
     private var archerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
-    private var attackButton = SKSpriteNode(color: SKColor.red, size: CGSize(width: 50, height: 50))
+    private var attackButton = SKSpriteNode(texture: SKTexture(imageNamed: "attackButton"), size: CGSize(width: 80, height: 80))
     private var popupNode = SKSpriteNode(color: SKColor.cyan, size: CGSize(width: 500, height: 800))
     private var popupBackground = SKSpriteNode()
     private let backgroundNode = SKSpriteNode(imageNamed: "castle.pdf")
@@ -134,7 +134,7 @@ class GameScene: SKScene {
         popupBackground.alpha = 0.5
         sendArmyPopoverBtn.position.y = popupNode.size.height/2 - 700
         
-        for c in MultipeerController.shared.otherCastles {
+        for _ in MultipeerController.shared.otherCastles {
             // section: minus/plus -> label -> section -> popup
             castle1PopoverSection.position.y = popupNode.size.height/2 - 80
             minusTroop.position.x = castle1PopoverSection.size.width/5 - 30

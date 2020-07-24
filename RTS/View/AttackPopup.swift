@@ -16,20 +16,22 @@ class AttackPopup: SKSpriteNode {
     }
     var backgroundNode: SKSpriteNode
     var sections: [AttackPopupSection] = []
-    var sendAttackBtn: SKSpriteNode
-    var spacing: CGFloat = 100
+    var sendAttackBtn: SKSpriteNode = SKSpriteNode()
+    var spacing: CGFloat = 160
     
     init(castleNames: [String], scene: GameScene) {
         gameScene = scene
         backgroundNode = SKSpriteNode(color: UIColor(red: 0.2, green: 0.2, blue: 0.2, alpha: 0.3), size: scene.frame.size)
-        sendAttackBtn = SKSpriteNode(color: .systemRed, size: CGSize(width: 200, height: 100))
-        super.init(texture: nil, color: .cyan, size: CGSize(width: 500, height: 800))
+
+        super.init(texture: SKTexture(imageNamed: "popupBackground"), color: .clear, size: CGSize(width: 600, height: 900))
+        sendAttackBtn = SKSpriteNode(texture: SKTexture(imageNamed: "popupAttackButton"), size: CGSize(width: self.frame.width/1.3, height: 100))
+
         for i in 0..<castleNames.count {
-            let newSection = AttackPopupSection(castleName: castleNames[i], popupBounds: self.frame, posY: self.frame.maxY - spacing/2 - (CGFloat(i) * spacing), parent: self)
+            let newSection = AttackPopupSection(castleName: castleNames[i], popupBounds: self.frame, posY: self.frame.maxY - spacing/1.5 - (CGFloat(i) * spacing), parent: self)
             sections.append(newSection)
             addChild(newSection)
         }
-        self.zPosition = 100
+        self.zPosition = 10
         self.isUserInteractionEnabled = true
         addChild(backgroundNode)
         backgroundNode.zPosition = -1

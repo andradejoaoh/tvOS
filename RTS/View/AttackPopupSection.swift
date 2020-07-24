@@ -25,8 +25,8 @@ class AttackPopupSection: SKNode {
     init(castleName: String, popupBounds: CGRect, posY: CGFloat, parent: AttackPopup) {
         self.parentPopup = parent
         self.castleName = iOSLabelNode(fontSize: 32, fontColor: .black, text: castleName)
-        minusButton = SKSpriteNode(color: .red, size: CGSize(width: 40, height: 40))
-        plusButton = SKSpriteNode(color: .red, size: CGSize(width: 40, height: 40))
+        minusButton = SKSpriteNode(texture: SKTexture(imageNamed: "popupLeftArrow"), size: CGSize(width: 40, height: 40))
+        plusButton = SKSpriteNode(texture: SKTexture(imageNamed: "popupRightArrow"), size: CGSize(width: 40, height: 40))
         valueLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(value)")
         super.init()
         self.castleName.position.y -= self.castleName.frame.height/2
@@ -35,6 +35,8 @@ class AttackPopupSection: SKNode {
         valueLabel.position.x = plusButton.position.x - plusButton.size.width/2 - padding - valueLabel.frame.width/2
         minusButton.position.x = valueLabel.position.x - valueLabel.frame.width/2 - padding - minusButton.size.width/2
         valueLabel.position.y = -valueLabel.frame.height/2
+        plusButton.zPosition = 11
+        minusButton.zPosition = 11
         self.position.y = posY
         addChild(self.castleName)
         addChild(minusButton)
