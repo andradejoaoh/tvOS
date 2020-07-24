@@ -37,10 +37,12 @@ class LobbyViewController: UIViewController {
     
     func setReady(_ state: Bool) {
         if state {
-            self.imgCheck.image = UIImage.init(systemName: "checkmark.square.fill")
+            self.imgCheck.image = UIImage.init(systemName: "checkmark")
+            self.imgCheck.tintColor = .systemGreen
             self.isReady = true
         } else {
-            self.imgCheck.image = UIImage.init(systemName: "square.fill")
+            self.imgCheck.image = UIImage.init(systemName: "xmark")
+            self.imgCheck.tintColor = #colorLiteral(red: 0.6073825955, green: 0.1656134129, blue: 0.09109530598, alpha: 1)
             self.isReady = false
         }
     }
