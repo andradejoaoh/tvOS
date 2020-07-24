@@ -15,7 +15,7 @@ class GameScene: SKScene {
     lazy var gameController: GameController = GameController(gameScene: self)
     lazy var screenSize = self.frame
     private var soldierInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
-    private var farmerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
+    private var farmerInstance = SKSpriteNode(color: SKColor.red, size: CGSize(width: 60, height: 60))
     private var archerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
     private var attackButton = SKSpriteNode(texture: SKTexture(imageNamed: "attackButton"), size: CGSize(width: 80, height: 80))
     private var popupNode = SKSpriteNode(color: SKColor.cyan, size: CGSize(width: 500, height: 800))
@@ -200,6 +200,7 @@ class GameScene: SKScene {
         soldiersAmountLabel.text = "\(army)"
     }
     
+    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
@@ -207,7 +208,7 @@ class GameScene: SKScene {
             if (soldierInstance.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.soldierInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (farmerInstance.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            } else if (farmerInstance.contains(location) && gameController.castle.villager >= multiplierSelected && gameController.farmerInQueue < 4 && gameController.castle.farmer <= 5) {
                 gameController.farmerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
             } else if (archerInstance.contains(location) && gameController.castle.villager >= multiplierSelected) {

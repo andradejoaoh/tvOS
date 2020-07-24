@@ -10,7 +10,7 @@
         <!--Game View-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="GameView" customModule="RTS" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GameView" customModule="Medieval_Wars" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -26,7 +26,7 @@
         <!--Lobby View Controller-->
         <scene sceneID="NzX-FP-o6O">
             <objects>
-                <viewController modalPresentationStyle="fullScreen" id="nit-Ka-Vb3" customClass="LobbyViewController" customModule="RTS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="nit-Ka-Vb3" customClass="LobbyViewController" customModule="Medieval_Wars" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o5N-si-8Z7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
