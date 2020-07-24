@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "616140EE24AE731500194165"
-               BuildableName = "RTS.app"
+               BuildableName = "Medieval Wars.app"
                BlueprintName = "RTS"
                ReferencedContainer = "container:RTS.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "616140EE24AE731500194165"
-            BuildableName = "RTS.app"
+            BuildableName = "Medieval Wars.app"
             BlueprintName = "RTS"
             ReferencedContainer = "container:RTS.xcodeproj">
          </BuildableReference>
@@ -63,7 +63,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "616140EE24AE731500194165"
-            BuildableName = "RTS.app"
+            BuildableName = "Medieval Wars.app"
             BlueprintName = "RTS"
             ReferencedContainer = "container:RTS.xcodeproj">
          </BuildableReference>
