@@ -12,8 +12,13 @@ import MultipeerConnectivity
 class GameController {
     
     var castle: Castle = {
+        #if OFFLINE
+        return Castle()
+        #else
         guard let castle = MultipeerController.shared.myCastle else { fatalError("myCastle not found") }
         return castle
+        #endif
+        
     }()
     let gameScene: GameScene
     

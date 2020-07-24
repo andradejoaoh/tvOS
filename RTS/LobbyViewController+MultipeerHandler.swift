@@ -59,9 +59,7 @@ extension LobbyViewController: MultipeerHandler {
                 for i in 1..<castleNames.count {
                     MultipeerController.shared.otherCastles.append(Castle(named: String(castleNames[i])))
                 }
-                DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "showGameView", sender: nil)
-                }
+                self.showGameView()
             default:
                 print ("[iOS] LobbyViewController receivedData: No func found with name \(text), from id \(peerID.description), self id \(MultipeerController.shared.myPeerID.description)")
             }
