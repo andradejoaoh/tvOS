@@ -26,6 +26,9 @@ class LobbyViewController: UIViewController {
     @IBOutlet weak var imgCheck: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if OFFLINE
+            showGameView()
+        #endif
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -42,6 +45,12 @@ class LobbyViewController: UIViewController {
         } else {
             self.imgCheck.image = UIImage.init(systemName: "square.fill")
             self.isReady = false
+        }
+    }
+    
+    func showGameView() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "showGameView", sender: nil)
         }
     }
 }

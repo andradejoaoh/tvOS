@@ -15,8 +15,9 @@ class GameScene: SKScene {
     lazy var gameController: GameController = GameController(gameScene: self)
     lazy var screenSize = self.frame
     private var soldierInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
-    private var farmerInstance = SKSpriteNode(color: SKColor.red, size: CGSize(width: 60, height: 60))
+    private var farmerInstance = SKSpriteNode(color: SKColor.red, size: CGSize(width: 30, height: 30))
     private var archerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
+    private var fieldSpace = SKSpriteNode(color: SKColor.blue, size: CGSize(width: 60, height: 60))
     private var attackButton = SKSpriteNode(texture: SKTexture(imageNamed: "attackButton"), size: CGSize(width: 80, height: 80))
     private var popupNode = SKSpriteNode(color: SKColor.cyan, size: CGSize(width: 500, height: 800))
     private var popupBackground = SKSpriteNode()
@@ -55,6 +56,7 @@ class GameScene: SKScene {
         self.addChild(farmersLabel)
         self.addChild(archersLabel)
         self.addChild(multiplierNode)
+        self.addChild(fieldSpace)
         
         self.addChild(attackButton)
         
@@ -78,10 +80,15 @@ class GameScene: SKScene {
     }
     
     func setupNodes(){
-        farmerInstance.size = CGSize(width: screenSize.width/2.3 , height: screenSize.height/1.6)
-        farmerInstance.position.x = CGFloat(-screenSize.width/3.5)
-        farmerInstance.position.y = CGFloat(-screenSize.height/4)
+        farmerInstance.size = CGSize(width: screenSize.width/3 , height: screenSize.height/5)
+        farmerInstance.position.x = CGFloat(-screenSize.width/5)
+        farmerInstance.position.y = CGFloat(-screenSize.height/3)
         farmerInstance.zPosition = 2
+        
+        fieldSpace.size = CGSize(width: screenSize.width/3 , height: screenSize.height/5)
+        fieldSpace.position.x = CGFloat(-screenSize.width/3.5)
+        fieldSpace.position.y = CGFloat(-screenSize.height/8)
+        fieldSpace.zPosition = 2
         
         soldierInstance.size = CGSize(width: screenSize.width/2.5 , height: screenSize.height/5)
         soldierInstance.position.x = CGFloat(screenSize.width/3.5)
@@ -208,7 +215,7 @@ class GameScene: SKScene {
             if (soldierInstance.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.soldierInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (farmerInstance.contains(location) && gameController.castle.villager >= multiplierSelected && gameController.farmerInQueue < 4 && gameController.castle.farmer <= 5) {
+            } else if (farmerInstance.contains(location) && gameController.castle.villager >= multiplierSelected && gameController.farmerInQueue + gameController.castle.farmer < 5) {
                 gameController.farmerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
             } else if (archerInstance.contains(location) && gameController.castle.villager >= multiplierSelected) {

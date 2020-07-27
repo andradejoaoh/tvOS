@@ -12,8 +12,13 @@ import MultipeerConnectivity
 class GameController {
     
     var castle: Castle = {
+        #if OFFLINE
+        return Castle()
+        #else
         guard let castle = MultipeerController.shared.myCastle else { fatalError("myCastle not found") }
         return castle
+        #endif
+        
     }()
     let gameScene: GameScene
     
@@ -51,9 +56,9 @@ class GameController {
     
     func createSoldier(){
         self.createSoldierIsRunning = true
-        soldierInQueue -= 1
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Soldier.timeToMake), repeats: false) { (timer) in
+            self.soldierInQueue -= 1
             self.castle.soldier += 1
             self.createSoldierIsRunning = false
             self.gameScene.updateLabel()
@@ -67,9 +72,9 @@ class GameController {
     
     func createFarmer(){
         self.createFarmerIsRunning = true
-        farmerInQueue -= 1
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Farmer.timeToMake), repeats: false) { (timer) in
+            self.farmerInQueue -= 1
             self.castle.farmer += 1
             self.createFarmerIsRunning = false
             self.gameScene.updateLabel()
@@ -83,9 +88,9 @@ class GameController {
     
     func createArcher(){
         self.createArcherIsRunning = true
-        archerInQueue -= 1
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Archer.timeToMake), repeats: false) { (timer) in
+            self.archerInQueue -= 1
             self.castle.archer += 1
             self.createArcherIsRunning = false
             self.gameScene.updateLabel()
