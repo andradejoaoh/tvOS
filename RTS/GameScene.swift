@@ -93,16 +93,16 @@ class GameScene: SKScene {
     
     // Field Spaces
     private lazy var fieldSpace1: FieldSpace = {
-        FieldSpace(emptyField: self.field1Sprite, farm: self.farm1Sprite, trigger: self.farm1Trigger, true)
+        FieldSpace(emptyField: self.field1Sprite, farm: self.farm1Sprite, trigger: self.farm1Trigger, true, castle: self.gameController.castle, gameScene: self)
     }()
     private lazy var fieldSpace2: FieldSpace = {
-        FieldSpace(emptyField: self.field2Sprite, farm: self.farm2Sprite, trigger: self.farm2Trigger, false)
+        FieldSpace(emptyField: self.field2Sprite, farm: self.farm2Sprite, trigger: self.farm2Trigger, false, castle: self.gameController.castle, gameScene: self)
     }()
     private lazy var fieldSpace3: FieldSpace = {
-        FieldSpace(emptyField: self.field3Sprite, farm: self.farm3Sprite, trigger: self.farm3Trigger, false)
+        FieldSpace(emptyField: self.field3Sprite, farm: self.farm3Sprite, trigger: self.farm3Trigger, false, castle: self.gameController.castle, gameScene: self)
     }()
     private lazy var fieldSpace4: FieldSpace = {
-        FieldSpace(emptyField: self.field4Sprite, farm: self.farm4Sprite, trigger: self.farm4Trigger, false)
+        FieldSpace(emptyField: self.field4Sprite, farm: self.farm4Sprite, trigger: self.farm4Trigger, false, castle: self.gameController.castle, gameScene: self)
     }()
     
     // HUD (labels and buttons)
@@ -248,8 +248,17 @@ class GameScene: SKScene {
             if (barracksTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.soldierInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (farm1Trigger.contains(location) && gameController.castle.villager >= multiplierSelected && gameController.farmerInQueue + gameController.castle.farmer < 5) {
-                gameController.farmerInQueue += multiplierSelected
+            } else if (farm1Trigger.contains(location) && fieldSpace1.isFarmEnabled && gameController.castle.villager >= multiplierSelected && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers < 5) {
+                fieldSpace1.farmerInQueue += multiplierSelected
+                gameController.castle.villager -= multiplierSelected
+            } else if (farm2Trigger.contains(location) && fieldSpace2.isFarmEnabled && gameController.castle.villager >= multiplierSelected && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers < 5) {
+                fieldSpace2.farmerInQueue += multiplierSelected
+                gameController.castle.villager -= multiplierSelected
+            } else if (farm3Trigger.contains(location) && fieldSpace3.isFarmEnabled && gameController.castle.villager >= multiplierSelected && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers < 5) {
+                fieldSpace3.farmerInQueue += multiplierSelected
+                gameController.castle.villager -= multiplierSelected
+            } else if (farm4Trigger.contains(location) && fieldSpace4.isFarmEnabled && gameController.castle.villager >= multiplierSelected && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers < 5) {
+                fieldSpace4.farmerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
             } else if (castleTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.archerInQueue += multiplierSelected

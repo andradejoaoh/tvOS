@@ -20,22 +20,13 @@ class GameController {
         #endif
         
     }()
-    let gameScene: GameScene
+    unowned var gameScene: GameScene
     
     private var createSoldierIsRunning: Bool = false
     var soldierInQueue: Int = 0 {
         didSet{
             if createSoldierIsRunning == false{
                 createSoldier()
-            }
-        }
-    }
-    
-    private var createFarmerIsRunning: Bool = false
-    var farmerInQueue: Int = 0 {
-        didSet{
-            if createFarmerIsRunning == false {
-                createFarmer()
             }
         }
     }
@@ -66,22 +57,6 @@ class GameController {
                 timer.invalidate()
             } else if self.soldierInQueue > 0 {
                 self.createSoldier()
-            }
-        }
-    }
-    
-    func createFarmer(){
-        self.createFarmerIsRunning = true
-        
-        let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Farmer.timeToMake), repeats: false) { (timer) in
-            self.farmerInQueue -= 1
-            self.castle.farmer += 1
-            self.createFarmerIsRunning = false
-            self.gameScene.updateLabel()
-            if self.farmerInQueue == 0 {
-                timer.invalidate()
-            } else if self.farmerInQueue > 0 {
-                self.createFarmer()
             }
         }
     }
