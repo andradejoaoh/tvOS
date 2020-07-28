@@ -51,6 +51,7 @@
 		6FA7F8DD24BCE63500992181 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSystem.swift */; };
 		6FA7F8DE24BCE63500992181 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSystem.swift */; };
 		6FA7F8E124BE166B00992181 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Player.swift */; };
+		8C21727A24D0C91A0027131B /* FieldSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C21727924D0C91A0027131B /* FieldSpace.swift */; };
 		8C51659824C763A600239F82 /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */; };
 		8C57E44424C8BA64009AF2E2 /* AttackPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C57E44324C8BA64009AF2E2 /* AttackPopup.swift */; };
 		8C57E44624C8BAB5009AF2E2 /* AttackPopupSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C57E44524C8BAB5009AF2E2 /* AttackPopupSection.swift */; };
@@ -98,6 +99,7 @@
 		6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		6FA7F8DC24BCE63500992181 /* CommandSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSystem.swift; sourceTree = "<group>"; };
 		6FA7F8DF24BE166B00992181 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8C21727924D0C91A0027131B /* FieldSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSpace.swift; sourceTree = "<group>"; };
 		8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameView+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		8C57E44324C8BA64009AF2E2 /* AttackPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackPopup.swift; sourceTree = "<group>"; };
 		8C57E44524C8BAB5009AF2E2 /* AttackPopupSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackPopupSection.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				8CE85E0B24C7712200D5AEB3 /* PopupNode.swift */,
 				8C57E44324C8BA64009AF2E2 /* AttackPopup.swift */,
 				8C57E44524C8BAB5009AF2E2 /* AttackPopupSection.swift */,
+				8C21727924D0C91A0027131B /* FieldSpace.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				6161411F24AE75A800194165 /* Soldier.swift in Sources */,
 				613AAC6524B6365600F15167 /* Archer.swift in Sources */,
 				6FA7F8DD24BCE63500992181 /* CommandSystem.swift in Sources */,
+				8C21727A24D0C91A0027131B /* FieldSpace.swift in Sources */,
 				6120ED9D24C0D49B00F560B5 /* CGExtension.swift in Sources */,
 				8C51659824C763A600239F82 /* GameView+MultipeerHandler.swift in Sources */,
 				616140F524AE731500194165 /* SceneDelegate.swift in Sources */,
@@ -501,7 +505,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG OFFLINE";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG OFFLINE SHOW_TRIGGERS";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;

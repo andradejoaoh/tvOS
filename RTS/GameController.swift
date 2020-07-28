@@ -22,7 +22,7 @@ class GameController {
     }()
     let gameScene: GameScene
     
-    var createSoldierIsRunning: Bool = false
+    private var createSoldierIsRunning: Bool = false
     var soldierInQueue: Int = 0 {
         didSet{
             if createSoldierIsRunning == false{
@@ -31,7 +31,7 @@ class GameController {
         }
     }
     
-    var createFarmerIsRunning: Bool = false
+    private var createFarmerIsRunning: Bool = false
     var farmerInQueue: Int = 0 {
         didSet{
             if createFarmerIsRunning == false {
@@ -40,7 +40,7 @@ class GameController {
         }
     }
     
-    var createArcherIsRunning: Bool = false
+    private var createArcherIsRunning: Bool = false
     var archerInQueue: Int = 0 {
         didSet{
             if createArcherIsRunning == false{
