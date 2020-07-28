@@ -160,9 +160,6 @@ class GameScene: SKScene {
                 castle.name
             }), scene: self)
             self.addChild(attackPopup!)
-        } else if popupBackground.contains(location) && !popupNode.contains(location) {
-            attackPopup?.removeFromParent()
-            attackPopup = nil
         }
     }
     

@@ -36,6 +36,7 @@ class AttackPopup: SKSpriteNode {
         addChild(backgroundNode)
         backgroundNode.zPosition = -1
         sendAttackBtn.position.y = self.frame.minY + spacing/2 + sendAttackBtn.frame.height/2
+        sendAttackBtn.zPosition = 12
         addChild(sendAttackBtn)
     }
     
@@ -62,16 +63,15 @@ class AttackPopup: SKSpriteNode {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let location = touches.first?.location(in: self) {
             let node = self.atPoint(location)
+            if self.frame.contains(location) {
             if node === sendAttackBtn {
                 sendAttack()
                 dismissPopup()
+            }
             }
             else if node === backgroundNode {
                 dismissPopup()
             }
         }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
 }
