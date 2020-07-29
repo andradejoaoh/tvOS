@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="16097" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder.AppleTV.Storyboard" version="3.0" toolsVersion="16097.2" targetRuntime="AppleTV" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="appleTV" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
@@ -10,7 +10,7 @@
         <!--Tv Lobby View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="TvLobbyViewController" customModule="RTStvOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TvLobbyViewController" customModule="Medieval_Wars" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -19,38 +19,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZJ-xa-iy4">
-                                <rect key="frame" x="106" y="93" width="1708" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="uMi-qd-ddx"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tvLobbyBackground" translatesAutoresizingMaskIntoConstraints="NO" id="yL7-0U-dI4">
+                                <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KZJ-xa-iy4">
+                                <rect key="frame" x="110" y="100" width="1700" height="91"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5I-bP-ar0">
-                                <rect key="frame" x="106" y="166" width="1708" height="647"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="g5I-bP-ar0" secondAttribute="bottom" constant="207" id="4jF-lh-1Uy"/>
-                            <constraint firstItem="KZJ-xa-iy4" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="33" id="9g7-9c-XPx"/>
-                            <constraint firstItem="wu6-TO-1qx" firstAttribute="trailing" secondItem="g5I-bP-ar0" secondAttribute="trailing" constant="16" id="LCl-i1-j6g"/>
-                            <constraint firstItem="wu6-TO-1qx" firstAttribute="trailing" secondItem="KZJ-xa-iy4" secondAttribute="trailing" constant="16" id="MHi-d3-7KY"/>
-                            <constraint firstItem="g5I-bP-ar0" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="16" id="drF-WW-QJp"/>
-                            <constraint firstItem="KZJ-xa-iy4" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="16" id="ipe-n3-ddj"/>
-                            <constraint firstItem="g5I-bP-ar0" firstAttribute="top" secondItem="KZJ-xa-iy4" secondAttribute="bottom" constant="33" id="sC8-Xw-OmT"/>
+                            <constraint firstAttribute="trailing" secondItem="yL7-0U-dI4" secondAttribute="trailing" id="1Fo-57-DT8"/>
+                            <constraint firstItem="KZJ-xa-iy4" firstAttribute="leading" secondItem="wu6-TO-1qx" secondAttribute="leading" constant="20" id="EGx-Rs-gwm"/>
+                            <constraint firstItem="yL7-0U-dI4" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="by1-F7-hhm"/>
+                            <constraint firstItem="KZJ-xa-iy4" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="40" id="dT7-5i-LTE"/>
+                            <constraint firstItem="wu6-TO-1qx" firstAttribute="trailing" secondItem="KZJ-xa-iy4" secondAttribute="trailing" constant="20" id="e3Q-fb-TPK"/>
+                            <constraint firstAttribute="bottom" secondItem="yL7-0U-dI4" secondAttribute="bottom" id="w2u-AA-I3F"/>
+                            <constraint firstItem="yL7-0U-dI4" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="zw3-DI-Fey"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wu6-TO-1qx"/>
                     </view>
                     <connections>
                         <outlet property="lblStatus" destination="KZJ-xa-iy4" id="eI8-n3-G37"/>
-                        <outlet property="txtPlayers" destination="g5I-bP-ar0" id="VCZ-rV-7ma"/>
                         <segue destination="M1J-RN-qUk" kind="show" identifier="showGameView" id="eYO-tZ-tWB"/>
                     </connections>
                 </viewController>
@@ -61,7 +53,7 @@
         <!--Game View-->
         <scene sceneID="JNa-ZG-jz6">
             <objects>
-                <viewController storyboardIdentifier="GameView" id="M1J-RN-qUk" customClass="GameView" customModule="RTStvOS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameView" id="M1J-RN-qUk" customClass="GameView" customModule="Medieval_Wars" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="chX-9H-Pdj"/>
                         <viewControllerLayoutGuide type="bottom" id="t17-bH-urb"/>
@@ -78,4 +70,7 @@
             <point key="canvasLocation" x="2633" y="69"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="tvLobbyBackground" width="1920" height="1080"/>
+    </resources>
 </document>

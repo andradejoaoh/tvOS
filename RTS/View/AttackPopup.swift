@@ -25,7 +25,7 @@ class AttackPopup: SKSpriteNode {
 
         super.init(texture: SKTexture(imageNamed: "popupBackground"), color: .clear, size: CGSize(width: 600, height: 900))
         sendAttackBtn = SKSpriteNode(texture: SKTexture(imageNamed: "popupAttackButton"), size: CGSize(width: self.frame.width/1.3, height: 100))
-
+        sendAttackBtn.zPosition = 11
         for i in 0..<castleNames.count {
             let newSection = AttackPopupSection(castleName: castleNames[i], popupBounds: self.frame, posY: self.frame.maxY - spacing/1.5 - (CGFloat(i) * spacing), parent: self)
             sections.append(newSection)

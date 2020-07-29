@@ -10,7 +10,7 @@
         <!--Game View-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="GameView" customModule="Medieval_Wars" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GameView" customModule="Medieval_Wars" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -31,26 +31,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobbyBackground" translatesAutoresizingMaskIntoConstraints="NO" id="WiN-fQ-xpM">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8T-gH-A1H">
                                 <rect key="frame" x="20" y="104" width="374" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="SCm-Dp-yHx"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sv6-KP-Vq9">
-                                <rect key="frame" x="292" y="592" width="102" height="94"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="xmark" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="sv6-KP-Vq9">
+                                <rect key="frame" x="308" y="759.5" width="86" height="81.5"/>
+                                <color key="tintColor" red="0.55950337650000004" green="0.20113673809999999" blue="0.12938109040000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="102" id="0c3-cU-hMq"/>
-                                    <constraint firstAttribute="height" constant="96.5" id="pNw-2o-mq0"/>
+                                    <constraint firstAttribute="width" secondItem="sv6-KP-Vq9" secondAttribute="height" multiplier="1:1" id="mGC-jE-q2Y"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tJP-kc-eIk">
-                                <rect key="frame" x="67" y="613" width="93" height="53"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                <state key="normal" title="Ready"/>
+                                <rect key="frame" x="20" y="739.5" width="290" height="122.5"/>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Wide" family="Marker Felt" pointSize="30"/>
+                                <state key="normal" title="Ready" backgroundImage="popupAttackButton">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="btnReady:" destination="nit-Ka-Vb3" eventType="touchUpInside" id="GmB-d6-cdP"/>
                                 </connections>
@@ -58,13 +63,20 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="WiN-fQ-xpM" secondAttribute="bottom" id="0b2-72-jvk"/>
                             <constraint firstItem="C4i-AE-Ag2" firstAttribute="trailing" secondItem="sv6-KP-Vq9" secondAttribute="trailing" constant="20" id="1ij-JO-Zgs"/>
                             <constraint firstItem="C4i-AE-Ag2" firstAttribute="trailing" secondItem="l8T-gH-A1H" secondAttribute="trailing" constant="20" id="5QU-5S-32D"/>
-                            <constraint firstItem="tJP-kc-eIk" firstAttribute="leading" secondItem="C4i-AE-Ag2" secondAttribute="leading" constant="67" id="NKI-S8-cxe"/>
+                            <constraint firstItem="WiN-fQ-xpM" firstAttribute="trailing" secondItem="C4i-AE-Ag2" secondAttribute="trailing" id="8xO-w7-jGf"/>
+                            <constraint firstItem="tJP-kc-eIk" firstAttribute="bottom" secondItem="C4i-AE-Ag2" secondAttribute="bottom" id="91s-3N-LAW"/>
+                            <constraint firstItem="tJP-kc-eIk" firstAttribute="height" secondItem="C4i-AE-Ag2" secondAttribute="height" multiplier="0.15" id="CUC-ZN-Jg0"/>
+                            <constraint firstItem="sv6-KP-Vq9" firstAttribute="height" secondItem="tJP-kc-eIk" secondAttribute="height" multiplier="0.7" id="GcW-Fh-9YQ"/>
+                            <constraint firstItem="WiN-fQ-xpM" firstAttribute="top" secondItem="o5N-si-8Z7" secondAttribute="top" id="Hhd-SA-Ouv"/>
                             <constraint firstItem="l8T-gH-A1H" firstAttribute="leading" secondItem="C4i-AE-Ag2" secondAttribute="leading" constant="20" id="TLM-3R-qY5"/>
-                            <constraint firstItem="C4i-AE-Ag2" firstAttribute="bottom" secondItem="sv6-KP-Vq9" secondAttribute="bottom" constant="174.5" id="cGI-oV-w5T"/>
+                            <constraint firstItem="tJP-kc-eIk" firstAttribute="width" secondItem="C4i-AE-Ag2" secondAttribute="width" multiplier="0.7" id="YeA-0Z-N5V"/>
+                            <constraint firstItem="sv6-KP-Vq9" firstAttribute="centerY" secondItem="tJP-kc-eIk" secondAttribute="centerY" id="jiB-o2-KOu"/>
+                            <constraint firstItem="WiN-fQ-xpM" firstAttribute="leading" secondItem="C4i-AE-Ag2" secondAttribute="leading" id="s4s-M9-MEX"/>
+                            <constraint firstItem="tJP-kc-eIk" firstAttribute="leading" secondItem="C4i-AE-Ag2" secondAttribute="leading" constant="20" id="tEB-AU-Qrp"/>
                             <constraint firstItem="l8T-gH-A1H" firstAttribute="top" secondItem="C4i-AE-Ag2" secondAttribute="top" constant="60" id="tlB-hj-MRQ"/>
-                            <constraint firstItem="C4i-AE-Ag2" firstAttribute="bottom" secondItem="tJP-kc-eIk" secondAttribute="bottom" constant="196" id="u3p-iL-XWy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="C4i-AE-Ag2"/>
                     </view>
@@ -81,6 +93,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="square.fill" catalog="system" width="128" height="114"/>
+        <image name="lobbyBackground" width="1752" height="4088"/>
+        <image name="popupAttackButton" width="861" height="140"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
     </resources>
 </document>

@@ -111,6 +111,9 @@ class GameScene: SKScene {
     private var farmersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Farmers")
     private var villagersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Villagers")
     private var archersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Archers")
+
+    private var hpLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "HP: 6000/6000")
+    
     private var multiplierSelected: Int = 1
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
     private var multiplierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "1x")
@@ -196,7 +199,8 @@ class GameScene: SKScene {
         farmersLabel.position.y += self.frame.height/2 - 120
         villagersLabel.position.y += self.frame.height/2 - 160
         archersLabel.position.y += self.frame.height/2 - 200
-        
+        hpLabel.position.y += self.frame.height/2 - 240
+
         attackButton.position.y = screenSize.height/2 - 1250
         attackButton.zPosition = 50
         
@@ -215,6 +219,7 @@ class GameScene: SKScene {
         villagersLabel.text = "Villagers: \(gameController.castle.villager)"
         farmersLabel.text = "Farmers: \(gameController.castle.farmer)"
         archersLabel.text = "Archers: \(gameController.castle.archer)"
+        hpLabel.text = "HP: \(gameController.castle.hp)/6000"
         multiplierLabel.text = "\(multiplierSelected)x"
         
         if multiplierSelected > gameController.castle.villager {

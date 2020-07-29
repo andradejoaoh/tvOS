@@ -63,9 +63,6 @@ public class Castle {
             self.hp -= damage
         } else {
             self.hp = 0
-            print("Castelo \(self.name) Morreu - WASTED!")
-            
-            
         }
     }
     
