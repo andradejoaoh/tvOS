@@ -32,7 +32,7 @@ class LobbyViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        lblStatus.text = ("Connect to an AppleTV to begin your fun!")
+        lblStatus.text = ("Connect to an AppleTV!")
         MultipeerController.shared.startBrowsing()
         MultipeerController.shared.delegate = self
         setReady(false)

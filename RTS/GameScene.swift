@@ -114,6 +114,8 @@ class GameScene: SKScene {
 
     private var hpLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "HP: 6000/6000")
     
+    private var trainingSoldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
+    
     private var multiplierSelected: Int = 1
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
     private var multiplierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "1x")
@@ -206,6 +208,7 @@ class GameScene: SKScene {
         
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
+        trainingSoldiers()
     }
     
     func addLayerNode(_ node: SKSpriteNode, _ zPos: CGFloat = 5) {
@@ -229,13 +232,18 @@ class GameScene: SKScene {
         }
     }
     
+    func trainingSoldiers () {
+        let trainingSoldiers = gameController.castle.soldier - gameController.soldierInQueue
+        trainingSoldiersLabel.text = "\(trainingSoldiers)"
+        self.addChild(trainingSoldiersLabel)
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
         }
         let location = touch.location(in: self)
         let frontTouchedNode = self.atPoint(location)
-        
         
         if (frontTouchedNode === attackButton)  {
             attackPopup = AttackPopup(castleNames: MultipeerController.shared.otherCastles.map({ (castle) -> String in
@@ -290,6 +298,7 @@ class GameScene: SKScene {
             }
             #endif
             updateLabel()
+            trainingSoldiers()
         }
     }
     

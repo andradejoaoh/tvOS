@@ -18,7 +18,7 @@ class TvLobbyViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        lblStatus.text = "Connect an iPhone device..."
+        lblStatus.text = "Connect two to six iPhone devices..."
         MultipeerController.shared.delegate = self
         MultipeerController.shared.startAdvertising()
         for p in MultipeerController.shared.players {
