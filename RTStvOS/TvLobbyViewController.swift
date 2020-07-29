@@ -10,9 +10,7 @@ import UIKit
 import MultipeerConnectivity
 
 class TvLobbyViewController: UIViewController {
-    
-    @IBOutlet weak var txtPlayers: UITextView!
- 
+     
     @IBOutlet weak var lblStatus: UILabel!
     
     override func viewDidLoad() {
@@ -33,7 +31,6 @@ class TvLobbyViewController: UIViewController {
     
     func updateStatus(_ newMessage: String) {
         self.lblStatus.text = newMessage
-        self.txtPlayers.text += newMessage + "\n"
     }
     
     func checkForConnectedPlayers() {
