@@ -113,11 +113,17 @@ class GameScene: SKScene {
         self.addChild(soldier)
         
         soldier.run(soldierWalkAnimation) {
+//            let musicNode = SKAudioNode()
+//            musicNode.autoplayLooped = true
+
             let soldierAttack = SKAction.animate(with: self.soldierAttackTextures, timePerFrame: 0.2)
             let soldierAttackAnimation = SKAction.repeatForever(soldierAttack)
-                
             
-            soldier.run(soldierAttackAnimation)
+            let soldierSound  = SKAction.playSoundFileNamed("sword_fight_2.mp3", waitForCompletion: true)
+            soldierSound.duration = 1
+            let soldierSoundRepeat =  SKAction.repeatForever(soldierSound)
+            
+            soldier.run(SKAction.group([soldierAttackAnimation, soldierSoundRepeat]))
             
             self.beginAttack(attackerArmy: army, defensorCastle: to, completion: {
                 soldier.removeFromParent()
