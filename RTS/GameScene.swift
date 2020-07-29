@@ -209,6 +209,7 @@ class GameScene: SKScene {
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
         trainingSoldiers()
+        setupCircle()
     }
     
     func addLayerNode(_ node: SKSpriteNode, _ zPos: CGFloat = 5) {
@@ -233,11 +234,28 @@ class GameScene: SKScene {
     }
     
     func trainingSoldiers () {
-        let trainingSoldiers = gameController.castle.soldier - gameController.soldierInQueue
+        let trainingSoldiers = gameController.soldierInQueue - gameController.castle.soldier
         trainingSoldiersLabel.text = "\(trainingSoldiers)"
-        self.addChild(trainingSoldiersLabel)
     }
     
+    
+    func setupCircle () {
+        let path = CGMutablePath()
+        path.addArc(center: CGPoint(x: self.frame.midX + self.frame.width/9, y: self.frame.minY + self.frame.height/4),
+                    radius: 30,
+                    startAngle: 0,
+                    endAngle: CGFloat.pi * 2,
+                    clockwise: true)
+        let ball = SKShapeNode(path: path)
+        ball.lineWidth = 1
+        ball.fillColor = .lightGray
+        ball.strokeColor = .white
+        ball.glowWidth = 0.5
+        ball.zPosition = 10
+        self.addChild(ball)
+        ball.addChild(trainingSoldiersLabel)
+    }
+        
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
