@@ -31,7 +31,7 @@ extension GameView: MultipeerHandler {
                     playerAux = MultipeerController.shared.players[index]
                 }
             }
-            guard let player = playerAux else { return }
+            guard playerAux != nil else { return }
             
             let substrings = text.split(separator: ":")
             let funcName = substrings.first
@@ -48,6 +48,8 @@ extension GameView: MultipeerHandler {
                 guard let archers = Int(parameters[0]) else {return}
                 let onCity = String(parameters[1])
                 self.addArcher(archers: archers, onCity: onCity)
+                self.gameScene.updateCastleList()
+                self.gameScene.checkArchersAndHP()
             default:
                 print ("[TV] GameView receivedData: No func found with name \(text) ")
             }
