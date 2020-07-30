@@ -229,6 +229,8 @@ class GameScene: SKScene {
         archersLabel.text = "Archers: \(gameController.castle.archer)"
         hpLabel.text = "HP: \(gameController.castle.hp)/6000"
         multiplierLabel.text = "\(multiplierSelected)x"
+        trainingArchers()
+        trainingSoldiers()
         
         if multiplierSelected > gameController.castle.villager {
             multiplierNode.color = UIColor.gray
@@ -238,7 +240,7 @@ class GameScene: SKScene {
     }
     
     func trainingSoldiers () {
-        let trainingSoldiers = gameController.soldierInQueue - gameController.castle.soldier
+        let trainingSoldiers = gameController.soldierInQueue
         trainingSoldiersLabel.position.x  = self.frame.midX + self.frame.width/9
         trainingSoldiersLabel.position.y = self.frame.minY + self.frame.height/4.15
         trainingSoldiersLabel.zPosition = 11
@@ -247,7 +249,7 @@ class GameScene: SKScene {
     }
     
     func trainingArchers() {
-        let trainingArchers = gameController.archerInQueue - gameController.castle.archer
+        let trainingArchers = gameController.archerInQueue 
         trainingArchersLabel.position.x  = self.frame.midX + self.frame.width/8.5
         trainingArchersLabel.position.y = self.frame.midY + self.frame.height/7.5
         trainingArchersLabel.zPosition = 11
