@@ -267,34 +267,34 @@ class GameScene: SKScene {
                 gameController.soldierInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
             } else if (farm1Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
-                if (fieldSpace1.isFarmEnabled && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers < MAX_FARMERS) {
+                if (fieldSpace1.isFarmEnabled && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers < MAX_FARMERS + multiplierSelected) {
                     fieldSpace1.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
-                } else if (!fieldSpace1.isFarmEnabled  && fieldSpace1.workingBuilders < MAX_BUILDERS) {
+                } else if (!fieldSpace1.isFarmEnabled  && fieldSpace1.workingBuilders < MAX_BUILDERS + multiplierSelected) {
                     fieldSpace1.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }
             } else if (farm2Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
-            if (fieldSpace2.isFarmEnabled && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers < MAX_FARMERS) {
+            if (fieldSpace2.isFarmEnabled && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers < MAX_FARMERS + multiplierSelected) {
                 fieldSpace2.farmerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (!fieldSpace2.isFarmEnabled  && fieldSpace2.workingBuilders < MAX_BUILDERS) {
+            } else if (!fieldSpace2.isFarmEnabled  && fieldSpace2.workingBuilders < MAX_BUILDERS + multiplierSelected) {
                 fieldSpace2.workingBuilders += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
                 }
             } else if (farm3Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
-                if (fieldSpace3.isFarmEnabled && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers < MAX_FARMERS) {
+                if (fieldSpace3.isFarmEnabled && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers < MAX_FARMERS + multiplierSelected) {
                     fieldSpace3.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
-                } else if (!fieldSpace3.isFarmEnabled  && fieldSpace3.workingBuilders < MAX_BUILDERS) {
+                } else if (!fieldSpace3.isFarmEnabled  && fieldSpace3.workingBuilders < MAX_BUILDERS + multiplierSelected) {
                     fieldSpace3.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }
             } else if (farm4Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
-                if (fieldSpace4.isFarmEnabled && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers < MAX_FARMERS) {
+                if (fieldSpace4.isFarmEnabled && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers < MAX_FARMERS + multiplierSelected) {
                     fieldSpace4.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
-                } else if (!fieldSpace4.isFarmEnabled  && fieldSpace4.workingBuilders < MAX_BUILDERS) {
+                } else if (!fieldSpace4.isFarmEnabled  && fieldSpace4.workingBuilders < MAX_BUILDERS + multiplierSelected) {
                     fieldSpace4.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }

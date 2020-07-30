@@ -115,7 +115,10 @@ class GameScene: SKScene {
         soldier.run(soldierWalkAnimation) {
             let soldierAttack = SKAction.animate(with: self.soldierAttackTextures, timePerFrame: 0.2)
             let soldierAttackAnimation = SKAction.repeatForever(soldierAttack)
-                
+            let playAction = SKAction.play()
+            playAction.duration = 1
+            let audioNode = SKAudioNode()
+            audioNode.run(SKAction.repeatForever(playAction))
             
             soldier.run(soldierAttackAnimation)
             
