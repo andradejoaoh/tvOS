@@ -35,8 +35,8 @@ class AttackPopupSection: SKNode {
         valueLabel.position.x = plusButton.position.x - plusButton.size.width/2 - padding - valueLabel.frame.width/2
         minusButton.position.x = valueLabel.position.x - valueLabel.frame.width/2 - padding - minusButton.size.width/2
         valueLabel.position.y = -valueLabel.frame.height/2
-        plusButton.zPosition = 11
-        minusButton.zPosition = 11
+        plusButton.zPosition = 35
+        minusButton.zPosition = 35
         self.position.y = posY
         addChild(self.castleName)
         addChild(minusButton)
