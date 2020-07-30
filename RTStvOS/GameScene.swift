@@ -125,7 +125,10 @@ class GameScene: SKScene {
         soldier.run(soldierWalkAnimation) {
             let soldierAttack = SKAction.animate(with: self.soldierAttackTextures, timePerFrame: 0.2)
             let soldierAttackAnimation = SKAction.repeatForever(soldierAttack)
-                
+            let playAction = SKAction.play()
+            playAction.duration = 1
+            let audioNode = SKAudioNode()
+            audioNode.run(SKAction.repeatForever(playAction))
             
             soldier.run(soldierAttackAnimation)
             
@@ -158,8 +161,8 @@ class GameScene: SKScene {
     func beginAttack(attackerArmy: Army, armyLabel: SKLabelNode, defensorCastle: Castle, completion: @escaping () -> Void){
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
             if attackerArmy.soldierCount > 0 && defensorCastle.hp > 0 {
-                defensorCastle.receiveAttack(damage: attackerArmy.attack())
                 attackerArmy.receiveDamage(damage: defensorCastle.defensorAttack())
+                defensorCastle.receiveAttack(damage: attackerArmy.attack())
                 armyLabel.text = "\(attackerArmy.soldierCount)"
                 self.updateCastleList()
                 self.checkArchersAndHP()

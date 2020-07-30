@@ -45,7 +45,7 @@ class GameController {
         setupFarmerTimer()
     }
     
-    func createSoldier(){
+    private func createSoldier(){
         self.createSoldierIsRunning = true
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Soldier.timeToMake), repeats: false) { (timer) in
@@ -61,7 +61,7 @@ class GameController {
         }
     }
     
-    func createArcher(){
+    private func createArcher(){
         self.createArcherIsRunning = true
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Archer.timeToMake), repeats: false) { (timer) in
@@ -78,13 +78,13 @@ class GameController {
         }
     }
     
-    @objc func farmerResources(){
+    @objc private func farmerResources(){
         let resourcesPerTick = Int(castle.farmer/2)
         castle.villager += resourcesPerTick
         gameScene?.updateLabel()
     }
     
-    func setupFarmerTimer(){
+    private func setupFarmerTimer(){
         let _ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.farmerResources), userInfo: nil, repeats: true)
     }
 }

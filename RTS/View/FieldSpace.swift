@@ -26,7 +26,10 @@ class FieldSpace {
             }
         }
     }
+    var workingBuilders = 0
+    var farmCompletion: Double = 0
     var workingFarmers = 0
+    static let buildingRate: Double = 5
     private var createFarmerIsRunning: Bool = false
     var farmerInQueue: Int = 0 {
         didSet{
@@ -45,8 +48,7 @@ class FieldSpace {
         self.gameScene = gameScene
     }
     
-    
-    func createFarmer(){
+    private func createFarmer(){
         self.createFarmerIsRunning = true
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Farmer.timeToMake), repeats: false) { (timer) in
@@ -62,8 +64,25 @@ class FieldSpace {
         }
     }
     
+    func finishBuildingFarm() {
+        workingFarmers = workingBuilders
+        workingBuilders = 0
+        isFarmEnabled = true
+    }
+    
     func destroyFarm() {
         isFarmEnabled = false
         workingFarmers = 0
+        farmCompletion = 0
+    }
+    
+    func takeHit(dmg: Int) {
+        let maxDeadFarmers = dmg/25
+        let deadFarmers = workingFarmers > maxDeadFarmers ? maxDeadFarmers : workingFarmers
+        workingFarmers -= deadFarmers
+        castle.farmer -= deadFarmers
+        if workingFarmers == 0 {
+            destroyFarm()
+        }
     }
 }
