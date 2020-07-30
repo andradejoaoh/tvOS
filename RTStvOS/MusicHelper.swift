@@ -17,7 +17,7 @@ class MusicHelper {
     
     func setupBackgroundMusic() {
         do {
-            audioPlayer =  try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "background", ofType: "mp3")!))
+            audioPlayer =  try AVAudioPlayer(contentsOf: URL.init(fileURLWithPath: Bundle.main.path(forResource: "MedievalWars_Theme", ofType: "m4a")!))
             audioPlayer.prepareToPlay()
             audioPlayer.play()
             audioPlayer.numberOfLoops = .max

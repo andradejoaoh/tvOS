@@ -50,7 +50,6 @@
 		61DD279D24B3C013009C4425 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 61DD279C24B3C013009C4425 /* GameScene.sks */; };
 		6F5704A324D09BF70007DF87 /* MusicHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5704A224D09BF70007DF87 /* MusicHelper.swift */; };
 		6F5704AB24D0A36D0007DF87 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6F5704A924D09D200007DF87 /* background.mp3 */; };
-		6F5704B024D1F2AD0007DF87 /* sword_fight_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6F5704AF24D1F2AD0007DF87 /* sword_fight_2.mp3 */; };
 		6FA7F8D324B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D224B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift */; };
 		6FA7F8D524B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D424B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift */; };
 		6FA7F8D724B6C1A100992181 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */; };
@@ -61,6 +60,8 @@
 		8C51659824C763A600239F82 /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */; };
 		8C57E44424C8BA64009AF2E2 /* AttackPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C57E44324C8BA64009AF2E2 /* AttackPopup.swift */; };
 		8C57E44624C8BAB5009AF2E2 /* AttackPopupSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C57E44524C8BAB5009AF2E2 /* AttackPopupSection.swift */; };
+		8CB4DE4424D372050015EEB1 /* sword_fight_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8CB4DE4324D372050015EEB1 /* sword_fight_2.mp3 */; };
+		8CB4DE4724D3751F0015EEB1 /* MedievalWars_Theme.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8CB4DE4524D372510015EEB1 /* MedievalWars_Theme.m4a */; };
 		8CB884AA24C2263A001BA24E /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */; };
 		8CE85E0C24C7712200D5AEB3 /* PopupNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE85E0B24C7712200D5AEB3 /* PopupNode.swift */; };
 		8CE85E0D24C7825600D5AEB3 /* iOSLabelNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613AAC6224B5081F00F15167 /* iOSLabelNode.swift */; };
@@ -104,7 +105,6 @@
 		61DD279C24B3C013009C4425 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
 		6F5704A224D09BF70007DF87 /* MusicHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicHelper.swift; sourceTree = "<group>"; };
 		6F5704A924D09D200007DF87 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
-		6F5704AF24D1F2AD0007DF87 /* sword_fight_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sword_fight_2.mp3; path = ../../../sword_fight_2.mp3; sourceTree = "<group>"; };
 		6FA7F8D224B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TvLobbyViewController+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		6FA7F8D424B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LobbyViewController+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +114,8 @@
 		8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameView+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		8C57E44324C8BA64009AF2E2 /* AttackPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackPopup.swift; sourceTree = "<group>"; };
 		8C57E44524C8BAB5009AF2E2 /* AttackPopupSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackPopupSection.swift; sourceTree = "<group>"; };
+		8CB4DE4324D372050015EEB1 /* sword_fight_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = sword_fight_2.mp3; sourceTree = "<group>"; };
+		8CB4DE4524D372510015EEB1 /* MedievalWars_Theme.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = MedievalWars_Theme.m4a; sourceTree = "<group>"; };
 		8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameView+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		8CE85E0B24C7712200D5AEB3 /* PopupNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -274,7 +276,8 @@
 			isa = PBXGroup;
 			children = (
 				6F5704A924D09D200007DF87 /* background.mp3 */,
-				6F5704AF24D1F2AD0007DF87 /* sword_fight_2.mp3 */,
+				8CB4DE4324D372050015EEB1 /* sword_fight_2.mp3 */,
+				8CB4DE4524D372510015EEB1 /* MedievalWars_Theme.m4a */,
 			);
 			path = Sound_Resources;
 			sourceTree = "<group>";
@@ -371,9 +374,10 @@
 			files = (
 				611EA88024BE33EF001C59ED /* GameScene.sks in Resources */,
 				6F5704AB24D0A36D0007DF87 /* background.mp3 in Resources */,
-				6F5704B024D1F2AD0007DF87 /* sword_fight_2.mp3 in Resources */,
+				8CB4DE4424D372050015EEB1 /* sword_fight_2.mp3 in Resources */,
 				6161411724AE733100194165 /* LaunchScreen.storyboard in Resources */,
 				6161411424AE733100194165 /* Assets.xcassets in Resources */,
+				8CB4DE4724D3751F0015EEB1 /* MedievalWars_Theme.m4a in Resources */,
 				6161411224AE733000194165 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -535,7 +539,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG OFFLINE";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;

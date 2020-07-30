@@ -28,7 +28,11 @@ class FieldSpace {
     }
     var workingBuilders = 0
     var farmCompletion: Double = 0
-    var workingFarmers = 0
+    var workingFarmers = 0 {
+        didSet {
+            castle.farmer += workingFarmers - oldValue
+        }
+    }
     static let buildingRate: Double = 5
     private var createFarmerIsRunning: Bool = false
     var farmerInQueue: Int = 0 {
@@ -53,7 +57,7 @@ class FieldSpace {
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Farmer.timeToMake), repeats: false) { (timer) in
             self.farmerInQueue -= 1
-            self.castle.farmer += 1
+            self.workingFarmers += 1
             self.createFarmerIsRunning = false
             self.gameScene.updateLabel()
             if self.farmerInQueue == 0 {
@@ -80,7 +84,6 @@ class FieldSpace {
         let maxDeadFarmers = dmg/25
         let deadFarmers = workingFarmers > maxDeadFarmers ? maxDeadFarmers : workingFarmers
         workingFarmers -= deadFarmers
-        castle.farmer -= deadFarmers
         if workingFarmers == 0 {
             destroyFarm()
         }

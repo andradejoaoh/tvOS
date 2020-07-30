@@ -210,6 +210,7 @@ class GameScene: SKScene {
         addLayerNode(barracksSprite, 8)
         
         fieldSpace1.isFarmEnabled = true
+        fieldSpace1.workingFarmers = 2
         fieldSpace2.isFarmEnabled = false
         fieldSpace3.isFarmEnabled = false
         fieldSpace4.isFarmEnabled = false
@@ -444,7 +445,7 @@ class GameScene: SKScene {
         self.isUserInteractionEnabled = false
     }
     
-    private func makeShapeNode(_ vertices: [CGPoint], _ color: UIColor = .clear, _ zPos: CGFloat = 20) -> SKShapeNode {
+    private func makeShapeNode(_ vertices: [CGPoint], _ color: UIColor = .clear, _ zPos: CGFloat = 12) -> SKShapeNode {
         let path = CGMutablePath()
         path.move(to: vertices[0])
         path.addLines(between: vertices)

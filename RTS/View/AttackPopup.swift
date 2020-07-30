@@ -32,12 +32,12 @@ class AttackPopup: SKSpriteNode {
             sections.append(newSection)
             addChild(newSection)
         }
-        self.zPosition = 10
+        self.zPosition = 30
         self.isUserInteractionEnabled = true
         addChild(backgroundNode)
-        backgroundNode.zPosition = -1
+        backgroundNode.zPosition = 29
         sendAttackBtn.position.y = self.frame.minY + spacing/2 + sendAttackBtn.frame.height/2
-        sendAttackBtn.zPosition = 12
+        sendAttackBtn.zPosition = 32
         sendAttackBtn.addChild(attackLabel)
         addChild(sendAttackBtn)
     }

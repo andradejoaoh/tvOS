@@ -22,7 +22,7 @@ public class Castle {
     var hp: Int = 6000
     
     //Villagers amount.
-    var villager: Int = 50
+    var villager: Int = 6
     
     //Soldiers amount.
     var soldier: Int = 0
