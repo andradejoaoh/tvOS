@@ -8,6 +8,7 @@
 
 import Foundation
 import SpriteKit
+import AVKit
 
 class GameView: UIViewController {
     
@@ -28,6 +29,7 @@ class GameView: UIViewController {
             view.translatesAutoresizingMaskIntoConstraints = false
             gameScene = (scene as! GameScene)
             gameScene.gameView = self
+            MusicHelper.shared.setupBackgroundMusic()
             print("[TV] GameView: viewDidAppear: view is SKView")
         } else {
             print("[TV] GameView: viewDidAppear: view is not an SKView!")

@@ -48,6 +48,9 @@
 		61DD279924B3B0E4009C4425 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DD279824B3B0E4009C4425 /* GameScene.swift */; };
 		61DD279B24B3B212009C4425 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DD279A24B3B212009C4425 /* GameController.swift */; };
 		61DD279D24B3C013009C4425 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 61DD279C24B3C013009C4425 /* GameScene.sks */; };
+		6F5704A324D09BF70007DF87 /* MusicHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F5704A224D09BF70007DF87 /* MusicHelper.swift */; };
+		6F5704AB24D0A36D0007DF87 /* background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6F5704A924D09D200007DF87 /* background.mp3 */; };
+		6F5704B024D1F2AD0007DF87 /* sword_fight_2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 6F5704AF24D1F2AD0007DF87 /* sword_fight_2.mp3 */; };
 		6FA7F8D324B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D224B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift */; };
 		6FA7F8D524B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D424B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift */; };
 		6FA7F8D724B6C1A100992181 /* LobbyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */; };
@@ -99,6 +102,9 @@
 		61DD279824B3B0E4009C4425 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		61DD279A24B3B212009C4425 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		61DD279C24B3C013009C4425 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
+		6F5704A224D09BF70007DF87 /* MusicHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicHelper.swift; sourceTree = "<group>"; };
+		6F5704A924D09D200007DF87 /* background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = background.mp3; sourceTree = "<group>"; };
+		6F5704AF24D1F2AD0007DF87 /* sword_fight_2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = sword_fight_2.mp3; path = ../../../sword_fight_2.mp3; sourceTree = "<group>"; };
 		6FA7F8D224B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TvLobbyViewController+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		6FA7F8D424B6BFCF00992181 /* LobbyViewController+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LobbyViewController+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
@@ -202,10 +208,12 @@
 		6161410B24AE733000194165 /* RTStvOS */ = {
 			isa = PBXGroup;
 			children = (
+				6F5704A824D09CF20007DF87 /* Sound_Resources */,
 				6161412524AFB2D700194165 /* Controller */,
 				6161410C24AE733000194165 /* AppDelegate.swift */,
 				6161C21624C6383800DCC600 /* Model */,
 				611EA88124BE3406001C59ED /* GameScene.swift */,
+				6F5704A224D09BF70007DF87 /* MusicHelper.swift */,
 				611EA88324BE343C001C59ED /* GameView.swift */,
 				8CB884A924C2263A001BA24E /* GameView+MultipeerHandler.swift */,
 				6161410E24AE733000194165 /* TvLobbyViewController.swift */,
@@ -260,6 +268,15 @@
 				61CE301B24D1F95700C2168D /* ProgressBar.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		6F5704A824D09CF20007DF87 /* Sound_Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6F5704A924D09D200007DF87 /* background.mp3 */,
+				6F5704AF24D1F2AD0007DF87 /* sword_fight_2.mp3 */,
+			);
+			path = Sound_Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -353,6 +370,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				611EA88024BE33EF001C59ED /* GameScene.sks in Resources */,
+				6F5704AB24D0A36D0007DF87 /* background.mp3 in Resources */,
+				6F5704B024D1F2AD0007DF87 /* sword_fight_2.mp3 in Resources */,
 				6161411724AE733100194165 /* LaunchScreen.storyboard in Resources */,
 				6161411424AE733100194165 /* Assets.xcassets in Resources */,
 				6161411224AE733000194165 /* Main.storyboard in Resources */,
@@ -404,6 +423,7 @@
 				613AAC6924B63C6300F15167 /* WarController.swift in Sources */,
 				613AAC6A24B63C6300F15167 /* Farmer.swift in Sources */,
 				611EA88424BE343C001C59ED /* GameView.swift in Sources */,
+				6F5704A324D09BF70007DF87 /* MusicHelper.swift in Sources */,
 				613AAC6B24B63C6300F15167 /* Archer.swift in Sources */,
 				6FA7F8E124BE166B00992181 /* Player.swift in Sources */,
 				6FA7F8DE24BCE63500992181 /* CommandSystem.swift in Sources */,
