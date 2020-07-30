@@ -34,7 +34,7 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="lobbyBackground" translatesAutoresizingMaskIntoConstraints="NO" id="WiN-fQ-xpM">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" translatesAutoresizingMaskIntoConstraints="NO" id="l8T-gH-A1H">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l8T-gH-A1H">
                                 <rect key="frame" x="20" y="104" width="374" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="SCm-Dp-yHx"/>

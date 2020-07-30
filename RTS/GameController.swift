@@ -20,7 +20,7 @@ class GameController {
         #endif
         
     }()
-    unowned var gameScene: GameScene
+    weak var gameScene: GameScene?
     
     private var createSoldierIsRunning: Bool = false
     var soldierInQueue: Int = 0 {
@@ -45,14 +45,14 @@ class GameController {
         setupFarmerTimer()
     }
     
-    func createSoldier(){
+    private func createSoldier(){
         self.createSoldierIsRunning = true
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Soldier.timeToMake), repeats: false) { (timer) in
             self.soldierInQueue -= 1
             self.castle.soldier += 1
             self.createSoldierIsRunning = false
-            self.gameScene.updateLabel()
+            self.gameScene?.updateLabel()
             if self.soldierInQueue == 0 {
                 timer.invalidate()
             } else if self.soldierInQueue > 0 {
@@ -61,14 +61,14 @@ class GameController {
         }
     }
     
-    func createArcher(){
+    private func createArcher(){
         self.createArcherIsRunning = true
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Archer.timeToMake), repeats: false) { (timer) in
             self.archerInQueue -= 1
             self.castle.archer += 1
             self.createArcherIsRunning = false
-            self.gameScene.updateLabel()
+            self.gameScene?.updateLabel()
             MultipeerController.shared.sendToHost(msg: "addArcher:\(1)_\(self.castle.name)")
             if self.archerInQueue == 0 {
                 timer.invalidate()
@@ -78,13 +78,13 @@ class GameController {
         }
     }
     
-    @objc func farmerResources(){
+    @objc private func farmerResources(){
         let resourcesPerTick = Int(castle.farmer/2)
         castle.villager += resourcesPerTick
-        gameScene.updateLabel()
+        gameScene?.updateLabel()
     }
     
-    func setupFarmerTimer(){
+    private func setupFarmerTimer(){
         let _ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.farmerResources), userInfo: nil, repeats: true)
     }
 }

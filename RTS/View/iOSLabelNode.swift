@@ -12,7 +12,7 @@ class iOSLabelNode: SKLabelNode {
     
     init(fontSize: Int, fontColor: UIColor, text: String){
         super.init()
-        self.fontName = "Arial"
+        self.fontName = "ArialHebrew"
         self.fontSize = CGFloat(fontSize)
         self.fontColor = fontColor
         self.text = text

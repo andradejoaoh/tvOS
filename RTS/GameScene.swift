@@ -19,6 +19,9 @@ let showTriggers: Bool = {
 }()
 
 class GameScene: SKScene {
+    let MAX_FARMERS = 5
+    let MAX_BUILDERS = 3
+    
     lazy var gameController: GameController = GameController(gameScene: self)
     lazy var screenSize = self.frame
     
@@ -111,8 +114,13 @@ class GameScene: SKScene {
     private var farmersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Farmers")
     private var villagersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Villagers")
     private var archersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Archers")
-
-    private var hpLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "HP: 6000/6000")
+    private var hpLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "6000/6000")
+    
+    private var soldierIcon = iOSIconNode(imageNamed: "soldierIcon")
+    private var archerIcon = iOSIconNode(imageNamed: "archerIcon")
+    private var farmerIcon = iOSIconNode(imageNamed: "farmerIcon")
+    private var villagerIcon = iOSIconNode(imageNamed: "villagerIcon")
+    private var hpIcon = iOSIconNode(imageNamed: "hpIcon")
     
     private var trainingSoldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
     private var trainingArchersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
@@ -134,11 +142,19 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.addChild(backgroundNode)
+        
         self.addChild(soldiersLabel)
         self.addChild(villagersLabel)
         self.addChild(farmersLabel)
         self.addChild(archersLabel)
-        self.addChild(multiplierNode)
+        self.addChild(hpLabel)
+        
+        self.addChild(soldierIcon)
+        self.addChild(archerIcon)
+        self.addChild(farmerIcon)
+        self.addChild(hpIcon)
+        self.addChild(villagerIcon)
+        
         self.addChild(attackButton)
         self.addChild(castleTrigger)
         self.addChild(barracksTrigger)
@@ -165,6 +181,21 @@ class GameScene: SKScene {
         setupNodes()
     }
     
+    var lastTime: TimeInterval = 0
+    override func update(_ currentTime: TimeInterval) {
+        let deltaTime = currentTime - lastTime
+        // update farm completion for farms that are not already built
+        for f in [fieldSpace1, fieldSpace2, fieldSpace3, fieldSpace4].filter({ (fs) -> Bool in
+            !fs.isFarmEnabled
+        }) {
+            f.farmCompletion += Double(f.workingBuilders) * FieldSpace.buildingRate * deltaTime
+            if f.farmCompletion >= 100 {
+                f.finishBuildingFarm()
+            }
+        }
+        lastTime = currentTime
+    }
+    
     func setupNodes(){
         
         addLayerNode(farm1Sprite, 9)
@@ -183,11 +214,11 @@ class GameScene: SKScene {
         fieldSpace3.isFarmEnabled = false
         fieldSpace4.isFarmEnabled = false
 
-        multiplierNode.position.x = CGFloat(screenSize.width/2 - multiplierNode.frame.width/2)
-        multiplierNode.position.y += self.frame.height/2 - 80
-        multiplierNode.addChild(multiplierLabel)
-        multiplierNode.zPosition = 2
-        multiplierLabel.zPosition = 3
+//        multiplierNode.position.x = CGFloat(screenSize.width/2 - multiplierNode.frame.width/2)
+//        multiplierNode.position.y += self.frame.height/2 - 80
+//        multiplierNode.addChild(multiplierLabel)
+//        multiplierNode.zPosition = 2
+//        multiplierLabel.zPosition = 3
         
         #if TEST_VICTORY_CONDITIONS
         // test
@@ -202,13 +233,31 @@ class GameScene: SKScene {
         #endif
         
         soldiersLabel.position.y += self.frame.height/2 - 80
-        farmersLabel.position.y += self.frame.height/2 - 120
-        villagersLabel.position.y += self.frame.height/2 - 160
-        archersLabel.position.y += self.frame.height/2 - 200
-        hpLabel.position.y += self.frame.height/2 - 240
+        soldierIcon.position.y = soldiersLabel.position.y
+        soldierIcon.position.x -= 50
+        
+        farmersLabel.position.y = soldiersLabel.position.y
+        farmerIcon.position.x = -self.frame.width/2 + 100
+        farmerIcon.position.y = farmersLabel.position.y
+        farmersLabel.position.x = farmerIcon.position.x + 50
 
-        attackButton.position.y = screenSize.height/2 - 1250
-        attackButton.zPosition = 50
+        villagersLabel.position.y += self.frame.height/2 - 160
+        villagersLabel.position.x = -self.frame.width/5
+        villagerIcon.position.y = villagersLabel.position.y
+        villagerIcon.position.x = villagersLabel.position.x - 50
+        
+        archersLabel.position.y = soldiersLabel.position.y
+        archersLabel.position.x += self.frame.width/2 - 100
+        archerIcon.position.y = archersLabel.position.y
+        archerIcon.position.x = archersLabel.position.x - 50
+
+        hpLabel.position.y += self.frame.height/2 - 160
+        hpLabel.position.x = self.frame.width/5
+        hpIcon.position.y = hpLabel.position.y
+        hpIcon.position.x = hpLabel.position.x - 120
+
+        attackButton.position.y = -screenSize.height/2 + 120
+        attackButton.zPosition = 13
         
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
@@ -228,15 +277,16 @@ class GameScene: SKScene {
         farmersLabel.text = "Farmers: \(gameController.castle.farmer)"
         archersLabel.text = "Archers: \(gameController.castle.archer)"
         hpLabel.text = "HP: \(gameController.castle.hp)/6000"
-        multiplierLabel.text = "\(multiplierSelected)x"
         trainingArchers()
         trainingSoldiers()
         
-        if multiplierSelected > gameController.castle.villager {
-            multiplierNode.color = UIColor.gray
-        } else {
-            multiplierNode.color = UIColor.green
-        }
+//        multiplierLabel.text = "\(multiplierSelected)x"
+//
+//        if multiplierSelected > gameController.castle.villager {
+//            multiplierNode.color = UIColor.gray
+//        } else {
+//            multiplierNode.color = UIColor.green
+//        }
     }
     
     func trainingSoldiers () {
@@ -288,7 +338,6 @@ class GameScene: SKScene {
         }
     }
     
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
@@ -296,35 +345,56 @@ class GameScene: SKScene {
             if (barracksTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.soldierInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (farm1Trigger.contains(location) && fieldSpace1.isFarmEnabled && gameController.castle.villager >= multiplierSelected && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers < 5) {
-                fieldSpace1.farmerInQueue += multiplierSelected
-                gameController.castle.villager -= multiplierSelected
-            } else if (farm2Trigger.contains(location) && fieldSpace2.isFarmEnabled && gameController.castle.villager >= multiplierSelected && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers < 5) {
+            } else if (farm1Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+                if (fieldSpace1.isFarmEnabled && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                    fieldSpace1.farmerInQueue += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                } else if (!fieldSpace1.isFarmEnabled  && fieldSpace1.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                    fieldSpace1.workingBuilders += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                }
+            } else if (farm2Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            if (fieldSpace2.isFarmEnabled && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers < MAX_FARMERS + multiplierSelected) {
                 fieldSpace2.farmerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (farm3Trigger.contains(location) && fieldSpace3.isFarmEnabled && gameController.castle.villager >= multiplierSelected && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers < 5) {
-                fieldSpace3.farmerInQueue += multiplierSelected
+            } else if (!fieldSpace2.isFarmEnabled  && fieldSpace2.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                fieldSpace2.workingBuilders += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (farm4Trigger.contains(location) && fieldSpace4.isFarmEnabled && gameController.castle.villager >= multiplierSelected && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers < 5) {
-                fieldSpace4.farmerInQueue += multiplierSelected
-                gameController.castle.villager -= multiplierSelected
+                }
+            } else if (farm3Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+                if (fieldSpace3.isFarmEnabled && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                    fieldSpace3.farmerInQueue += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                } else if (!fieldSpace3.isFarmEnabled  && fieldSpace3.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                    fieldSpace3.workingBuilders += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                }
+            } else if (farm4Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+                if (fieldSpace4.isFarmEnabled && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                    fieldSpace4.farmerInQueue += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                } else if (!fieldSpace4.isFarmEnabled  && fieldSpace4.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                    fieldSpace4.workingBuilders += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                }
             } else if (castleTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.archerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if multiplierNode.contains(location){
-                switch multiplierSelected {
-                case 1:
-                    multiplierSelected = 5
-                case 5:
-                    multiplierSelected = 10
-                case 10:
-                    multiplierSelected = 20
-                case 20:
-                    multiplierSelected = 50
-                default:
-                    multiplierSelected = 1
-                }
             }
+//            else if multiplierNode.contains(location){
+//                switch multiplierSelected {
+//                case 1:
+//                    multiplierSelected = 5
+//                case 5:
+//                    multiplierSelected = 10
+//                case 10:
+//                    multiplierSelected = 20
+//                case 20:
+//                    multiplierSelected = 50
+//                default:
+//                    multiplierSelected = 1
+//                }
+//            }
             #if TEST_VICTORY_CONDITIONS
             if testGameOver.contains(location) {
                 gameOver()
@@ -335,6 +405,15 @@ class GameScene: SKScene {
             updateLabel()
             trainingSoldiers()
             trainingArchers()
+        }
+    }
+    
+    func processFarmDamage(totalDmg: Int) {
+        for f in [fieldSpace1, fieldSpace2, fieldSpace3, fieldSpace4] {
+            if f.isFarmEnabled {
+                f.takeHit(dmg: totalDmg)
+                break
+            }
         }
     }
     
