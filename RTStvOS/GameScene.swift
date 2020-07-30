@@ -155,8 +155,8 @@ class GameScene: SKScene {
     func beginAttack(attackerArmy: Army, armyLabel: SKLabelNode, defensorCastle: Castle, completion: @escaping () -> Void){
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
             if attackerArmy.soldierCount > 0 && defensorCastle.hp > 0 {
-                defensorCastle.receiveAttack(damage: attackerArmy.attack())
                 attackerArmy.receiveDamage(damage: defensorCastle.defensorAttack())
+                defensorCastle.receiveAttack(damage: attackerArmy.attack())
                 armyLabel.text = "\(attackerArmy.soldierCount)"
                 self.updateCastleList()
                 self.checkArchersAndHP()
