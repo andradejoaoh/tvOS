@@ -122,6 +122,9 @@ class GameScene: SKScene {
     private var villagerIcon = iOSIconNode(imageNamed: "villagerIcon")
     private var hpIcon = iOSIconNode(imageNamed: "hpIcon")
     
+    private var trainingSoldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
+    private var trainingArchersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
+    
     private var multiplierSelected: Int = 1
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
     private var multiplierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "1x")
@@ -159,6 +162,9 @@ class GameScene: SKScene {
         self.addChild(farm2Trigger)
         self.addChild(farm3Trigger)
         self.addChild(farm4Trigger)
+        self.addChild(trainingSoldiersLabel)
+        self.addChild(trainingArchersLabel)
+
 
         #if TEST_VICTORY_CONDITIONS
         // test
@@ -255,6 +261,8 @@ class GameScene: SKScene {
         
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
+        trainingSoldiers()
+        trainingArchers()
     }
     
     func addLayerNode(_ node: SKSpriteNode, _ zPos: CGFloat = 5) {
@@ -264,11 +272,13 @@ class GameScene: SKScene {
     }
     
     func updateLabel(){
-        soldiersLabel.text = "\(gameController.castle.soldier)"
-        villagersLabel.text = "\(gameController.castle.villager)"
-        farmersLabel.text = "\(gameController.castle.farmer)"
-        archersLabel.text = "\(gameController.castle.archer)"
-        hpLabel.text = "\(gameController.castle.hp)/6000"
+        soldiersLabel.text = "Soldiers: \(gameController.castle.soldier)"
+        villagersLabel.text = "Villagers: \(gameController.castle.villager)"
+        farmersLabel.text = "Farmers: \(gameController.castle.farmer)"
+        archersLabel.text = "Archers: \(gameController.castle.archer)"
+        hpLabel.text = "HP: \(gameController.castle.hp)/6000"
+        trainingArchers()
+        trainingSoldiers()
         
 //        multiplierLabel.text = "\(multiplierSelected)x"
 //
@@ -279,13 +289,46 @@ class GameScene: SKScene {
 //        }
     }
     
+    func trainingSoldiers () {
+        let trainingSoldiers = gameController.soldierInQueue
+        trainingSoldiersLabel.position.x  = self.frame.midX + self.frame.width/9
+        trainingSoldiersLabel.position.y = self.frame.minY + self.frame.height/4.15
+        trainingSoldiersLabel.zPosition = 11
+        trainingSoldiersLabel.text = "\(trainingSoldiers)"
+        setupCircle(x: self.frame.midX + self.frame.width/9, y: self.frame.minY + self.frame.height/4)
+    }
+    
+    func trainingArchers() {
+        let trainingArchers = gameController.archerInQueue 
+        trainingArchersLabel.position.x  = self.frame.midX + self.frame.width/8.5
+        trainingArchersLabel.position.y = self.frame.midY + self.frame.height/7.5
+        trainingArchersLabel.zPosition = 11
+        trainingArchersLabel.text = "\(trainingArchers)"
+        setupCircle(x: self.frame.midX + self.frame.width/8.5, y: self.frame.midY + self.frame.height/7)
+    }
+    
+    func setupCircle (x: CGFloat, y: CGFloat) {
+        let path = CGMutablePath()
+        path.addArc(center: CGPoint(x: x, y: y),
+                    radius: 30,
+                    startAngle: 0,
+                    endAngle: CGFloat.pi * 2,
+                    clockwise: true)
+        let ball = SKShapeNode(path: path)
+        ball.lineWidth = 1
+        ball.fillColor = .lightGray
+        ball.strokeColor = .white
+        ball.glowWidth = 0.5
+        ball.zPosition = 10
+        self.addChild(ball)
+    }
+        
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
         }
         let location = touch.location(in: self)
         let frontTouchedNode = self.atPoint(location)
-        
         
         if (frontTouchedNode === attackButton)  {
             attackPopup = AttackPopup(castleNames: MultipeerController.shared.otherCastles.map({ (castle) -> String in
@@ -360,6 +403,8 @@ class GameScene: SKScene {
             }
             #endif
             updateLabel()
+            trainingSoldiers()
+            trainingArchers()
         }
     }
     

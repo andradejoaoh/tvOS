@@ -60,6 +60,7 @@ class AttackPopup: SKSpriteNode {
     func dismissPopup() {
         gameScene.attackPopup = nil
         self.removeFromParent()
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -72,6 +73,7 @@ class AttackPopup: SKSpriteNode {
             }
             }
             else if node === backgroundNode {
+                
                 dismissPopup()
             }
         }
