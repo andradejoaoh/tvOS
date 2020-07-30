@@ -342,11 +342,12 @@ class GameScene: SKScene {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
+            let frontTouchedNode = self.atPoint(location)
             
-            if (barracksTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            if (frontTouchedNode === barracksTrigger && gameController.castle.villager >= multiplierSelected) {
                 gameController.soldierInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (farm1Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            } else if (frontTouchedNode === farm1Trigger && gameController.castle.villager >= multiplierSelected) {
                 if (fieldSpace1.isFarmEnabled && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers + multiplierSelected <= MAX_FARMERS) {
                     fieldSpace1.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
@@ -354,7 +355,7 @@ class GameScene: SKScene {
                     fieldSpace1.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }
-            } else if (farm2Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            } else if (frontTouchedNode === farm2Trigger && gameController.castle.villager >= multiplierSelected) {
             if (fieldSpace2.isFarmEnabled && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers + multiplierSelected <= MAX_FARMERS) {
                 fieldSpace2.farmerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
@@ -362,7 +363,7 @@ class GameScene: SKScene {
                 fieldSpace2.workingBuilders += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
                 }
-            } else if (farm3Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            } else if (frontTouchedNode === farm3Trigger && gameController.castle.villager >= multiplierSelected) {
                 if (fieldSpace3.isFarmEnabled && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers + multiplierSelected <= MAX_FARMERS) {
                     fieldSpace3.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
@@ -370,7 +371,7 @@ class GameScene: SKScene {
                     fieldSpace3.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }
-            } else if (farm4Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            } else if (frontTouchedNode === farm4Trigger && gameController.castle.villager >= multiplierSelected) {
                 if (fieldSpace4.isFarmEnabled && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers + multiplierSelected <= MAX_FARMERS) {
                     fieldSpace4.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
@@ -378,7 +379,7 @@ class GameScene: SKScene {
                     fieldSpace4.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }
-            } else if (castleTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            } else if (frontTouchedNode === castleTrigger && gameController.castle.villager >= multiplierSelected) {
                 gameController.archerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
             }
