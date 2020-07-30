@@ -18,6 +18,7 @@ class AttackPopup: SKSpriteNode {
     var sections: [AttackPopupSection] = []
     var sendAttackBtn: SKSpriteNode = SKSpriteNode()
     var spacing: CGFloat = 160
+    var attackLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Attack!")
     
     init(castleNames: [String], scene: GameScene) {
         gameScene = scene
@@ -37,6 +38,7 @@ class AttackPopup: SKSpriteNode {
         backgroundNode.zPosition = -1
         sendAttackBtn.position.y = self.frame.minY + spacing/2 + sendAttackBtn.frame.height/2
         sendAttackBtn.zPosition = 12
+        sendAttackBtn.addChild(attackLabel)
         addChild(sendAttackBtn)
     }
     

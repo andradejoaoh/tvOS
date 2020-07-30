@@ -52,9 +52,14 @@ class GameScene: SKScene {
             castleNode.zPosition = 2
             castleNode.name = castleList[castle].name
             
-            let castleLabel = iOSLabelNode(fontSize: 40, fontColor: .black, text: castleList[castle].name)
-            castleLabel.position.y += 60
+            let castleLabel = iOSLabelNode(fontSize: 28, fontColor: .black, text: castleList[castle].name)
+            castleLabel.position.y += 160
             castleNode.addChild(castleLabel)
+            
+            let archerIcon = iOSIconNode(imageNamed: "archerIcon")
+            archerIcon.position.y -= 140
+            archerIcon.position.x -= 20
+            castleNode.addChild(archerIcon)
             
             self.addChild(castleNode)
             self.castleNodes.append(castleNode)
@@ -71,8 +76,8 @@ class GameScene: SKScene {
         soldier.size = CGSize(width: self.frame.width/12, height: self.frame.height/6)
         soldier.zPosition = 2
         
-        let soldierLabel = iOSLabelNode(fontSize: 40, fontColor: .black, text: "\(army.soldierCount)")
-        soldierLabel.position.y += 60
+        let soldierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(army.soldierCount)")
+        soldierLabel.position.y += 80
         
         soldier.addChild(soldierLabel)
         
@@ -92,6 +97,7 @@ class GameScene: SKScene {
         
         if fromPosition.x > toPosition.x {
             soldier.xScale = -1
+            soldier.children.first?.xScale = -1
             movePos.x += 60
         } else {
             soldier.xScale = 1
@@ -199,14 +205,21 @@ class GameScene: SKScene {
     }
     func checkArchersAndHP(){
         for castle in castleList {
-            let archerNode = iOSLabelNode(fontSize: 40, fontColor: .black, text: "\(castle.archer)")
-            let hpNode = iOSLabelNode(fontSize: 40, fontColor: .black, text:  "\(castle.hp)")
+            let archerNode = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(castle.archer)")
+            
+            let hpNode = ProgressBar(color: SKColor.green, size:CGSize(width:100, height:20))
+
+
             
             hpNode.name = "hpNode"
-            hpNode.position.y -= 60
+            hpNode.position.y += 130
+            
+            let progressCalculator = Float(castle.hp)/6000
+            hpNode.progress = CGFloat(progressCalculator)
             
             archerNode.name = "archerNode"
-            archerNode.position.y -= 100
+            archerNode.position.y -= 140
+            archerNode.position.x += 20
             
             guard let castleNode = castleNodes.first(where: {$0.name == castle.name }) else { return }
             var removeNodes: [SKNode] = []
@@ -220,6 +233,8 @@ class GameScene: SKScene {
             
             castleNode.addChild(hpNode)
             castleNode.addChild(archerNode)
+
+
         }
     }
     

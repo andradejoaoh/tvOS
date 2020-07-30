@@ -111,8 +111,13 @@ class GameScene: SKScene {
     private var farmersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Farmers")
     private var villagersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Villagers")
     private var archersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Archers")
-
-    private var hpLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "HP: 6000/6000")
+    private var hpLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "6000/6000")
+    
+    private var soldierIcon = iOSIconNode(imageNamed: "soldierIcon")
+    private var archerIcon = iOSIconNode(imageNamed: "archerIcon")
+    private var farmerIcon = iOSIconNode(imageNamed: "farmerIcon")
+    private var villagerIcon = iOSIconNode(imageNamed: "villagerIcon")
+    private var hpIcon = iOSIconNode(imageNamed: "hpIcon")
     
     private var multiplierSelected: Int = 1
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
@@ -131,11 +136,19 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.addChild(backgroundNode)
+        
         self.addChild(soldiersLabel)
         self.addChild(villagersLabel)
         self.addChild(farmersLabel)
         self.addChild(archersLabel)
-        self.addChild(multiplierNode)
+        self.addChild(hpLabel)
+        
+        self.addChild(soldierIcon)
+        self.addChild(archerIcon)
+        self.addChild(farmerIcon)
+        self.addChild(hpIcon)
+        self.addChild(villagerIcon)
+        
         self.addChild(attackButton)
         self.addChild(castleTrigger)
         self.addChild(barracksTrigger)
@@ -177,11 +190,11 @@ class GameScene: SKScene {
         fieldSpace3.isFarmEnabled = false
         fieldSpace4.isFarmEnabled = false
 
-        multiplierNode.position.x = CGFloat(screenSize.width/2 - multiplierNode.frame.width/2)
-        multiplierNode.position.y += self.frame.height/2 - 80
-        multiplierNode.addChild(multiplierLabel)
-        multiplierNode.zPosition = 2
-        multiplierLabel.zPosition = 3
+//        multiplierNode.position.x = CGFloat(screenSize.width/2 - multiplierNode.frame.width/2)
+//        multiplierNode.position.y += self.frame.height/2 - 80
+//        multiplierNode.addChild(multiplierLabel)
+//        multiplierNode.zPosition = 2
+//        multiplierLabel.zPosition = 3
         
         #if TEST_VICTORY_CONDITIONS
         // test
@@ -196,13 +209,31 @@ class GameScene: SKScene {
         #endif
         
         soldiersLabel.position.y += self.frame.height/2 - 80
-        farmersLabel.position.y += self.frame.height/2 - 120
-        villagersLabel.position.y += self.frame.height/2 - 160
-        archersLabel.position.y += self.frame.height/2 - 200
-        hpLabel.position.y += self.frame.height/2 - 240
+        soldierIcon.position.y = soldiersLabel.position.y
+        soldierIcon.position.x -= 50
+        
+        farmersLabel.position.y = soldiersLabel.position.y
+        farmerIcon.position.x = -self.frame.width/2 + 100
+        farmerIcon.position.y = farmersLabel.position.y
+        farmersLabel.position.x = farmerIcon.position.x + 50
 
-        attackButton.position.y = screenSize.height/2 - 1250
-        attackButton.zPosition = 50
+        villagersLabel.position.y += self.frame.height/2 - 160
+        villagersLabel.position.x = -self.frame.width/5
+        villagerIcon.position.y = villagersLabel.position.y
+        villagerIcon.position.x = villagersLabel.position.x - 50
+        
+        archersLabel.position.y = soldiersLabel.position.y
+        archersLabel.position.x += self.frame.width/2 - 100
+        archerIcon.position.y = archersLabel.position.y
+        archerIcon.position.x = archersLabel.position.x - 50
+
+        hpLabel.position.y += self.frame.height/2 - 160
+        hpLabel.position.x = self.frame.width/5
+        hpIcon.position.y = hpLabel.position.y
+        hpIcon.position.x = hpLabel.position.x - 120
+
+        attackButton.position.y = -screenSize.height/2 + 120
+        attackButton.zPosition = 13
         
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
@@ -215,18 +246,19 @@ class GameScene: SKScene {
     }
     
     func updateLabel(){
-        soldiersLabel.text = "Soldiers: \(gameController.castle.soldier)"
-        villagersLabel.text = "Villagers: \(gameController.castle.villager)"
-        farmersLabel.text = "Farmers: \(gameController.castle.farmer)"
-        archersLabel.text = "Archers: \(gameController.castle.archer)"
-        hpLabel.text = "HP: \(gameController.castle.hp)/6000"
-        multiplierLabel.text = "\(multiplierSelected)x"
+        soldiersLabel.text = "\(gameController.castle.soldier)"
+        villagersLabel.text = "\(gameController.castle.villager)"
+        farmersLabel.text = "\(gameController.castle.farmer)"
+        archersLabel.text = "\(gameController.castle.archer)"
+        hpLabel.text = "\(gameController.castle.hp)/6000"
         
-        if multiplierSelected > gameController.castle.villager {
-            multiplierNode.color = UIColor.gray
-        } else {
-            multiplierNode.color = UIColor.green
-        }
+//        multiplierLabel.text = "\(multiplierSelected)x"
+//
+//        if multiplierSelected > gameController.castle.villager {
+//            multiplierNode.color = UIColor.gray
+//        } else {
+//            multiplierNode.color = UIColor.green
+//        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -268,20 +300,21 @@ class GameScene: SKScene {
             } else if (castleTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.archerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if multiplierNode.contains(location){
-                switch multiplierSelected {
-                case 1:
-                    multiplierSelected = 5
-                case 5:
-                    multiplierSelected = 10
-                case 10:
-                    multiplierSelected = 20
-                case 20:
-                    multiplierSelected = 50
-                default:
-                    multiplierSelected = 1
-                }
             }
+//            else if multiplierNode.contains(location){
+//                switch multiplierSelected {
+//                case 1:
+//                    multiplierSelected = 5
+//                case 5:
+//                    multiplierSelected = 10
+//                case 10:
+//                    multiplierSelected = 20
+//                case 20:
+//                    multiplierSelected = 50
+//                default:
+//                    multiplierSelected = 1
+//                }
+//            }
             #if TEST_VICTORY_CONDITIONS
             if testGameOver.contains(location) {
                 gameOver()
