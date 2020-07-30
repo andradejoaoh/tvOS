@@ -20,7 +20,7 @@ class GameController {
         #endif
         
     }()
-    unowned var gameScene: GameScene
+    weak var gameScene: GameScene?
     
     private var createSoldierIsRunning: Bool = false
     var soldierInQueue: Int = 0 {
@@ -52,7 +52,7 @@ class GameController {
             self.soldierInQueue -= 1
             self.castle.soldier += 1
             self.createSoldierIsRunning = false
-            self.gameScene.updateLabel()
+            self.gameScene?.updateLabel()
             if self.soldierInQueue == 0 {
                 timer.invalidate()
             } else if self.soldierInQueue > 0 {
@@ -68,7 +68,7 @@ class GameController {
             self.archerInQueue -= 1
             self.castle.archer += 1
             self.createArcherIsRunning = false
-            self.gameScene.updateLabel()
+            self.gameScene?.updateLabel()
             MultipeerController.shared.sendToHost(msg: "addArcher:\(1)_\(self.castle.name)")
             if self.archerInQueue == 0 {
                 timer.invalidate()
@@ -81,7 +81,7 @@ class GameController {
     @objc func farmerResources(){
         let resourcesPerTick = Int(castle.farmer/2)
         castle.villager += resourcesPerTick
-        gameScene.updateLabel()
+        gameScene?.updateLabel()
     }
     
     func setupFarmerTimer(){

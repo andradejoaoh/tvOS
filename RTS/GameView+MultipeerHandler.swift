@@ -39,6 +39,7 @@ extension GameView : MultipeerHandler {
                 if let archers = Int(parameters[1]) {
                     self.gameScene.gameController.castle.archer = archers
                 }
+                self.gameScene.updateLabel()
             case "youWon":
                 self.gameScene.gameWon()
             case "draw":
