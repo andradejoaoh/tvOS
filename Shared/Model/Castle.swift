@@ -63,13 +63,11 @@ public class Castle {
             self.hp -= damage
         } else {
             self.hp = 0
-            print("Castelo \(self.name) Morreu - WASTED!")
-            
-            
         }
     }
     
     func receiveAttack(damage: Int){
+        
         let totalDamage = damage + overReceivedDamage
         let deadArchers = totalDamage/Archer.hp
         overReceivedDamage = totalDamage - deadArchers*Archer.hp

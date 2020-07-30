@@ -18,6 +18,7 @@ class AttackPopup: SKSpriteNode {
     var sections: [AttackPopupSection] = []
     var sendAttackBtn: SKSpriteNode = SKSpriteNode()
     var spacing: CGFloat = 160
+    var attackLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Attack!")
     
     init(castleNames: [String], scene: GameScene) {
         gameScene = scene
@@ -36,6 +37,8 @@ class AttackPopup: SKSpriteNode {
         addChild(backgroundNode)
         backgroundNode.zPosition = -1
         sendAttackBtn.position.y = self.frame.minY + spacing/2 + sendAttackBtn.frame.height/2
+        sendAttackBtn.zPosition = 12
+        sendAttackBtn.addChild(attackLabel)
         addChild(sendAttackBtn)
     }
     
@@ -57,21 +60,22 @@ class AttackPopup: SKSpriteNode {
     func dismissPopup() {
         gameScene.attackPopup = nil
         self.removeFromParent()
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let location = touches.first?.location(in: self) {
             let node = self.atPoint(location)
+            if self.frame.contains(location) {
             if node === sendAttackBtn {
                 sendAttack()
                 dismissPopup()
             }
+            }
             else if node === backgroundNode {
+                
                 dismissPopup()
             }
         }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
     }
 }

@@ -26,10 +26,13 @@ class LobbyViewController: UIViewController {
     @IBOutlet weak var imgCheck: UIImageView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        #if OFFLINE
+            showGameView()
+        #endif
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        lblStatus.text = ("Connect to an AppleTV to begin your fun!")
+        lblStatus.text = ("Connect to an AppleTV!")
         MultipeerController.shared.startBrowsing()
         MultipeerController.shared.delegate = self
         setReady(false)
@@ -44,6 +47,12 @@ class LobbyViewController: UIViewController {
             self.imgCheck.image = UIImage.init(systemName: "xmark")
             self.imgCheck.tintColor = #colorLiteral(red: 0.6073825955, green: 0.1656134129, blue: 0.09109530598, alpha: 1)
             self.isReady = false
+        }
+    }
+    
+    func showGameView() {
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "showGameView", sender: nil)
         }
     }
 }

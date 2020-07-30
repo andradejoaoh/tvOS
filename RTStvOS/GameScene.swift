@@ -16,11 +16,10 @@ class GameScene: SKScene {
     private var backgroudNode: SKSpriteNode = SKSpriteNode(imageNamed: "overWorld")
     
     private var castleNodes: [SKSpriteNode] = []
-    private var testCastles: [Castle] = [Castle(), Castle()]
 
     private var soldierWalkTextures: [SKTexture] = []
     private var soldierAttackTextures: [SKTexture] = []
-    
+    private var castleList: [Castle] = []
     
     override func sceneDidLoad() {
         print("[TV] GameScene: sceneDidLoad")
@@ -33,30 +32,35 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         self.addChild(backgroudNode)
-        createMap(castleList: MultipeerController.shared.players.map({ (player) -> Castle in
-            let newCastle = player.castle
-            MultipeerController.shared.castles.append(newCastle)
-            return newCastle
-        }))
-//        createMap(castleList: testCastles)
+        updateCastleList()
+        createMap(castleList: castleList)
+        checkArchersAndHP()
     }
     
     func createMap(castleList: [Castle]) {
         var posX: CGFloat = 0
         
         for castle in 0..<castleList.count {
-            let castleNode = SKSpriteNode(imageNamed: "castle")
+            
             let posY: CGFloat = self.frame.height/3 - CGFloat(castle%2) * self.frame.height/2.2
             let frameX = self.frame.width * 0.7 / CGFloat(castleList.count-1) * CGFloat(castle)
-            
             posX = frameX - self.frame.width * 0.35
             
-            
-            
+            let castleNode = SKSpriteNode(imageNamed: "castle")
             castleNode.size = CGSize(width: self.frame.width/6, height: self.frame.height/4)
             castleNode.position = CGPoint(x: posX, y: posY)
             castleNode.zPosition = 2
             castleNode.name = castleList[castle].name
+            
+            let castleLabel = iOSLabelNode(fontSize: 28, fontColor: .black, text: castleList[castle].name)
+            castleLabel.position.y += 160
+            castleNode.addChild(castleLabel)
+            
+            let archerIcon = iOSIconNode(imageNamed: "archerIcon")
+            archerIcon.position.y -= 140
+            archerIcon.position.x -= 20
+            castleNode.addChild(archerIcon)
+            
             self.addChild(castleNode)
             self.castleNodes.append(castleNode)
         }
@@ -71,6 +75,11 @@ class GameScene: SKScene {
         let soldier: SKSpriteNode = SKSpriteNode(imageNamed: "soldierWalk0")
         soldier.size = CGSize(width: self.frame.width/12, height: self.frame.height/6)
         soldier.zPosition = 2
+        
+        let soldierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(army.soldierCount)")
+        soldierLabel.position.y += 80
+        
+        soldier.addChild(soldierLabel)
         
         guard let fromNode = castleNodes.first(where: { (aCastleNode) -> Bool in
             aCastleNode.name == from.name
@@ -88,6 +97,7 @@ class GameScene: SKScene {
         
         if fromPosition.x > toPosition.x {
             soldier.xScale = -1
+            soldier.children.first?.xScale = -1
             movePos.x += 60
         } else {
             soldier.xScale = 1
@@ -118,6 +128,10 @@ class GameScene: SKScene {
 
             let soldierAttack = SKAction.animate(with: self.soldierAttackTextures, timePerFrame: 0.2)
             let soldierAttackAnimation = SKAction.repeatForever(soldierAttack)
+            let playAction = SKAction.play()
+            playAction.duration = 1
+            let audioNode = SKAudioNode()
+            audioNode.run(SKAction.repeatForever(playAction))
             
             let soldierSound  = SKAction.playSoundFileNamed("sword_fight_2.mp3", waitForCompletion: true)
             soldierSound.duration = 1
@@ -125,17 +139,13 @@ class GameScene: SKScene {
             
             soldier.run(SKAction.group([soldierAttackAnimation, soldierSoundRepeat]))
             
-            self.beginAttack(attackerArmy: army, defensorCastle: to, completion: {
+            self.beginAttack(attackerArmy: army, armyLabel: soldierLabel, defensorCastle: to, completion: {
                 soldier.removeFromParent()
             })
 
         }
     }
 
-
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        attackAnimation(army: Army(soldierCount: 5), from: testCastles[0], to: testCastles[1])
-//    }
     
     func buildSoldier() {
         let soldierWalkAtlas = SKTextureAtlas(named: "soldierWalk")
@@ -155,13 +165,16 @@ class GameScene: SKScene {
         }
     }
     
-    func beginAttack(attackerArmy: Army, defensorCastle: Castle, completion: @escaping () -> Void){
+    func beginAttack(attackerArmy: Army, armyLabel: SKLabelNode, defensorCastle: Castle, completion: @escaping () -> Void){
         _ = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { (timer) in
             if attackerArmy.soldierCount > 0 && defensorCastle.hp > 0 {
-                defensorCastle.receiveAttack(damage: attackerArmy.attack())
                 attackerArmy.receiveDamage(damage: defensorCastle.defensorAttack())
+                defensorCastle.receiveAttack(damage: attackerArmy.attack())
+                armyLabel.text = "\(attackerArmy.soldierCount)"
+                self.updateCastleList()
+                self.checkArchersAndHP()
                 self.checkIfSomeoneWon()
-                self.beginAttack(attackerArmy: attackerArmy, defensorCastle: defensorCastle, completion: completion)
+                self.beginAttack(attackerArmy: attackerArmy, armyLabel: armyLabel, defensorCastle: defensorCastle, completion: completion)
             } else {
                 completion()
                 return
@@ -199,5 +212,48 @@ class GameScene: SKScene {
                 self.gameView?.goToLobby()
             }
         }
+    }
+    func checkArchersAndHP(){
+        for castle in castleList {
+            let archerNode = iOSLabelNode(fontSize: 32, fontColor: .black, text: "\(castle.archer)")
+            
+            let hpNode = ProgressBar(color: SKColor.green, size:CGSize(width:100, height:20))
+
+
+            
+            hpNode.name = "hpNode"
+            hpNode.position.y += 130
+            
+            let progressCalculator = Float(castle.hp)/6000
+            hpNode.progress = CGFloat(progressCalculator)
+            
+            archerNode.name = "archerNode"
+            archerNode.position.y -= 140
+            archerNode.position.x += 20
+            
+            guard let castleNode = castleNodes.first(where: {$0.name == castle.name }) else { return }
+            var removeNodes: [SKNode] = []
+            
+            if let hpRemove = castleNode.childNode(withName: "hpNode"),
+            let archerRemove = castleNode.childNode(withName: "archerNode") {
+                removeNodes.append(hpRemove)
+                removeNodes.append(archerRemove)
+            }
+            castleNode.removeChildren(in: removeNodes)
+            
+            castleNode.addChild(hpNode)
+            castleNode.addChild(archerNode)
+
+
+        }
+    }
+    
+    func updateCastleList(){
+        castleList.removeAll()
+        castleList = MultipeerController.shared.players.map({ (player) -> Castle in
+            let newCastle = player.castle
+            MultipeerController.shared.castles.append(newCastle)
+            return newCastle
+        })
     }
 }

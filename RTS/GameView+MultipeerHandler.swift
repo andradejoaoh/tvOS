@@ -31,6 +31,8 @@ extension GameView : MultipeerHandler {
             case "updateCastle":
                 let parameters = substrings[1].split(separator: "_")
                 if let hp = Int(parameters[0]) {
+                    let dmg = self.gameScene.gameController.castle.hp - hp
+                    self.gameScene.processFarmDamage(totalDmg: dmg)
                     self.gameScene.gameController.castle.hp = hp
                     if hp == 0 {
                         self.gameScene.gameOver()
@@ -39,6 +41,7 @@ extension GameView : MultipeerHandler {
                 if let archers = Int(parameters[1]) {
                     self.gameScene.gameController.castle.archer = archers
                 }
+                self.gameScene.updateLabel()
             case "youWon":
                 self.gameScene.gameWon()
             case "draw":

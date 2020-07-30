@@ -10,31 +10,124 @@ import Foundation
 import SpriteKit
 import MultipeerConnectivity
 
+let showTriggers: Bool = {
+    #if SHOW_TRIGGERS
+    return true
+    #else
+    return false
+    #endif
+}()
 
 class GameScene: SKScene {
+    let MAX_FARMERS = 5
+    let MAX_BUILDERS = 3
+    
     lazy var gameController: GameController = GameController(gameScene: self)
     lazy var screenSize = self.frame
-    private var soldierInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
-    private var farmerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
-    private var archerInstance = SKSpriteNode(color: SKColor.clear, size: CGSize(width: 60, height: 60))
-    private var attackButton = SKSpriteNode(texture: SKTexture(imageNamed: "attackButton"), size: CGSize(width: 80, height: 80))
-    private var popupNode = SKSpriteNode(color: SKColor.cyan, size: CGSize(width: 500, height: 800))
-    private var popupBackground = SKSpriteNode()
-    private let backgroundNode = SKSpriteNode(imageNamed: "castle.pdf")
     
+    // Sprites
+    private let backgroundNode = SKSpriteNode(imageNamed: "city_background.png")
+    private let farm1Sprite = SKSpriteNode(imageNamed: "city_farm1.png")
+    private let farm2Sprite = SKSpriteNode(imageNamed: "city_farm2.png")
+    private let farm3Sprite = SKSpriteNode(imageNamed: "city_farm3.png")
+    private let farm4Sprite = SKSpriteNode(imageNamed: "city_farm4.png")
+    private let field1Sprite = SKSpriteNode(imageNamed: "city_field1.png")
+    private let field2Sprite = SKSpriteNode(imageNamed: "city_field2.png")
+    private let field3Sprite = SKSpriteNode(imageNamed: "city_field3.png")
+    private let field4Sprite = SKSpriteNode(imageNamed: "city_field4.png")
+    private let castleSprite = SKSpriteNode(imageNamed: "city_castle.png")
+    private let barracksSprite = SKSpriteNode(imageNamed: "city_barracks.png")
+    
+    // Trigger Boxes
+    private lazy var farm1Trigger: SKShapeNode = {
+        let topleft = CGPoint(x: self.frame.minX, y: self.frame.minY + self.frame.height/5)
+        let topRight = CGPoint(x: self.frame.midX + self.frame.width/20, y: self.frame.minY + self.frame.height/8.5)
+        let bottomRight = CGPoint(x: self.frame.midX, y: self.frame.minY)
+        let bottomLeft = CGPoint(x: self.frame.minX, y: self.frame.minY)
+        let color = !showTriggers ? .clear : UIColor.init(red: 1.0, green: 0.1, blue: 0.4, alpha: 0.3)
+        return makeShapeNode([topleft, topRight, bottomRight, bottomLeft], color)
+    }()
+    private lazy var farm2Trigger: SKShapeNode = {
+        let topleft = CGPoint(x: self.frame.minX, y: self.frame.minY + self.frame.height/3.7)
+        let topRight = CGPoint(x: self.frame.midX - self.frame.width/20, y: self.frame.minY + self.frame.height/3)
+        let bottomRight = CGPoint(x: self.frame.midX + self.frame.width/20, y: self.frame.minY + self.frame.height/8.5)
+        let bottomLeft = CGPoint(x: self.frame.minX, y: self.frame.minY + self.frame.height/5)
+        let color = !showTriggers ? .clear : UIColor.init(red: 0.1, green: 1.0, blue: 0.4, alpha: 0.3)
+        return makeShapeNode([topleft, topRight, bottomRight, bottomLeft], color)
+    }()
+    private lazy var farm3Trigger: SKShapeNode = {
+        let topleft = CGPoint(x: self.frame.minX, y: self.frame.midY - self.frame.height/20)
+        let topRight = CGPoint(x: self.frame.midX - self.frame.width/7, y: self.frame.midY - self.frame.height/9.5)
+        let bottomRight = CGPoint(x: self.frame.midX - self.frame.width/20, y: self.frame.minY + self.frame.height/3)
+        let bottomLeft = CGPoint(x: self.frame.minX, y: self.frame.minY + self.frame.height/3.7)
+        let color = !showTriggers ? .clear : UIColor.init(red: 0.1, green: 0.4, blue: 1.0, alpha: 0.3)
+        return makeShapeNode([topleft, topRight, bottomRight, bottomLeft], color)
+    }()
+    private lazy var farm4Trigger: SKShapeNode = {
+        let topleft = CGPoint(x: self.frame.minX + self.frame.width/9, y: self.frame.midY)
+        let topRight = CGPoint(x: self.frame.midX - self.frame.width/13, y: self.frame.midY - self.frame.height/80)
+        let bottomRight = CGPoint(x: self.frame.midX - self.frame.width/7, y: self.frame.midY - self.frame.height/9.5)
+        let bottomLeft = CGPoint(x: self.frame.minX, y: self.frame.midY - self.frame.height/20)
+        let color = !showTriggers ? .clear : UIColor.init(red: 1.0, green: 0.4, blue: 0.1, alpha: 0.3)
+        return makeShapeNode([topleft, topRight, bottomRight, bottomLeft], color)
+    }()
+    private lazy var castleTrigger: SKShapeNode = {
+        let rect = CGRect(x: self.frame.midX,
+                          y: self.frame.midY + self.frame.height/5.5,
+                          width: self.frame.width/2,
+                          height: -self.frame.height/3)
+        let shapeNode = SKShapeNode(rect: rect)
+        shapeNode.zPosition = 20
+        shapeNode.fillColor = !showTriggers ? .clear : UIColor.init(red: 1.0, green: 0.4, blue: 0.1, alpha: 0.3)
+        shapeNode.lineWidth = 0
+        return shapeNode
+    }()
+    private lazy var barracksTrigger: SKShapeNode = {
+        let rect = CGRect(x: self.frame.midX + self.frame.width/10,
+                          y: self.frame.minY + self.frame.height/5.5,
+                          width: self.frame.width/2.6,
+                          height: self.frame.height/6.5)
+        let shapeNode = SKShapeNode(rect: rect)
+        shapeNode.zPosition = 20
+        shapeNode.fillColor = !showTriggers ? .clear : UIColor.init(red: 0.8, green: 0.8, blue: 0.1, alpha: 0.3)
+        shapeNode.lineWidth = 0
+        return shapeNode
+    }()
+    
+    // Field Spaces
+    private lazy var fieldSpace1: FieldSpace = {
+        FieldSpace(emptyField: self.field1Sprite, farm: self.farm1Sprite, trigger: self.farm1Trigger, true, castle: self.gameController.castle, gameScene: self)
+    }()
+    private lazy var fieldSpace2: FieldSpace = {
+        FieldSpace(emptyField: self.field2Sprite, farm: self.farm2Sprite, trigger: self.farm2Trigger, false, castle: self.gameController.castle, gameScene: self)
+    }()
+    private lazy var fieldSpace3: FieldSpace = {
+        FieldSpace(emptyField: self.field3Sprite, farm: self.farm3Sprite, trigger: self.farm3Trigger, false, castle: self.gameController.castle, gameScene: self)
+    }()
+    private lazy var fieldSpace4: FieldSpace = {
+        FieldSpace(emptyField: self.field4Sprite, farm: self.farm4Sprite, trigger: self.farm4Trigger, false, castle: self.gameController.castle, gameScene: self)
+    }()
+    
+    // HUD (labels and buttons)
+    private var attackButton = SKSpriteNode(texture: SKTexture(imageNamed: "attackButton"), size: CGSize(width: 80, height: 80))
     private var soldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Soldiers")
     private var farmersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Farmers")
     private var villagersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Villagers")
     private var archersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Archers")
+    private var hpLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "6000/6000")
+    
+    private var soldierIcon = iOSIconNode(imageNamed: "soldierIcon")
+    private var archerIcon = iOSIconNode(imageNamed: "archerIcon")
+    private var farmerIcon = iOSIconNode(imageNamed: "farmerIcon")
+    private var villagerIcon = iOSIconNode(imageNamed: "villagerIcon")
+    private var hpIcon = iOSIconNode(imageNamed: "hpIcon")
+    
+    private var trainingSoldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
+    private var trainingArchersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
     
     private var multiplierSelected: Int = 1
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
     private var multiplierLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "1x")
-    
-    var castle1PopoverSection = SKSpriteNode(color: SKColor.black, size: CGSize(width: 450, height: 80))
-    
-    var minusTroop = SKSpriteNode(color: SKColor.white, size: CGSize(width: 50, height: 50))
-    var plusTroop = SKSpriteNode(color: SKColor.systemGray2, size: CGSize(width: 50, height: 50))
     var soldiersAmountLabel = iOSLabelNode(fontSize: 30, fontColor: .white, text: "0")
     var army: Int = 0
     
@@ -54,14 +147,25 @@ class GameScene: SKScene {
         self.addChild(villagersLabel)
         self.addChild(farmersLabel)
         self.addChild(archersLabel)
-        self.addChild(multiplierNode)
+        self.addChild(hpLabel)
+        
+        self.addChild(soldierIcon)
+        self.addChild(archerIcon)
+        self.addChild(farmerIcon)
+        self.addChild(hpIcon)
+        self.addChild(villagerIcon)
         
         self.addChild(attackButton)
-        
-        self.addChild(soldierInstance)
-        self.addChild(farmerInstance)
-        self.addChild(archerInstance)
-        
+        self.addChild(castleTrigger)
+        self.addChild(barracksTrigger)
+        self.addChild(farm1Trigger)
+        self.addChild(farm2Trigger)
+        self.addChild(farm3Trigger)
+        self.addChild(farm4Trigger)
+        self.addChild(trainingSoldiersLabel)
+        self.addChild(trainingArchersLabel)
+
+
         #if TEST_VICTORY_CONDITIONS
         // test
         self.addChild(testGameWon)
@@ -70,34 +174,51 @@ class GameScene: SKScene {
     }
     
     override func sceneDidLoad() {
-        print("[iOS] GameScene: sceneDidLoad")
+        print("[iOS] GameScene: sceneDidLoad. size: \(self.size)")
         self.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         self.scaleMode = .fill
         self.backgroundColor = SKColor.white
         setupNodes()
     }
     
+    var lastTime: TimeInterval = 0
+    override func update(_ currentTime: TimeInterval) {
+        let deltaTime = currentTime - lastTime
+        // update farm completion for farms that are not already built
+        for f in [fieldSpace1, fieldSpace2, fieldSpace3, fieldSpace4].filter({ (fs) -> Bool in
+            !fs.isFarmEnabled
+        }) {
+            f.farmCompletion += Double(f.workingBuilders) * FieldSpace.buildingRate * deltaTime
+            if f.farmCompletion >= 100 {
+                f.finishBuildingFarm()
+            }
+        }
+        lastTime = currentTime
+    }
+    
     func setupNodes(){
-        farmerInstance.size = CGSize(width: screenSize.width/2.3 , height: screenSize.height/1.6)
-        farmerInstance.position.x = CGFloat(-screenSize.width/3.5)
-        farmerInstance.position.y = CGFloat(-screenSize.height/4)
-        farmerInstance.zPosition = 2
         
-        soldierInstance.size = CGSize(width: screenSize.width/2.5 , height: screenSize.height/5)
-        soldierInstance.position.x = CGFloat(screenSize.width/3.5)
-        soldierInstance.position.y = CGFloat(-screenSize.height/4)
-        soldierInstance.zPosition = 2
+        addLayerNode(farm1Sprite, 9)
+        addLayerNode(farm2Sprite, 8)
+        addLayerNode(farm3Sprite, 7)
+        addLayerNode(farm4Sprite, 6)
+        addLayerNode(field1Sprite, 9)
+        addLayerNode(field2Sprite, 8)
+        addLayerNode(field3Sprite, 7)
+        addLayerNode(field4Sprite, 6)
+        addLayerNode(castleSprite)
+        addLayerNode(barracksSprite, 8)
         
-        archerInstance.size = CGSize(width: screenSize.width/2.1 , height: screenSize.height/3)
-        archerInstance.position.x = CGFloat(screenSize.width/3.5)
-        archerInstance.position.y = CGFloat(screenSize.height/40)
-        archerInstance.zPosition = 2
-        
-        multiplierNode.position.x = CGFloat(screenSize.width/2 - multiplierNode.frame.width/2)
-        multiplierNode.position.y += self.frame.height/2 - 80
-        multiplierNode.addChild(multiplierLabel)
-        multiplierNode.zPosition = 2
-        multiplierLabel.zPosition = 3
+        fieldSpace1.isFarmEnabled = true
+        fieldSpace2.isFarmEnabled = false
+        fieldSpace3.isFarmEnabled = false
+        fieldSpace4.isFarmEnabled = false
+
+//        multiplierNode.position.x = CGFloat(screenSize.width/2 - multiplierNode.frame.width/2)
+//        multiplierNode.position.y += self.frame.height/2 - 80
+//        multiplierNode.addChild(multiplierLabel)
+//        multiplierNode.zPosition = 2
+//        multiplierLabel.zPosition = 3
         
         #if TEST_VICTORY_CONDITIONS
         // test
@@ -112,49 +233,42 @@ class GameScene: SKScene {
         #endif
         
         soldiersLabel.position.y += self.frame.height/2 - 80
-        farmersLabel.position.y += self.frame.height/2 - 120
-        villagersLabel.position.y += self.frame.height/2 - 160
-        archersLabel.position.y += self.frame.height/2 - 200
+        soldierIcon.position.y = soldiersLabel.position.y
+        soldierIcon.position.x -= 50
         
-        attackButton.position.y = screenSize.height/2 - 1250
-        attackButton.zPosition = 4
+        farmersLabel.position.y = soldiersLabel.position.y
+        farmerIcon.position.x = -self.frame.width/2 + 100
+        farmerIcon.position.y = farmersLabel.position.y
+        farmersLabel.position.x = farmerIcon.position.x + 50
+
+        villagersLabel.position.y += self.frame.height/2 - 160
+        villagersLabel.position.x = -self.frame.width/5
+        villagerIcon.position.y = villagersLabel.position.y
+        villagerIcon.position.x = villagersLabel.position.x - 50
+        
+        archersLabel.position.y = soldiersLabel.position.y
+        archersLabel.position.x += self.frame.width/2 - 100
+        archerIcon.position.y = archersLabel.position.y
+        archerIcon.position.x = archersLabel.position.x - 50
+
+        hpLabel.position.y += self.frame.height/2 - 160
+        hpLabel.position.x = self.frame.width/5
+        hpIcon.position.y = hpLabel.position.y
+        hpIcon.position.x = hpLabel.position.x - 120
+
+        attackButton.position.y = -screenSize.height/2 + 120
+        attackButton.zPosition = 13
         
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
-        
-        attackButton.name = "attackButton"
-        //        popupSetup()
+        trainingSoldiers()
+        trainingArchers()
     }
     
-    func popupSetup()  {
-        popupNode.zPosition = 6
-        popupBackground.zPosition = 5
-        popupBackground.size = CGSize(width: self.frame.width, height: self.frame.height)
-        popupBackground.color = UIColor.black
-        popupBackground.alpha = 0.5
-        sendArmyPopoverBtn.position.y = popupNode.size.height/2 - 700
-        
-        for _ in MultipeerController.shared.otherCastles {
-            // section: minus/plus -> label -> section -> popup
-            castle1PopoverSection.position.y = popupNode.size.height/2 - 80
-            minusTroop.position.x = castle1PopoverSection.size.width/5 - 30
-            plusTroop.position.x =  castle1PopoverSection.size.height/2 + 140
-            minusTroop.name = "minusTroop"
-            plusTroop.name = "plusTroop"
-            soldiersAmountLabel.position.x = castle1PopoverSection.size.width/5 + 30
-            soldiersAmountLabel.position.y = castle1PopoverSection.size.height/2 - 50
-            castle1PopoverSection.addChild(minusTroop)
-            castle1PopoverSection.addChild(plusTroop)
-            castle1PopoverSection.addChild(soldiersAmountLabel)
-        }
-        
-        self.addChild(popupBackground)
-        self.addChild(popupNode)
-        popupNode.addChild(castle1PopoverSection)
-        popupNode.addChild(sendArmyPopoverBtn)
-        
-        popupNode.isHidden =  true
-        popupBackground.isHidden = true
+    func addLayerNode(_ node: SKSpriteNode, _ zPos: CGFloat = 5) {
+        node.size = CGSize(width: self.frame.width, height: self.frame.height)
+        node.zPosition = zPos
+        addChild(node)
     }
     
     func updateLabel(){
@@ -162,15 +276,53 @@ class GameScene: SKScene {
         villagersLabel.text = "Villagers: \(gameController.castle.villager)"
         farmersLabel.text = "Farmers: \(gameController.castle.farmer)"
         archersLabel.text = "Archers: \(gameController.castle.archer)"
-        multiplierLabel.text = "\(multiplierSelected)x"
+        hpLabel.text = "HP: \(gameController.castle.hp)/6000"
+        trainingArchers()
+        trainingSoldiers()
         
-        if multiplierSelected > gameController.castle.villager {
-            multiplierNode.color = UIColor.gray
-        } else {
-            multiplierNode.color = UIColor.green
-        }
+//        multiplierLabel.text = "\(multiplierSelected)x"
+//
+//        if multiplierSelected > gameController.castle.villager {
+//            multiplierNode.color = UIColor.gray
+//        } else {
+//            multiplierNode.color = UIColor.green
+//        }
     }
     
+    func trainingSoldiers () {
+        let trainingSoldiers = gameController.soldierInQueue
+        trainingSoldiersLabel.position.x  = self.frame.midX + self.frame.width/9
+        trainingSoldiersLabel.position.y = self.frame.minY + self.frame.height/4.15
+        trainingSoldiersLabel.zPosition = 11
+        trainingSoldiersLabel.text = "\(trainingSoldiers)"
+        setupCircle(x: self.frame.midX + self.frame.width/9, y: self.frame.minY + self.frame.height/4)
+    }
+    
+    func trainingArchers() {
+        let trainingArchers = gameController.archerInQueue 
+        trainingArchersLabel.position.x  = self.frame.midX + self.frame.width/8.5
+        trainingArchersLabel.position.y = self.frame.midY + self.frame.height/7.5
+        trainingArchersLabel.zPosition = 11
+        trainingArchersLabel.text = "\(trainingArchers)"
+        setupCircle(x: self.frame.midX + self.frame.width/8.5, y: self.frame.midY + self.frame.height/7)
+    }
+    
+    func setupCircle (x: CGFloat, y: CGFloat) {
+        let path = CGMutablePath()
+        path.addArc(center: CGPoint(x: x, y: y),
+                    radius: 30,
+                    startAngle: 0,
+                    endAngle: CGFloat.pi * 2,
+                    clockwise: true)
+        let ball = SKShapeNode(path: path)
+        ball.lineWidth = 1
+        ball.fillColor = .lightGray
+        ball.strokeColor = .white
+        ball.glowWidth = 0.5
+        ball.zPosition = 10
+        self.addChild(ball)
+    }
+        
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
@@ -178,55 +330,71 @@ class GameScene: SKScene {
         let location = touch.location(in: self)
         let frontTouchedNode = self.atPoint(location)
         
-        
-        if (frontTouchedNode.name == "attackButton")  {
-            //            popupBackground.isHidden = false
-            //            popupNode.isHidden = false
+        if (frontTouchedNode === attackButton)  {
             attackPopup = AttackPopup(castleNames: MultipeerController.shared.otherCastles.map({ (castle) -> String in
                 castle.name
             }), scene: self)
             self.addChild(attackPopup!)
-        } else if popupBackground.contains(location) && !popupNode.contains(location) {
-            //                popupNode.isHidden = true
-            //               popupBackground.isHidden = true
-            attackPopup?.removeFromParent()
-            attackPopup = nil
         }
-        if (frontTouchedNode.name == "plusTroop") {
-            army += 1
-        } else if (frontTouchedNode.name == "minusTroop" && army > 0) {
-            army -= 1
-        }
-        soldiersAmountLabel.text = "\(army)"
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
             let location = touch.location(in: self)
             
-            if (soldierInstance.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            if (barracksTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.soldierInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (farmerInstance.contains(location) && gameController.castle.villager >= multiplierSelected) {
-                gameController.farmerInQueue += multiplierSelected
+            } else if (farm1Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+                if (fieldSpace1.isFarmEnabled && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                    fieldSpace1.farmerInQueue += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                } else if (!fieldSpace1.isFarmEnabled  && fieldSpace1.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                    fieldSpace1.workingBuilders += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                }
+            } else if (farm2Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            if (fieldSpace2.isFarmEnabled && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                fieldSpace2.farmerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (archerInstance.contains(location) && gameController.castle.villager >= multiplierSelected) {
+            } else if (!fieldSpace2.isFarmEnabled  && fieldSpace2.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                fieldSpace2.workingBuilders += multiplierSelected
+                gameController.castle.villager -= multiplierSelected
+                }
+            } else if (farm3Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+                if (fieldSpace3.isFarmEnabled && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                    fieldSpace3.farmerInQueue += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                } else if (!fieldSpace3.isFarmEnabled  && fieldSpace3.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                    fieldSpace3.workingBuilders += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                }
+            } else if (farm4Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
+                if (fieldSpace4.isFarmEnabled && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                    fieldSpace4.farmerInQueue += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                } else if (!fieldSpace4.isFarmEnabled  && fieldSpace4.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                    fieldSpace4.workingBuilders += multiplierSelected
+                    gameController.castle.villager -= multiplierSelected
+                }
+            } else if (castleTrigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
                 gameController.archerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if multiplierNode.contains(location){
-                switch multiplierSelected {
-                case 1:
-                    multiplierSelected = 5
-                case 5:
-                    multiplierSelected = 10
-                case 10:
-                    multiplierSelected = 20
-                case 20:
-                    multiplierSelected = 50
-                default:
-                    multiplierSelected = 1
-                }
             }
+//            else if multiplierNode.contains(location){
+//                switch multiplierSelected {
+//                case 1:
+//                    multiplierSelected = 5
+//                case 5:
+//                    multiplierSelected = 10
+//                case 10:
+//                    multiplierSelected = 20
+//                case 20:
+//                    multiplierSelected = 50
+//                default:
+//                    multiplierSelected = 1
+//                }
+//            }
             #if TEST_VICTORY_CONDITIONS
             if testGameOver.contains(location) {
                 gameOver()
@@ -235,6 +403,17 @@ class GameScene: SKScene {
             }
             #endif
             updateLabel()
+            trainingSoldiers()
+            trainingArchers()
+        }
+    }
+    
+    func processFarmDamage(totalDmg: Int) {
+        for f in [fieldSpace1, fieldSpace2, fieldSpace3, fieldSpace4] {
+            if f.isFarmEnabled {
+                f.takeHit(dmg: totalDmg)
+                break
+            }
         }
     }
     
@@ -263,5 +442,16 @@ class GameScene: SKScene {
         let popupLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "Draw")
         popupNode.addChild(popupLabel)
         self.isUserInteractionEnabled = false
+    }
+    
+    private func makeShapeNode(_ vertices: [CGPoint], _ color: UIColor = .clear, _ zPos: CGFloat = 20) -> SKShapeNode {
+        let path = CGMutablePath()
+        path.move(to: vertices[0])
+        path.addLines(between: vertices)
+        let shapeNode = SKShapeNode(path: path)
+        shapeNode.fillColor = color
+        shapeNode.zPosition = zPos
+        shapeNode.lineWidth = 0
+        return shapeNode
     }
 }

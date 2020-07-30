@@ -12,12 +12,17 @@ import MultipeerConnectivity
 class GameController {
     
     var castle: Castle = {
+        #if OFFLINE
+        return Castle()
+        #else
         guard let castle = MultipeerController.shared.myCastle else { fatalError("myCastle not found") }
         return castle
+        #endif
+        
     }()
-    let gameScene: GameScene
+    weak var gameScene: GameScene?
     
-    var createSoldierIsRunning: Bool = false
+    private var createSoldierIsRunning: Bool = false
     var soldierInQueue: Int = 0 {
         didSet{
             if createSoldierIsRunning == false{
@@ -26,16 +31,7 @@ class GameController {
         }
     }
     
-    var createFarmerIsRunning: Bool = false
-    var farmerInQueue: Int = 0 {
-        didSet{
-            if createFarmerIsRunning == false {
-                createFarmer()
-            }
-        }
-    }
-    
-    var createArcherIsRunning: Bool = false
+    private var createArcherIsRunning: Bool = false
     var archerInQueue: Int = 0 {
         didSet{
             if createArcherIsRunning == false{
@@ -49,14 +45,14 @@ class GameController {
         setupFarmerTimer()
     }
     
-    func createSoldier(){
+    private func createSoldier(){
         self.createSoldierIsRunning = true
-        soldierInQueue -= 1
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Soldier.timeToMake), repeats: false) { (timer) in
+            self.soldierInQueue -= 1
             self.castle.soldier += 1
             self.createSoldierIsRunning = false
-            self.gameScene.updateLabel()
+            self.gameScene?.updateLabel()
             if self.soldierInQueue == 0 {
                 timer.invalidate()
             } else if self.soldierInQueue > 0 {
@@ -65,30 +61,14 @@ class GameController {
         }
     }
     
-    func createFarmer(){
-        self.createFarmerIsRunning = true
-        farmerInQueue -= 1
-        
-        let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Farmer.timeToMake), repeats: false) { (timer) in
-            self.castle.farmer += 1
-            self.createFarmerIsRunning = false
-            self.gameScene.updateLabel()
-            if self.farmerInQueue == 0 {
-                timer.invalidate()
-            } else if self.farmerInQueue > 0 {
-                self.createFarmer()
-            }
-        }
-    }
-    
-    func createArcher(){
+    private func createArcher(){
         self.createArcherIsRunning = true
-        archerInQueue -= 1
         
         let _ = Timer.scheduledTimer(withTimeInterval: TimeInterval(Archer.timeToMake), repeats: false) { (timer) in
+            self.archerInQueue -= 1
             self.castle.archer += 1
             self.createArcherIsRunning = false
-            self.gameScene.updateLabel()
+            self.gameScene?.updateLabel()
             MultipeerController.shared.sendToHost(msg: "addArcher:\(1)_\(self.castle.name)")
             if self.archerInQueue == 0 {
                 timer.invalidate()
@@ -98,13 +78,13 @@ class GameController {
         }
     }
     
-    @objc func farmerResources(){
+    @objc private func farmerResources(){
         let resourcesPerTick = Int(castle.farmer/2)
         castle.villager += resourcesPerTick
-        gameScene.updateLabel()
+        gameScene?.updateLabel()
     }
     
-    func setupFarmerTimer(){
+    private func setupFarmerTimer(){
         let _ = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.farmerResources), userInfo: nil, repeats: true)
     }
 }

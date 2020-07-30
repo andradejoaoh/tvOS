@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		610C32D924D352DA00E72D05 /* iOSIconNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6121063724D21846003956A1 /* iOSIconNode.swift */; };
 		611EA88024BE33EF001C59ED /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 611EA87F24BE33EF001C59ED /* GameScene.sks */; };
 		611EA88224BE3406001C59ED /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611EA88124BE3406001C59ED /* GameScene.swift */; };
 		611EA88424BE343C001C59ED /* GameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 611EA88324BE343C001C59ED /* GameView.swift */; };
 		6120ED9D24C0D49B00F560B5 /* CGExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6120ED9C24C0D49B00F560B5 /* CGExtension.swift */; };
 		6120ED9E24C0D4AF00F560B5 /* CGExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6120ED9C24C0D49B00F560B5 /* CGExtension.swift */; };
+		6121063824D21846003956A1 /* iOSIconNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6121063724D21846003956A1 /* iOSIconNode.swift */; };
 		612600AB24AFCF3000D0FD67 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612600AA24AFCF3000D0FD67 /* GlobalProperties.swift */; };
 		612600AC24AFCF3000D0FD67 /* GlobalProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 612600AA24AFCF3000D0FD67 /* GlobalProperties.swift */; };
 		613AAC6024B4F2D900F15167 /* Farmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 613AAC5F24B4F2D900F15167 /* Farmer.swift */; };
@@ -42,6 +44,7 @@
 		6161412C24AFBF6300194165 /* MultipeerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6161412824AFBD4A00194165 /* MultipeerController.swift */; };
 		6161412D24AFBF6300194165 /* MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6161412A24AFBD5B00194165 /* MultipeerHandler.swift */; };
 		6161C21824C6385400DCC600 /* Army.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6161C21724C6385400DCC600 /* Army.swift */; };
+		61CE301C24D1F95700C2168D /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CE301B24D1F95700C2168D /* ProgressBar.swift */; };
 		61DD279924B3B0E4009C4425 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DD279824B3B0E4009C4425 /* GameScene.swift */; };
 		61DD279B24B3B212009C4425 /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61DD279A24B3B212009C4425 /* GameController.swift */; };
 		61DD279D24B3C013009C4425 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 61DD279C24B3C013009C4425 /* GameScene.sks */; };
@@ -54,6 +57,7 @@
 		6FA7F8DD24BCE63500992181 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSystem.swift */; };
 		6FA7F8DE24BCE63500992181 /* CommandSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DC24BCE63500992181 /* CommandSystem.swift */; };
 		6FA7F8E124BE166B00992181 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA7F8DF24BE166B00992181 /* Player.swift */; };
+		8C21727A24D0C91A0027131B /* FieldSpace.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C21727924D0C91A0027131B /* FieldSpace.swift */; };
 		8C51659824C763A600239F82 /* GameView+MultipeerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */; };
 		8C57E44424C8BA64009AF2E2 /* AttackPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C57E44324C8BA64009AF2E2 /* AttackPopup.swift */; };
 		8C57E44624C8BAB5009AF2E2 /* AttackPopupSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C57E44524C8BAB5009AF2E2 /* AttackPopupSection.swift */; };
@@ -67,6 +71,7 @@
 		611EA88124BE3406001C59ED /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		611EA88324BE343C001C59ED /* GameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameView.swift; sourceTree = "<group>"; };
 		6120ED9C24C0D49B00F560B5 /* CGExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGExtension.swift; sourceTree = "<group>"; };
+		6121063724D21846003956A1 /* iOSIconNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSIconNode.swift; sourceTree = "<group>"; };
 		612600AA24AFCF3000D0FD67 /* GlobalProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalProperties.swift; sourceTree = "<group>"; };
 		613AAC5F24B4F2D900F15167 /* Farmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Farmer.swift; sourceTree = "<group>"; };
 		613AAC6224B5081F00F15167 /* iOSLabelNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSLabelNode.swift; sourceTree = "<group>"; };
@@ -93,6 +98,7 @@
 		6161412824AFBD4A00194165 /* MultipeerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerController.swift; sourceTree = "<group>"; };
 		6161412A24AFBD5B00194165 /* MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerHandler.swift; sourceTree = "<group>"; };
 		6161C21724C6385400DCC600 /* Army.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Army.swift; sourceTree = "<group>"; };
+		61CE301B24D1F95700C2168D /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		61DD279824B3B0E4009C4425 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		61DD279A24B3B212009C4425 /* GameController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		61DD279C24B3C013009C4425 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -104,6 +110,7 @@
 		6FA7F8D624B6C1A100992181 /* LobbyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyViewController.swift; sourceTree = "<group>"; };
 		6FA7F8DC24BCE63500992181 /* CommandSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandSystem.swift; sourceTree = "<group>"; };
 		6FA7F8DF24BE166B00992181 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8C21727924D0C91A0027131B /* FieldSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldSpace.swift; sourceTree = "<group>"; };
 		8C51659724C763A600239F82 /* GameView+MultipeerHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GameView+MultipeerHandler.swift"; sourceTree = "<group>"; };
 		8C57E44324C8BA64009AF2E2 /* AttackPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackPopup.swift; sourceTree = "<group>"; };
 		8C57E44524C8BAB5009AF2E2 /* AttackPopupSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttackPopupSection.swift; sourceTree = "<group>"; };
@@ -144,6 +151,8 @@
 				8CE85E0B24C7712200D5AEB3 /* PopupNode.swift */,
 				8C57E44324C8BA64009AF2E2 /* AttackPopup.swift */,
 				8C57E44524C8BAB5009AF2E2 /* AttackPopupSection.swift */,
+				8C21727924D0C91A0027131B /* FieldSpace.swift */,
+				6121063724D21846003956A1 /* iOSIconNode.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -256,6 +265,7 @@
 			children = (
 				6FA7F8DF24BE166B00992181 /* Player.swift */,
 				6161C21724C6385400DCC600 /* Army.swift */,
+				61CE301B24D1F95700C2168D /* ProgressBar.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -381,6 +391,7 @@
 				6161412D24AFBF6300194165 /* MultipeerHandler.swift in Sources */,
 				616140F724AE731500194165 /* GameView.swift in Sources */,
 				61DD279924B3B0E4009C4425 /* GameScene.swift in Sources */,
+				6121063824D21846003956A1 /* iOSIconNode.swift in Sources */,
 				616140F324AE731500194165 /* AppDelegate.swift in Sources */,
 				613AAC6824B63BEF00F15167 /* WarController.swift in Sources */,
 				8CE85E0C24C7712200D5AEB3 /* PopupNode.swift in Sources */,
@@ -389,6 +400,7 @@
 				6161411F24AE75A800194165 /* Soldier.swift in Sources */,
 				613AAC6524B6365600F15167 /* Archer.swift in Sources */,
 				6FA7F8DD24BCE63500992181 /* CommandSystem.swift in Sources */,
+				8C21727A24D0C91A0027131B /* FieldSpace.swift in Sources */,
 				6120ED9D24C0D49B00F560B5 /* CGExtension.swift in Sources */,
 				8C51659824C763A600239F82 /* GameView+MultipeerHandler.swift in Sources */,
 				616140F524AE731500194165 /* SceneDelegate.swift in Sources */,
@@ -406,6 +418,7 @@
 			files = (
 				6161410F24AE733000194165 /* TvLobbyViewController.swift in Sources */,
 				6FA7F8D324B6BF7000992181 /* TvLobbyViewController+MultipeerHandler.swift in Sources */,
+				610C32D924D352DA00E72D05 /* iOSIconNode.swift in Sources */,
 				6120ED9E24C0D4AF00F560B5 /* CGExtension.swift in Sources */,
 				613AAC6924B63C6300F15167 /* WarController.swift in Sources */,
 				613AAC6A24B63C6300F15167 /* Farmer.swift in Sources */,
@@ -418,6 +431,7 @@
 				6161412724AFB2F900194165 /* GameController.swift in Sources */,
 				6161412024AE75A800194165 /* Soldier.swift in Sources */,
 				6161410D24AE733000194165 /* AppDelegate.swift in Sources */,
+				61CE301C24D1F95700C2168D /* ProgressBar.swift in Sources */,
 				6161C21824C6385400DCC600 /* Army.swift in Sources */,
 				8CB884AA24C2263A001BA24E /* GameView+MultipeerHandler.swift in Sources */,
 				6161412B24AFBD5B00194165 /* MultipeerHandler.swift in Sources */,
@@ -517,7 +531,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_ENABLE_DEBUG_INFO = TEST;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -585,7 +599,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 557CPNQUYB;
+				DEVELOPMENT_TEAM = PVKHG959FC;
 				INFOPLIST_FILE = RTS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -604,7 +618,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 557CPNQUYB;
+				DEVELOPMENT_TEAM = PVKHG959FC;
 				INFOPLIST_FILE = RTS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -623,7 +637,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 557CPNQUYB;
+				DEVELOPMENT_TEAM = PVKHG959FC;
 				INFOPLIST_FILE = RTStvOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -643,7 +657,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 557CPNQUYB;
+				DEVELOPMENT_TEAM = PVKHG959FC;
 				INFOPLIST_FILE = RTStvOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
