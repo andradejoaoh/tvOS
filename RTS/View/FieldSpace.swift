@@ -75,4 +75,14 @@ class FieldSpace {
         workingFarmers = 0
         farmCompletion = 0
     }
+    
+    func takeHit(dmg: Int) {
+        let maxDeadFarmers = dmg/25
+        let deadFarmers = workingFarmers > maxDeadFarmers ? maxDeadFarmers : workingFarmers
+        workingFarmers -= deadFarmers
+        castle.farmer -= deadFarmers
+        if workingFarmers == 0 {
+            destroyFarm()
+        }
+    }
 }

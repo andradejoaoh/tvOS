@@ -330,6 +330,15 @@ class GameScene: SKScene {
         }
     }
     
+    func processFarmDamage(totalDmg: Int) {
+        for f in [fieldSpace1, fieldSpace2, fieldSpace3, fieldSpace4] {
+            if f.isFarmEnabled {
+                f.takeHit(dmg: totalDmg)
+                break
+            }
+        }
+    }
+    
     func gameOver() {
         let popupNode = SKSpriteNode(color: SKColor.lightGray, size: CGSize(width: 400, height: 400))
         self.addChild(popupNode)

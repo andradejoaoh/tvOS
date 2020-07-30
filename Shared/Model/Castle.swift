@@ -67,6 +67,7 @@ public class Castle {
     }
     
     func receiveAttack(damage: Int){
+        
         let totalDamage = damage + overReceivedDamage
         let deadArchers = totalDamage/Archer.hp
         overReceivedDamage = totalDamage - deadArchers*Archer.hp
