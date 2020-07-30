@@ -272,11 +272,11 @@ class GameScene: SKScene {
     }
     
     func updateLabel(){
-        soldiersLabel.text = "Soldiers: \(gameController.castle.soldier)"
-        villagersLabel.text = "Villagers: \(gameController.castle.villager)"
-        farmersLabel.text = "Farmers: \(gameController.castle.farmer)"
-        archersLabel.text = "Archers: \(gameController.castle.archer)"
-        hpLabel.text = "HP: \(gameController.castle.hp)/6000"
+        soldiersLabel.text = "\(gameController.castle.soldier)"
+        villagersLabel.text = "\(gameController.castle.villager)"
+        farmersLabel.text = "\(gameController.castle.farmer)"
+        archersLabel.text = "\(gameController.castle.archer)"
+        hpLabel.text = "\(gameController.castle.hp)/6000"
         trainingArchers()
         trainingSoldiers()
         
@@ -346,34 +346,34 @@ class GameScene: SKScene {
                 gameController.soldierInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
             } else if (farm1Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
-                if (fieldSpace1.isFarmEnabled && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                if (fieldSpace1.isFarmEnabled && fieldSpace1.farmerInQueue + fieldSpace1.workingFarmers + multiplierSelected <= MAX_FARMERS) {
                     fieldSpace1.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
-                } else if (!fieldSpace1.isFarmEnabled  && fieldSpace1.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                } else if (!fieldSpace1.isFarmEnabled  && fieldSpace1.workingBuilders + multiplierSelected <= MAX_BUILDERS) {
                     fieldSpace1.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }
             } else if (farm2Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
-            if (fieldSpace2.isFarmEnabled && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers < MAX_FARMERS + multiplierSelected) {
+            if (fieldSpace2.isFarmEnabled && fieldSpace2.farmerInQueue + fieldSpace2.workingFarmers + multiplierSelected <= MAX_FARMERS) {
                 fieldSpace2.farmerInQueue += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
-            } else if (!fieldSpace2.isFarmEnabled  && fieldSpace2.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+            } else if (!fieldSpace2.isFarmEnabled  && fieldSpace2.workingBuilders + multiplierSelected <= MAX_BUILDERS) {
                 fieldSpace2.workingBuilders += multiplierSelected
                 gameController.castle.villager -= multiplierSelected
                 }
             } else if (farm3Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
-                if (fieldSpace3.isFarmEnabled && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                if (fieldSpace3.isFarmEnabled && fieldSpace3.farmerInQueue + fieldSpace3.workingFarmers + multiplierSelected <= MAX_FARMERS) {
                     fieldSpace3.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
-                } else if (!fieldSpace3.isFarmEnabled  && fieldSpace3.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                } else if (!fieldSpace3.isFarmEnabled  && fieldSpace3.workingBuilders + multiplierSelected <= MAX_BUILDERS) {
                     fieldSpace3.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }
             } else if (farm4Trigger.contains(location) && gameController.castle.villager >= multiplierSelected) {
-                if (fieldSpace4.isFarmEnabled && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers < MAX_FARMERS + multiplierSelected) {
+                if (fieldSpace4.isFarmEnabled && fieldSpace4.farmerInQueue + fieldSpace4.workingFarmers + multiplierSelected <= MAX_FARMERS) {
                     fieldSpace4.farmerInQueue += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
-                } else if (!fieldSpace4.isFarmEnabled  && fieldSpace4.workingBuilders < MAX_BUILDERS + multiplierSelected) {
+                } else if (!fieldSpace4.isFarmEnabled  && fieldSpace4.workingBuilders + multiplierSelected <= MAX_BUILDERS) {
                     fieldSpace4.workingBuilders += multiplierSelected
                     gameController.castle.villager -= multiplierSelected
                 }
