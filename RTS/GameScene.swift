@@ -115,6 +115,7 @@ class GameScene: SKScene {
     private var hpLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "HP: 6000/6000")
     
     private var trainingSoldiersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
+    private var trainingArchersLabel = iOSLabelNode(fontSize: 32, fontColor: .black, text: "")
     
     private var multiplierSelected: Int = 1
     private var multiplierNode = SKSpriteNode(color: SKColor.systemPink, size: CGSize(width: 60, height: 60))
@@ -145,6 +146,9 @@ class GameScene: SKScene {
         self.addChild(farm2Trigger)
         self.addChild(farm3Trigger)
         self.addChild(farm4Trigger)
+        self.addChild(trainingSoldiersLabel)
+        self.addChild(trainingArchersLabel)
+
 
         #if TEST_VICTORY_CONDITIONS
         // test
@@ -209,7 +213,7 @@ class GameScene: SKScene {
         backgroundNode.size = CGSize(width: self.frame.width, height: self.frame.height)
         updateLabel()
         trainingSoldiers()
-        setupCircle()
+        trainingArchers()
     }
     
     func addLayerNode(_ node: SKSpriteNode, _ zPos: CGFloat = 5) {
@@ -235,13 +239,25 @@ class GameScene: SKScene {
     
     func trainingSoldiers () {
         let trainingSoldiers = gameController.soldierInQueue - gameController.castle.soldier
+        trainingSoldiersLabel.position.x  = self.frame.midX + self.frame.width/9
+        trainingSoldiersLabel.position.y = self.frame.minY + self.frame.height/4.15
+        trainingSoldiersLabel.zPosition = 11
         trainingSoldiersLabel.text = "\(trainingSoldiers)"
+        setupCircle(x: self.frame.midX + self.frame.width/9, y: self.frame.minY + self.frame.height/4)
     }
     
+    func trainingArchers() {
+        let trainingArchers = gameController.archerInQueue - gameController.castle.archer
+        trainingArchersLabel.position.x  = self.frame.midX + self.frame.width/8.5
+        trainingArchersLabel.position.y = self.frame.midY + self.frame.height/7.5
+        trainingArchersLabel.zPosition = 11
+        trainingArchersLabel.text = "\(trainingArchers)"
+        setupCircle(x: self.frame.midX + self.frame.width/8.5, y: self.frame.midY + self.frame.height/7)
+    }
     
-    func setupCircle () {
+    func setupCircle (x: CGFloat, y: CGFloat) {
         let path = CGMutablePath()
-        path.addArc(center: CGPoint(x: self.frame.midX + self.frame.width/9, y: self.frame.minY + self.frame.height/4),
+        path.addArc(center: CGPoint(x: x, y: y),
                     radius: 30,
                     startAngle: 0,
                     endAngle: CGFloat.pi * 2,
@@ -253,7 +269,6 @@ class GameScene: SKScene {
         ball.glowWidth = 0.5
         ball.zPosition = 10
         self.addChild(ball)
-        ball.addChild(trainingSoldiersLabel)
     }
         
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -317,6 +332,7 @@ class GameScene: SKScene {
             #endif
             updateLabel()
             trainingSoldiers()
+            trainingArchers()
         }
     }
     
